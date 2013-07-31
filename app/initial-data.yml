@@ -1,0 +1,14 @@
+
+# Candidates
+
+candidates:
+
+    - !!models.Candidate
+        firstname:  Julien
+        lastname:   Smadja
+        email:      julien.smadja@gmail.com
+
+    - !!models.Candidate
+        firstname:  Renaud
+        lastname:   Chevalier
+        email:      renaud.chevalier@gmail.com

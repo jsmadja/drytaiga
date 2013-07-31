@@ -1,7 +1,10 @@
-@(message: String)
+@(candidates: List[Candidate])
+@main("Todo list") {
 
-    @main("Welcome to Play 2.1") {
-
-        @play20.welcome(message, style = "Java")
-
+    <ul>
+    @for(candidate <- candidates) {
+        <li>@candidate.firstname @candidate.lastname</li>
     }
+    </ul>
+
+}

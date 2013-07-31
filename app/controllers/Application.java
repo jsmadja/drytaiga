@@ -1,13 +1,13 @@
 package controllers;
 
+import models.Candidate;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.index;
 
 public class Application extends Controller {
 
-    public static Result index() {
-        return ok(index.render("Your new application is ready. that's cool"));
+    public static Result candidates() {
+        return ok(views.html.index.render(Candidate.findAll()));
     }
 
 }
