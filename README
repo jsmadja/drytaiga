@@ -3,3 +3,7 @@ Installer le project
 
    heroku git:clone -a drytaiga
    git remote add github ssh://git@github.com/jsmadja/drytaiga.git
+
+Stuff
+=====
+heroku config:get SENDGRID_PASSWORD
