@@ -2,12 +2,14 @@ package controllers;
 
 import com.google.common.io.Files;
 import models.Candidate;
+import models.Mail;
 import models.S3File;
 import play.data.Form;
 import play.data.validation.Constraints;
 import play.mvc.Controller;
 import play.mvc.Result;
-import services.SimpleMail;
+import plugins.MailerPlugin;
+import plugins.S3Plugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +22,14 @@ public class Application extends Controller {
     public static class Email {
         @Constraints.Required
         public String address;
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
     }
 
     public static Result sendEmail() {
@@ -36,23 +46,27 @@ public class Application extends Controller {
     }
 
     private static void storeFile(String content) {
-        try {
-            S3File s3File = new S3File();
-            s3File.name = UUID.randomUUID().toString() + ".txt";
-            File to = new File("/tmp/" + s3File.name);
-            Files.write(content.getBytes(), to);
-            s3File.file = to;
-            s3File.save();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (S3Plugin.isEnabled()) {
+            try {
+                S3File s3File = new S3File();
+                s3File.name = UUID.randomUUID().toString() + ".txt";
+                File to = new File("/tmp/" + s3File.name);
+                Files.write(content.getBytes(), to);
+                s3File.file = to;
+                s3File.save();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     private static void sendEmailTo(String email) {
-        try {
-            new SimpleMail().send(email);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (MailerPlugin.isEnabled()) {
+            try {
+                new Mail(email).send();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
