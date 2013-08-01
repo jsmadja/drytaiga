@@ -19,18 +19,9 @@ create table s3file (
 
 create sequence candidate_seq;
 
-
-
-
 # --- !Downs
 
-#SET REFERENTIAL_INTEGRITY FALSE;
-
 drop table if exists candidate;
-
 drop table if exists s3file;
-
-#SET REFERENTIAL_INTEGRITY TRUE;
-
 drop sequence if exists candidate_seq;
 
