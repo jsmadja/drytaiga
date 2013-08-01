@@ -13,6 +13,7 @@ public class S3Plugin extends Plugin {
     public static final String AWS_S3_BUCKET = "aws.s3.bucket";
     public static final String AWS_ACCESS_KEY = "aws.access.key";
     public static final String AWS_SECRET_KEY = "aws.secret.key";
+
     private final Application application;
 
     public static AmazonS3 amazonS3;
@@ -44,4 +45,7 @@ public class S3Plugin extends Plugin {
                 application.configuration().keys().contains(AWS_S3_BUCKET));
     }
 
+    public static boolean isEnabled() {
+        return amazonS3 != null;
+    }
 }
