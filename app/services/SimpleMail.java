@@ -1,18 +1,23 @@
 package services;
 
 import javax.mail.*;
-import javax.mail.internet.*;
-import javax.mail.Authenticator;
-import javax.mail.PasswordAuthentication;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import java.util.Properties;
 
 public class SimpleMail {
 
+    public static void main(String[] args) throws Exception {
+        new SimpleMail().send("julien.smadja@gmail.com");
+    }
+
     private static final String SMTP_HOST_NAME = "smtp.sendgrid.net";
     private static final String SMTP_AUTH_USER = "app17222387@heroku.com";
-    private static final String SMTP_AUTH_PWD  = "Your Password";
+    private static final String SMTP_AUTH_PWD = "soctxpvx";
 
-    public void send(String to) throws Exception{
+    public void send(String to) throws Exception {
         Properties props = new Properties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.host", SMTP_HOST_NAME);
@@ -22,7 +27,7 @@ public class SimpleMail {
         Authenticator auth = new SMTPAuthenticator();
         Session mailSession = Session.getDefaultInstance(props, auth);
         // uncomment for debugging infos to stdout
-        // mailSession.setDebug(true);
+        mailSession.setDebug(true);
         Transport transport = mailSession.getTransport();
 
         MimeMessage message = new MimeMessage(mailSession);
