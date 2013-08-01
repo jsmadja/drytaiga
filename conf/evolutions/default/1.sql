@@ -10,6 +10,13 @@ create table candidate (
   constraint pk_candidate primary key (email))
 ;
 
+create table s3file (
+  id                        varchar(40) not null,
+  bucket                    varchar(255),
+  name                      varchar(255),
+  constraint pk_s3file primary key (id))
+;
+
 create sequence candidate_seq;
 
 
@@ -20,6 +27,8 @@ create sequence candidate_seq;
 SET REFERENTIAL_INTEGRITY FALSE;
 
 drop table if exists candidate;
+
+drop table if exists s3file;
 
 SET REFERENTIAL_INTEGRITY TRUE;
 
