@@ -1,4 +1,5 @@
-@(candidates: List[Candidate])
+@(emailForm: Form[Application.Email], candidates: List[Candidate])
+@import helper._
 @main("Todo list") {
 
     <ul>
@@ -6,5 +7,18 @@
         <li>@candidate.firstname @candidate.lastname</li>
     }
     </ul>
+
+    @form(action = routes.Application.sendEmail, args = 'id -> "helloform") {
+
+        @inputText(
+            field = emailForm("address"),
+            args = '_label -> "Email address ?", 'placeholder -> "julien.smadja@gmail.com"
+        )
+
+        <p class="buttons">
+            <input type="submit">
+        <p>
+
+    }
 
 }
