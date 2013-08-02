@@ -45,4 +45,13 @@ public class Company extends Model {
     public static List<Company> findAll() {
         return find.all();
     }
+
+    public boolean hasMember(String email) {
+        for (User member : members) {
+            if(member.hasEmail(email)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

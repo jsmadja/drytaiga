@@ -35,5 +35,8 @@ public class User extends Model {
         this.password = password;
     }
 
+    public boolean hasEmail(String email) {
+        return this.email.equalsIgnoreCase(email);
+    }
 }
 

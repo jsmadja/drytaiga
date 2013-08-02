@@ -1,10 +1,9 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
-import play.mvc.Http.*;
-
-import models.*;
+import models.Company;
+import play.mvc.Http.Context;
+import play.mvc.Result;
+import play.mvc.Security;
 
 public class Secured extends Security.Authenticator {
 
@@ -15,23 +14,11 @@ public class Secured extends Security.Authenticator {
 
     @Override
     public Result onUnauthorized(Context ctx) {
-        return redirect(routes.Application.login());
+        return redirect(routes.Application.sendEmail());
     }
 
-    // Access rights
-
-    public static boolean isMemberOf(Long project) {
-        return Project.isMember(
-                project,
-                Context.current().request().username()
-        );
-    }
-
-    public static boolean isOwnerOf(Long task) {
-        return Task.isOwner(
-                task,
-                Context.current().request().username()
-        );
+    public static boolean isMemberOf(Company company) {
+        return company.hasMember(Context.current().request().username());
     }
 
 }
