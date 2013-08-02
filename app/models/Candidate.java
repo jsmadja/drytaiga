@@ -4,15 +4,15 @@ import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="candidate")
-public class Candidate {
+public class Candidate extends Model {
+
+    @Id
+    public Long id;
 
     @Constraints.Required
     public String firstname;
@@ -20,21 +20,20 @@ public class Candidate {
     @Constraints.Required
     public String lastname;
 
-    @Id
     @Constraints.Required
     @Formats.NonEmpty
     public String email;
 
-    public static Model.Finder<String,Candidate> find = new Model.Finder(String.class, Candidate.class);
+    @ManyToMany
+    public List<Position> positions = new ArrayList<Position>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Document> documents = new ArrayList<Document>();
 
     public Candidate(String firstname, String lastname, String email) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
-    }
-
-    public static List<Candidate> findAll() {
-        return find.all();
     }
 
     public String getFirstname() {
@@ -47,5 +46,13 @@ public class Candidate {
 
     public String getEmail() {
         return email;
+    }
+
+    public void addDocument(Document document) {
+        documents.add(document);
+    }
+
+    public void addPosition(Position position) {
+        positions.add(position);
     }
 }

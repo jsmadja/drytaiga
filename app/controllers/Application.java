@@ -1,7 +1,9 @@
 package controllers;
 
+import com.avaje.ebean.Ebean;
 import com.google.common.io.Files;
 import models.Candidate;
+import models.Company;
 import models.Mail;
 import models.S3File;
 import play.data.Form;
@@ -35,13 +37,18 @@ public class Application extends Controller {
     public static Result sendEmail() {
         Form<Email> form = form(Email.class).bindFromRequest();
         if (form.hasErrors()) {
-            return badRequest(views.html.index.render(form, Candidate.findAll()));
+            return badRequest(views.html.index.render(form, Company.findAll()));
         } else {
             Email data = form.get();
             String email = data.address;
+
+            Company company = Company.findAll().get(0);
+            company.positions.get(0).addCandidate(new Candidate("Robert", "Martin", "rmartin@gmail.com"));
+            Ebean.update(company);
+
             sendEmailTo(email);
             storeFile(email);
-            return ok(views.html.index.render(form, Candidate.findAll()));
+            return ok(views.html.index.render(form, Company.findAll()));
         }
     }
 

@@ -1,10 +1,30 @@
-@(emailForm: Form[Application.Email], candidates: List[Candidate])
+@(emailForm: Form[Application.Email], companies: List[Company])
 @import helper._
-@main("Todo list") {
+@main("Dry Taiga") {
 
     <ul>
-    @for(candidate <- candidates) {
-        <li>@candidate.firstname @candidate.lastname</li>
+    @for(company <- companies) {
+        <li>[@company.id] @company.name</li>
+
+        Members:
+        <ul>
+            @for(member <- company.members) {
+                <li>[@member.id] @member.firstname @member.lastname</li>
+            }
+        </ul>
+
+        Positions:
+        <ul>
+        @for(position <- company.positions) {
+            <li>[@position.id] @position.name</li>
+            Candidates
+            <ul>
+                @for(candidate <- position.candidates) {
+                    <li>[@candidate.id] @candidate.firstname @candidate.lastname</li>
+                }
+            </ul>
+        }
+        </ul>
     }
     </ul>
 
