@@ -38,14 +38,14 @@ create table s3file (
   constraint pk_s3file primary key (id))
 ;
 
-create table user (
+create table account (
   id                        bigint not null,
   company_id                bigint not null,
   email                     varchar(255),
   firstname                 varchar(255),
   lastname                  varchar(255),
   password                  varchar(255),
-  constraint pk_user primary key (id))
+  constraint pk_account primary key (id))
 ;
 
 
@@ -68,14 +68,14 @@ create sequence document_seq;
 
 create sequence position_seq;
 
-create sequence user_seq;
+create sequence account_seq;
 
 alter table document add constraint fk_document_candidate_1 foreign key (candidate_id) references candidate (id) on delete restrict on update restrict;
 create index ix_document_candidate_1 on document (candidate_id);
 alter table position add constraint fk_position_company_2 foreign key (company_id) references company (id) on delete restrict on update restrict;
 create index ix_position_company_2 on position (company_id);
-alter table user add constraint fk_user_company_3 foreign key (company_id) references company (id) on delete restrict on update restrict;
-create index ix_user_company_3 on user (company_id);
+alter table account add constraint fk_account_company_3 foreign key (company_id) references company (id) on delete restrict on update restrict;
+create index ix_account_company_3 on account (company_id);
 
 
 
@@ -105,7 +105,7 @@ drop table if exists position_candidate;
 
 drop table if exists s3file;
 
-drop table if exists user;
+drop table if exists account;
 
 SET REFERENTIAL_INTEGRITY TRUE;
 
@@ -117,5 +117,5 @@ drop sequence if exists document_seq;
 
 drop sequence if exists position_seq;
 
-drop sequence if exists user_seq;
+drop sequence if exists account_seq;
 
