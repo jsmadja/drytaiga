@@ -34,6 +34,7 @@ public class Company extends Model {
     }
 
     public void addMember(User user) {
+        user.company = this;
         members.add(user);
     }
 

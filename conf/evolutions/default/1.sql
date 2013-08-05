@@ -40,11 +40,11 @@ create table s3file (
 
 create table account (
   id                        bigint not null,
-  company_id                bigint not null,
   email                     varchar(255),
   firstname                 varchar(255),
   lastname                  varchar(255),
   password                  varchar(255),
+  company_id                bigint,
   constraint pk_account primary key (id))
 ;
 
