@@ -16,7 +16,7 @@ public class Position extends Model {
     @Constraints.Required
     public String name;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
+    @ManyToMany(mappedBy = "positions", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
     public List<Candidate> candidates = new ArrayList<Candidate>();
 
     @ManyToOne

@@ -1,6 +1,3 @@
-# --- Created by Ebean DDL
-# To stop Ebean DDL generation, remove this comment and start using Evolutions
-
 # --- !Ups
 
 create table candidate (
@@ -54,12 +51,6 @@ create table candidate_position (
   position_id                    bigint not null,
   constraint pk_candidate_position primary key (candidate_id, position_id))
 ;
-
-create table position_candidate (
-  position_id                    bigint not null,
-  candidate_id                   bigint not null,
-  constraint pk_position_candidate primary key (position_id, candidate_id))
-;
 create sequence candidate_seq;
 
 create sequence company_seq;
@@ -83,10 +74,6 @@ alter table candidate_position add constraint fk_candidate_position_candida_01 f
 
 alter table candidate_position add constraint fk_candidate_position_positio_02 foreign key (position_id) references position (id) on delete restrict on update restrict;
 
-alter table position_candidate add constraint fk_position_candidate_positio_01 foreign key (position_id) references position (id) on delete restrict on update restrict;
-
-alter table position_candidate add constraint fk_position_candidate_candida_02 foreign key (candidate_id) references candidate (id) on delete restrict on update restrict;
-
 # --- !Downs
 
 SET REFERENTIAL_INTEGRITY FALSE;
@@ -100,8 +87,6 @@ drop table if exists company;
 drop table if exists document;
 
 drop table if exists position;
-
-drop table if exists position_candidate;
 
 drop table if exists s3file;
 
