@@ -1,0 +1,8 @@
+@(user: User)
+@main(user){
+    @for(position <- user.company.positions) {
+        <a href="/positions/@position.id">@position.name</a>
+    }
+}
+
+<a class="btn success" id="add" href="@routes.Positions.create()">Add a new position</a>

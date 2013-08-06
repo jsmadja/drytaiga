@@ -1,6 +1,4 @@
 @(user: User)
 @main(user){
-    @user.firstname
-    @user.company.name
-    <a href="/logout">logout</a>
+    <a href="@routes.Positions.list()">Positions</a>
 }

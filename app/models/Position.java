@@ -22,6 +22,8 @@ public class Position extends Model {
     @ManyToOne
     public Company company;
 
+    public static Model.Finder<Long,Position> find = new Model.Finder(Long.class, Position.class);
+
     public Position(String name) {
         this.name = name;
     }

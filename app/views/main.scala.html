@@ -3,14 +3,14 @@
     <head>
         <title>DryTaiga</title>
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-        <script type="text/javascript" src="@routes.Assets.at("javascripts/jquery-1.7.1.js")"></script>
-        <script type="text/javascript" src="@routes.Assets.at("javascripts/jquery-play-1.7.1.js")"></script>
-        <script type="text/javascript" src="@routes.Assets.at("javascripts/underscore-min.js")"></script>
-        <script type="text/javascript" src="@routes.Assets.at("javascripts/backbone-min.js")"></script>
-        <script type="text/javascript" src="@routes.Assets.at("javascripts/main.js")"></script>
     </head>
     <body>
         @body
+        @if(user != null) {
+            @user.firstname
+            @user.company.name
+            <a href="/logout">logout</a>
+        }
     </body>
 </html>
 

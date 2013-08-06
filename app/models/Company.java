@@ -17,10 +17,10 @@ public class Company extends Model {
 
     public String name;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
     public List<User> members = new ArrayList<User>();
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
     public List<Position> positions = new ArrayList<Position>();
 
     private Company(String name) {
@@ -43,16 +43,36 @@ public class Company extends Model {
     }
 
     public static Model.Finder<Long, Company> find = new Model.Finder(Long.class, Company.class);
-    public static List<Company> findAll() {
-        return find.all();
+
+    public static boolean isMember(Long company, String user) {
+        return find.where()
+                .eq("members.email", user)
+                .eq("id", company)
+                .findRowCount() > 0;
     }
 
-    public boolean hasMember(String email) {
-        for (User member : members) {
-            if(member.hasEmail(email)) {
-                return true;
-            }
-        }
-        return false;
+    public static boolean isMember(Company company, String user) {
+        return isMember(company.id, user);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Company company = (Company) o;
+
+        if (!name.equals(company.name)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + name.hashCode();
+        return result;
+    }
+
 }

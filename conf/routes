@@ -3,12 +3,26 @@
 # ~~~~
 
 # Tasks
-GET     /                   controllers.Dashboard.index()
+GET           /                           controllers.Dashboard.index()
 
 # Authentication
-GET     /login              controllers.Application.login()
-POST    /login              controllers.Application.authenticate()
-GET     /logout             controllers.Application.logout()
+GET           /login                      controllers.Application.login()
+POST          /login                      controllers.Application.authenticate()
+GET           /logout                     controllers.Application.logout()
+
+# Computers list (look at the default values for pagination parameters)
+GET     /positions                  controllers.Positions.list()
+
+# Add computer
+GET     /positions/new              controllers.Positions.create()
+POST    /positions                  controllers.Positions.save()
+
+# Edit existing computer
+GET     /positions/:id              controllers.Positions.edit(id:Long)
+POST    /positions/:id              controllers.Positions.update(id:Long)
+
+# Delete a computer
+POST    /positions/:id/delete       controllers.Positions.delete(id:Long)
 
 # Map static resources from the /public folder to the /assets URL path
-GET        /assets/*file        controllers.Assets.at(path="/public", file)
+GET           /assets/*file               controllers.Assets.at(path="/public", file)

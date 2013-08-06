@@ -62,5 +62,9 @@ public class User extends Model {
     public static User currentUser(Http.Request request) {
         return User.findByEmail(request.username());
     }
+
+    public boolean isMemberOf(Company company) {
+        return this.company.equals(company);
+    }
 }
 
