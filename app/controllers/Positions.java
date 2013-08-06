@@ -50,10 +50,7 @@ public class Positions extends Controller {
 
 
     public static Result create() {
-        Form<Position> form = form(Position.class);
-        return ok(
-                views.html.positions.createForm.render(form, User.currentUser(request()))
-        );
+        return ok(views.html.positions.createForm.render(form(Position.class), User.currentUser(request())));
     }
 
     public static Result save() {

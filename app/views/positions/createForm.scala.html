@@ -1,6 +1,7 @@
 @(positionForm: Form[Position], user: User)
 
 @import helper._
+@import play.i18n._
 
 @main(user) {
 
@@ -14,7 +15,7 @@
 
         <div class="actions">
             <input type="submit" value="Create this position" class="btn primary"> or
-            <a href="@routes.Positions.list()" class="btn">Cancel</a>
+            <a href="@routes.Positions.list()" class="btn">@Messages.get("common.Cancel")</a>
         </div>
 
     }

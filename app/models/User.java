@@ -42,10 +42,6 @@ public class User extends Model {
         this.password = password;
     }
 
-    public boolean hasEmail(String email) {
-        return this.email.equalsIgnoreCase(email);
-    }
-
     public static User authenticate(String email, String password) {
         return find.where()
                 .eq("email", email)
@@ -63,8 +59,5 @@ public class User extends Model {
         return User.findByEmail(request.username());
     }
 
-    public boolean isMemberOf(Company company) {
-        return this.company.equals(company);
-    }
 }
 

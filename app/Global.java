@@ -12,7 +12,7 @@ public class Global extends GlobalSettings {
 
     static class InitialData {
         public static void insert(Application app) {
-            if(Ebean.find(Candidate.class).findRowCount() == 0) {
+            if(Ebean.find(User.class).findRowCount() == 0) {
                 Company company = Company.create("xebia");
                 User user = new User("Julien", "Smadja", "jsmadja@xebia.fr", "ogdsoiugdosfsdo");
                 company.addMember(user);
