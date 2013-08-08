@@ -1,8 +1,19 @@
-@(user: User)
-@main(user){
+@(user: User, positionForm: Form[Position])
+@main(user) {
+
+    <button id="newPosition">New Position</button>
+    @dialog("newPosition", "New position") {
+        @positions.createNewPosition(positionForm, user)
+    }
+
+    <ul>
     @for(position <- user.company.positions) {
-        <a href="/positions/@position.id">@position.name</a>
+        <li><a href="/positions/@position.id">@position.name</a></li>
+    }
+    </ul>
+
+    <button id="newTrue">New True</button>
+    @dialog("newTrue", "New true") {
+        <b>new True mec!</b>
     }
 }
-
-<a class="btn success" id="add" href="@routes.Positions.create()">Add a new position</a>

@@ -1,0 +1,14 @@
+@(opener: String, title: String)(body: Html)
+<script>
+    $(function() {
+        $("#dialog_@opener").dialog({
+            autoOpen: false
+        });
+        $("#@opener").click(function() {
+            $("#dialog_@opener").dialog("open");
+        });
+    });
+</script>
+<div id="dialog_@opener" title="@title">
+    @body
+</div>

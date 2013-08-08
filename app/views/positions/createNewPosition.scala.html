@@ -1,0 +1,13 @@
+@(positionForm: Form[Position], user: User)
+@import helper._
+@import play.i18n._
+<h1>Add a position</h1>
+@form(routes.Positions.save()) {
+    <fieldset>
+    @inputText(positionForm("name"), '_label -> "Position name")
+    </fieldset>
+    <div class="actions">
+        <input type="submit" value="Create this position" class="btn primary"> or
+        <a href="@routes.Positions.list()" class="btn">@Messages.get("common.Cancel")</a>
+    </div>
+}

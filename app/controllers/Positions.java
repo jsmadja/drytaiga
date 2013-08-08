@@ -21,14 +21,9 @@ public class Positions extends Controller {
 
     public static Result list() {
         User user = User.currentUser(request());
-        return ok(index.render(user));
+        return ok(index.render(user, form(Position.class)));
     }
 
-    /**
-     * Display the 'edit form' of a existing Computer.
-     *
-     * @param id Id of the computer to edit
-     */
     public static Result edit(Long id) {
         Form<Position> form = form(Position.class).fill(
                 Position.find.byId(id)
