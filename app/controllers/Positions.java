@@ -8,6 +8,7 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import views.html.positions.createNewPosition;
 import views.html.positions.index;
 
 import static play.data.Form.form;
@@ -45,13 +46,13 @@ public class Positions extends Controller {
 
 
     public static Result create() {
-        return ok(views.html.positions.createForm.render(form(Position.class), User.currentUser(request())));
+        return ok(createNewPosition.render(form(Position.class), User.currentUser(request())));
     }
 
     public static Result save() {
         Form<Position> form = form(Position.class).bindFromRequest();
         if(form.hasErrors()) {
-            return badRequest(views.html.positions.createForm.render(form, User.currentUser(request())));
+            return badRequest(createNewPosition.render(form, User.currentUser(request())));
         }
         Company company = User.currentUser(request()).company;
         company.addPosition(form.get());
