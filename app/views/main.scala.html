@@ -1,3 +1,4 @@
+@Html(com.newrelic.api.agent.NewRelic.getBrowserTimingHeader())
 @(user: User)(body: Html)
 <html lang="en">
     <head>
@@ -59,4 +60,4 @@
         </div>
     </div>
 </html>
-
+@Html(com.newrelic.api.agent.NewRelic.getBrowserTimingFooter())
