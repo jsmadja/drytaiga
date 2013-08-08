@@ -15,6 +15,7 @@ GET     /positions/new              controllers.Positions.create()
 POST    /positions                  controllers.Positions.save()
 GET     /positions/:id              controllers.Positions.edit(id:Long)
 POST    /positions/:id              controllers.Positions.update(id:Long)
+POST    /positions/:id/files              controllers.Positions.upload(id:Long)
 
 # Delete a computer
 POST    /positions/:id/delete       controllers.Positions.delete(id:Long)

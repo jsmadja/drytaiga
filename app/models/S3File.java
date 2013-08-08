@@ -36,11 +36,13 @@ public class S3File extends Model {
 
     @Override
     public void save() {
-        this.bucket = S3Plugin.s3Bucket;
-        super.save();
-        PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, getActualFileName(), file);
-        putObjectRequest.withCannedAcl(CannedAccessControlList.PublicRead);
-        S3Plugin.amazonS3.putObject(putObjectRequest);
+        if(S3Plugin.isEnabled()) {
+            this.bucket = S3Plugin.s3Bucket;
+            super.save();
+            PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, getActualFileName(), file);
+            putObjectRequest.withCannedAcl(CannedAccessControlList.PublicRead);
+            S3Plugin.amazonS3.putObject(putObjectRequest);
+        }
     }
 
     @Override

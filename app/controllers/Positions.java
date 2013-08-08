@@ -3,9 +3,11 @@ package controllers;
 import com.avaje.ebean.Ebean;
 import models.Company;
 import models.Position;
+import models.S3File;
 import models.User;
 import play.data.Form;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
 import views.html.positions.createNewPosition;
@@ -36,7 +38,7 @@ public class Positions extends Controller {
 
     public static Result update(Long id) {
         Form<Position> form = form(Position.class).bindFromRequest();
-        if(form.hasErrors()) {
+        if (form.hasErrors()) {
             return badRequest(views.html.positions.editForm.render(id, form, User.currentUser(request())));
         }
         form.get().update(id);
@@ -51,7 +53,7 @@ public class Positions extends Controller {
 
     public static Result save() {
         Form<Position> form = form(Position.class).bindFromRequest();
-        if(form.hasErrors()) {
+        if (form.hasErrors()) {
             return badRequest(createNewPosition.render(form, User.currentUser(request())));
         }
         Company company = User.currentUser(request()).company;
@@ -70,6 +72,22 @@ public class Positions extends Controller {
         } else {
             return forbidden();
         }
+    }
+
+    public static Result upload(Long idPosition) {
+        Http.Request request = request();
+        Http.RequestBody body = request.body();
+        Http.MultipartFormData formData = body.asMultipartFormData();
+        Http.MultipartFormData.FilePart picture = formData.getFile("file");
+        if (picture != null) {
+            S3File s3File = new S3File();
+            s3File.file = picture.getFile();
+            s3File.name = picture.getFilename();
+            s3File.save();
+        } else {
+            flash("error", "Missing file");
+        }
+        return redirect(routes.Positions.edit(idPosition));
     }
 
 }

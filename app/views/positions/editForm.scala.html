@@ -18,6 +18,13 @@
 
     }
 
+    @form(routes.Positions.upload(id), 'enctype -> "multipart/form-data") {
+        <input type="file" name="file">
+        <p>
+            <input type="submit">
+        </p>
+    }
+
     @form(routes.Positions.delete(id), 'class -> "topRight") {
         <input type="submit" value="Delete this position" class="btn danger">
     }
