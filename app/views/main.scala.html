@@ -1,27 +1,62 @@
 @(user: User)(body: Html)
-<html>
+<html lang="en">
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
         <title>DryTaiga</title>
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
 
         <script src="@routes.Assets.at("javascripts/jquery-1.9.1.js")"></script>
         <script src="@routes.Assets.at("javascripts/jquery-ui.js")"></script>
         <script src="@routes.Assets.at("javascripts/jquery.dataTables.js")"></script>
+        <script src="@routes.Assets.at("javascripts/bootstrap.js")"></script>
 
         <link rel="stylesheet" href="@routes.Assets.at("stylesheets/jquery-ui/jquery.ui.all.css")">
         <link rel="stylesheet" href="@routes.Assets.at("stylesheets/datatables/css/demo_page.css")">
         <link rel="stylesheet" href="@routes.Assets.at("stylesheets/datatables/css/demo_table.css")">
-
+        <link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap.css")">
     </head>
-    <body>
-        @body
-        @if(user != null) {
-            <div style="border-style: solid; float:right; position: absolute; vertical-align: top; right: 0px;">
-            @user.firstname
-            @user.company.name
-            <a href="/logout">logout</a>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Dry Taiga</a>
+            <div class="nav-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Positions</a></li>
+                    <li><a href="#about">Candidates</a></li>
+                    <li><a href="#contact">Reporting</a></li>
+                </ul>
+
+                @if(user != null) {
+                    <li class="active" style="color: white;">@user.firstname @user.company.name</li>
+                    <li><a href="/logout">logout</a></li>
+                } else {
+                    <form class="navbar-form form-inline pull-right">
+                        <input type="text" placeholder="Email">
+                        <input type="password" placeholder="Password">
+                        <button type="submit" class="btn">Sign in</button>
+                    </form>
+                }
             </div>
-        }
-    </body>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="body-content" style="margin-top: 100px;">
+            @body
+            <hr>
+            <footer>
+                <p>&copy; Company 2013</p>
+            </footer>
+        </div>
+    </div>
 </html>
 

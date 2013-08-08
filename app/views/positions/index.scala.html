@@ -1,7 +1,7 @@
 @(user: User, positionForm: Form[Position])
 @main(user) {
 
-    <button id="newPosition">New Position</button>
+    <button id="newPosition" style="float: right;">New Position</button>
     @dialog("newPosition", "New position") {
         @positions.createNewPosition(positionForm, user)
     }
