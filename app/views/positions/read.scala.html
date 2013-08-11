@@ -1,0 +1,23 @@
+@(position: Position, user: User, documentForm: Form[Document])
+
+@main(user) {
+
+    <h1>@position.name</h1>
+
+    <h2>Candidates</h2>
+    @table("candidates") {
+        <thead>
+            <th>Name</th>
+        </thead>
+        <tbody>
+            @for(candidate <- position.candidates) {
+            <tr>
+                <td>@candidate.lastname, @candidate.firstname</td>
+            </tr>
+            }
+        </tbody>
+    }
+
+    @documents.cartridge(documentForm, position)
+
+}

@@ -1,16 +1,12 @@
 package controllers;
 
 import com.avaje.ebean.Ebean;
-import models.Company;
-import models.Position;
-import models.S3File;
-import models.User;
+import models.*;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
-import views.html.positions.createNewPosition;
 import views.html.positions.index;
 
 import static play.data.Form.form;
@@ -32,14 +28,20 @@ public class Positions extends Controller {
                 Position.find.byId(id)
         );
         return ok(
-                views.html.positions.editForm.render(id, form, User.currentUser(request()))
+                views.html.positions.update.render(id, form, User.currentUser(request()))
+        );
+    }
+
+    public static Result read(Long id) {
+        return ok(
+                views.html.positions.read.render(Position.find.byId(id), User.currentUser(request()), form(Document.class))
         );
     }
 
     public static Result update(Long id) {
         Form<Position> form = form(Position.class).bindFromRequest();
         if (form.hasErrors()) {
-            return badRequest(views.html.positions.editForm.render(id, form, User.currentUser(request())));
+            return badRequest(views.html.positions.update.render(id, form, User.currentUser(request())));
         }
         form.get().update(id);
         flash("success", "Position " + form.get().name + " has been updated");
@@ -48,13 +50,13 @@ public class Positions extends Controller {
 
 
     public static Result create() {
-        return ok(createNewPosition.render(form(Position.class), User.currentUser(request())));
+        return ok(views.html.positions.create.render(form(Position.class), User.currentUser(request())));
     }
 
     public static Result save() {
         Form<Position> form = form(Position.class).bindFromRequest();
         if (form.hasErrors()) {
-            return badRequest(createNewPosition.render(form, User.currentUser(request())));
+            return badRequest(views.html.positions.create.render(form, User.currentUser(request())));
         }
         Company company = User.currentUser(request()).company;
         company.addPosition(form.get());

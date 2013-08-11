@@ -1,2 +1,3 @@
 1500:plugins.MailerPlugin
 1500:plugins.S3Plugin
+1600:plugins.StoragePlugin

@@ -1,19 +1,12 @@
 @(user: User, positionForm: Form[Position])
 @main(user) {
-
+    <h1>Positions</h1>
     <button id="newPosition" style="float: right;">New Position</button>
     @dialog("newPosition", "New position") {
-        @positions.createNewPosition(positionForm, user)
+        @positions.create(positionForm, user)
     }
 
-    <script>
-        $(document).ready(function() {
-            $('#example').dataTable();
-        } );
-    </script>
-
-
-    <table cellpadding="0" cellspacing="0" border="0" class="display" id="example" width="100%">
+    @table("positions") {
         <thead>
             <tr>
                 <th>Id</th>
@@ -23,11 +16,10 @@
         <tbody>
         @for(position <- user.company.positions) {
             <tr>
-                <td>@position.id</td>
-                <td><a href="/positions/@position.id">@position.name</a></td>
+                <td>@position.getId</td>
+                <td><a href="/positions/@position.getId">@position.name</a></td>
             </tr>
         }
         </tbody>
-    </table>
-
+    }
 }

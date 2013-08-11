@@ -13,12 +13,15 @@ GET           /logout                     controllers.Application.logout()
 GET     /positions                  controllers.Positions.list()
 GET     /positions/new              controllers.Positions.create()
 POST    /positions                  controllers.Positions.save()
-GET     /positions/:id              controllers.Positions.edit(id:Long)
+GET     /positions/:id              controllers.Positions.read(id:Long)
+GET     /positions/edit/:id         controllers.Positions.edit(id:Long)
 POST    /positions/:id              controllers.Positions.update(id:Long)
-POST    /positions/:id/files              controllers.Positions.upload(id:Long)
-
-# Delete a computer
+POST    /positions/:id/files        controllers.Positions.upload(id:Long)
 POST    /positions/:id/delete       controllers.Positions.delete(id:Long)
+
+GET     /positions/:id/documents/new    controllers.Documents.create(id:Long)
+POST    /positions/:id/documents        controllers.Documents.save(id:Long)
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file               controllers.Assets.at(path="/public", file)

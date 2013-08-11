@@ -1,0 +1,13 @@
+@(documentForm: Form[Document], idPosition: Long)
+@import helper._
+<h1>Add a document</h1>
+@form(routes.Documents.save(idPosition), 'enctype -> "multipart/form-data") {
+    <fieldset>
+        @inputText(documentForm("name"), '_label -> "Name")
+
+        <input type="file" name="file">
+    </fieldset>
+    <div class="actions">
+        <input type="submit" value="Upload this document" class="btn primary">
+    </div>
+}

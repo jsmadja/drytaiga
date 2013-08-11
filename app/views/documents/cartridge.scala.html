@@ -1,0 +1,29 @@
+@(form: Form[Document], documentable: Documentable)
+
+<h2>
+    Documents
+    <button id="newDocument" style="float: right;">New Document</button>
+</h2>
+
+@dialog("newDocument", "Add Document") {
+    @documents.create(form, documentable.getId())
+}
+
+@table("documents") {
+    <thead>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Size</th>
+    </thead>
+    <tbody>
+    @if(documentable.getDocuments() != null) {
+        @for(document <- documentable.getDocuments()) {
+            <tr>
+                <td><a href="@document.url">@document.name</a></td>
+                <td>@document.contentType</td>
+                <td>@document.size</td>
+            </tr>
+        }
+    }
+    </tbody>
+}

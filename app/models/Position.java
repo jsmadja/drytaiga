@@ -8,16 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Position extends Model {
+public class Position extends Model implements Documentable {
 
     @Id
-    public Long id;
+    private Long id;
 
     @Constraints.Required
     public String name;
 
     @ManyToMany(mappedBy = "positions", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
     public List<Candidate> candidates = new ArrayList<Candidate>();
+
+    @OneToMany(mappedBy = "position", cascade = CascadeType.ALL)
+    private List<Document> documents = new ArrayList<Document>();
 
     @ManyToOne
     public Company company;
@@ -31,6 +34,22 @@ public class Position extends Model {
     public void addCandidate(Candidate candidate) {
         this.candidates.add(candidate);
         candidate.addPosition(this);
+    }
+
+    @Override
+    public void addDocument(Document document) {
+        document.attachTo(this);
+        this.documents.add(document);
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public List<Document> getDocuments() {
+        return documents;
     }
 }
 

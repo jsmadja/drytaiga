@@ -1,6 +1,7 @@
 package models;
 
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import play.db.ebean.Model;
 import plugins.S3Plugin;
@@ -26,12 +27,16 @@ public class S3File extends Model {
     @Transient
     public File file;
 
-    public URL getUrl() throws MalformedURLException {
-        return new URL("https://s3.amazonaws.com/" + bucket + "/" + getActualFileName());
+    public URL getUrl() {
+        try {
+            return new URL("https://s3.amazonaws.com/" + bucket + "/" + getActualFileName());
+        } catch (MalformedURLException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     private String getActualFileName() {
-        return id + "/" + name;
+        return name;
     }
 
     @Override
@@ -51,4 +56,7 @@ public class S3File extends Model {
         super.delete();
     }
 
+    public ObjectMetadata getObjectMetadata() {
+        return S3Plugin.amazonS3.getObject(bucket, getActualFileName()).getObjectMetadata();
+    }
 }

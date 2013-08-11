@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Candidate extends Model {
+public class Candidate extends Model implements Documentable {
 
     @Id
     public Long id;
@@ -27,7 +27,7 @@ public class Candidate extends Model {
     @ManyToMany
     public List<Position> positions = new ArrayList<Position>();
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
     private List<Document> documents = new ArrayList<Document>();
 
     public Candidate(String firstname, String lastname, String email) {
@@ -50,6 +50,16 @@ public class Candidate extends Model {
 
     public void addDocument(Document document) {
         documents.add(document);
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public List<Document> getDocuments() {
+        return documents;
     }
 
     public void addPosition(Position position) {
