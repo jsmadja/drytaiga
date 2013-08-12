@@ -55,8 +55,8 @@ public class Company extends Model {
         return isMember(company.id, user);
     }
 
-    public long getUsedSpace() {
-        long usedSpace = 0;
+    public double getUsedSpace() {
+        double usedSpace = 0;
         List<Documentable> documentables = new ArrayList<Documentable>();
         documentables.addAll(positions);
         for (Documentable documentable : documentables) {
@@ -65,7 +65,7 @@ public class Company extends Model {
                 usedSpace += document.size;
             }
         }
-        return usedSpace / (1024 * 1024);
+        return Math.round(usedSpace / (1024 * 1024));
     }
 
     public long getTotalSpace() {
