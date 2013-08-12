@@ -8,3 +8,5 @@ Stuff
 =====
 heroku config:get SENDGRID_PASSWORD
 ----
+
+heroku config:set JAVA_OPTS='-Xmx384m -Xss512k -XX:+UseCompressedOops -javaagent:target/staged/newrelic-agent-2.21.0.jar -Dnewrelic.bootstrap_classpath=true -Dnewrelic.sync_startup=false ' NEW_RELIC_APP_NAME="app17222387@heroku.com"
