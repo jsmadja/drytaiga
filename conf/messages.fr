@@ -1,1 +1,5 @@
 common.Cancel=Annuler
+
+positions.form.name.alreadyexist=Une fiche de poste avec le nom {0} existe déjà
+
+error.required=Champ requis

@@ -55,6 +55,34 @@ public class Company extends Model {
         return isMember(company.id, user);
     }
 
+    public long getUsedSpace() {
+        long usedSpace = 0;
+        List<Documentable> documentables = new ArrayList<Documentable>();
+        documentables.addAll(positions);
+        for (Documentable documentable : documentables) {
+            List<Document> documents = documentable.getDocuments();
+            for (Document document : documents) {
+                usedSpace += document.size;
+            }
+        }
+        return usedSpace / (1024 * 1024);
+    }
+
+    public long getTotalSpace() {
+        return 100;
+    }
+
+    public int getNumDocuments() {
+        int numDocuments = 0;
+        List<Documentable> documentables = new ArrayList<Documentable>();
+        documentables.addAll(positions);
+        for (Documentable documentable : documentables) {
+            List<Document> documents = documentable.getDocuments();
+            numDocuments += documents.size();
+        }
+        return numDocuments;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -75,4 +103,12 @@ public class Company extends Model {
         return result;
     }
 
+    public boolean containsPositionWithName(String positionName) {
+        for (Position position : positions) {
+            if(position.hasName(positionName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -1,6 +1,6 @@
 package controllers;
 
-import models.User;
+import models.Position;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
@@ -8,19 +8,15 @@ import play.api.mvc.Call;
 import play.data.Form;
 import play.data.validation.ValidationError;
 import play.i18n.Messages;
-import play.mvc.Controller;
 import play.mvc.Result;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static models.User.currentUser;
+import static com.google.common.collect.Lists.newArrayList;
 
-public abstract class AjaxController extends Controller {
-
-    protected static User user() {
-        return currentUser(request());
-    }
+public abstract class AjaxController extends SecuredController {
 
     protected static Status badRequest(Form<?> form) {
         return badRequest(toJson(form));
@@ -42,6 +38,15 @@ public abstract class AjaxController extends Controller {
             }
         }
         return json;
+    }
+
+    protected static void addError(Form<Position> form, String fieldName, String messageKey, Object ... arguments) {
+        List<ValidationError> errors = form.errors().get(fieldName);
+        if (errors == null) {
+            errors = new ArrayList<ValidationError>();
+            form.errors().put(fieldName, errors);
+        }
+        errors.add(new ValidationError(fieldName, messageKey, newArrayList(arguments)));
     }
 
 }

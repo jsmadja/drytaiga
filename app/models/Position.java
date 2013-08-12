@@ -51,5 +51,9 @@ public class Position extends Model implements Documentable {
     public List<Document> getDocuments() {
         return documents;
     }
+
+    public boolean hasName(String positionName) {
+        return name.equals(positionName);
+    }
 }
 

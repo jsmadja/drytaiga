@@ -1,1 +1,3 @@
 common.Cancel=Cancel
+
+positions.form.name.alreadyexist=Position with name {0} already exist

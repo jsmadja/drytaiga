@@ -29,8 +29,29 @@ public class Positions extends AjaxController {
         return ok(read.render(position, user(), positionForm(position), documentForm()));
     }
 
+    public static Result save() {
+        Form<Position> form = positionForm().bindFromRequest();
+        if (form.value().isDefined()) {
+            checkNameUnicity(form, form.get());
+        }
+        if (form.hasErrors()) {
+            return badRequest(form);
+        }
+        Position position = form.get();
+        Company company = company();
+        company.addPosition(position);
+        company.update();
+        return ok(Positions.read(position.getId()));
+    }
+
     public static Result update(Long id) {
         Form<Position> form = positionForm().bindFromRequest();
+        if (form.value().isDefined()) {
+            boolean nameHasChanged = !Position.find.byId(id).hasName(form.get().name);
+            if(nameHasChanged) {
+                checkNameUnicity(form, form.get());
+            }
+        }
         if (form.hasErrors()) {
             return badRequest(form);
         }
@@ -40,16 +61,10 @@ public class Positions extends AjaxController {
         return ok(Positions.read(id));
     }
 
-    public static Result save() {
-        Form<Position> form = positionForm().bindFromRequest();
-        if (form.hasErrors()) {
-            return badRequest(form);
+    private static void checkNameUnicity(Form<Position> form, Position position) {
+        if (company().containsPositionWithName(position.name)) {
+            addError(form, "name", "positions.form.name.alreadyexist", position.name);
         }
-        Company company = user().company;
-        Position position = form.get();
-        company.addPosition(position);
-        company.update();
-        return ok(Positions.read(position.getId()));
     }
 
     private static Form<Position> positionForm() {
