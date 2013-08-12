@@ -1,95 +1,73 @@
 package controllers;
 
 import com.avaje.ebean.Ebean;
-import models.*;
+import models.Company;
+import models.Document;
+import models.Position;
+import models.User;
 import play.data.Form;
 import play.mvc.Controller;
-import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
+import views.html.positions.create;
 import views.html.positions.index;
+import views.html.positions.read;
 
+import static controllers.routes.Positions;
+import static models.User.currentUser;
 import static play.data.Form.form;
 
 @Security.Authenticated(Secured.class)
 public class Positions extends Controller {
 
-    public static Result GO_POSITIONS = redirect(
-            routes.Positions.list()
-    );
-
     public static Result list() {
-        User user = User.currentUser(request());
-        return ok(index.render(user, form(Position.class)));
+        return ok(index.render(user(), form(Position.class)));
     }
 
-    public static Result edit(Long id) {
-        Form<Position> form = form(Position.class).fill(
-                Position.find.byId(id)
-        );
-        return ok(
-                views.html.positions.update.render(id, form, User.currentUser(request()))
-        );
+    public static Result create() {
+        return ok(create.render(form(Position.class), user()));
     }
 
     public static Result read(Long id) {
-        return ok(
-                views.html.positions.read.render(Position.find.byId(id), User.currentUser(request()), form(Document.class))
-        );
+        Position position = Position.find.byId(id);
+        return ok(read.render(position, user(), positionForm(position), documentForm()));
     }
 
     public static Result update(Long id) {
+        Position position = Position.find.byId(id);
         Form<Position> form = form(Position.class).bindFromRequest();
         if (form.hasErrors()) {
-            return badRequest(views.html.positions.update.render(id, form, User.currentUser(request())));
+            return badRequest(read.render(position, user(), positionForm(position), documentForm()));
         }
-        form.get().update(id);
-        flash("success", "Position " + form.get().name + " has been updated");
-        return GO_POSITIONS;
-    }
-
-
-    public static Result create() {
-        return ok(views.html.positions.create.render(form(Position.class), User.currentUser(request())));
+        position.name = form.data().get("name");
+        position.update();
+        return redirect(Positions.read(id));
     }
 
     public static Result save() {
         Form<Position> form = form(Position.class).bindFromRequest();
         if (form.hasErrors()) {
-            return badRequest(views.html.positions.create.render(form, User.currentUser(request())));
+            return badRequest(create.render(form, user()));
         }
-        Company company = User.currentUser(request()).company;
+        Company company = user().company;
         company.addPosition(form.get());
         Ebean.update(company);
-
-        flash("success", "Position " + form.get().name + " has been created");
-        return GO_POSITIONS;
+        return redirect(Positions.list());
     }
 
-    public static Result delete(Long idPosition) {
-        Position position = Position.find.ref(idPosition);
-        if (Secured.isMemberOf(position.company)) {
-            position.delete();
-            return GO_POSITIONS;
-        } else {
-            return forbidden();
-        }
+    /**
+     * forms
+     */
+    private static Form<Position> positionForm(Position position) {
+        return form(Position.class).fill(position);
     }
 
-    public static Result upload(Long idPosition) {
-        Http.Request request = request();
-        Http.RequestBody body = request.body();
-        Http.MultipartFormData formData = body.asMultipartFormData();
-        Http.MultipartFormData.FilePart picture = formData.getFile("file");
-        if (picture != null) {
-            S3File s3File = new S3File();
-            s3File.file = picture.getFile();
-            s3File.name = picture.getFilename();
-            s3File.save();
-        } else {
-            flash("error", "Missing file");
-        }
-        return redirect(routes.Positions.edit(idPosition));
+    private static Form<Document> documentForm() {
+        return form(Document.class);
+    }
+
+    private static User user() {
+        return currentUser(request());
     }
 
 }

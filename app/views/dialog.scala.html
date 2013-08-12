@@ -1,8 +1,11 @@
-@(opener: String, title: String)(body: Html)
+@(opener: String, title: String, width: Integer = 640, height: Integer = 480)(body: Html)
 <script>
     $(function() {
         $("#dialog_@opener").dialog({
-            autoOpen: false
+            modal: true,
+            autoOpen: false,
+            width: @width,
+            height: @height
         });
         $("#@opener").click(function() {
             $("#dialog_@opener").dialog("open");

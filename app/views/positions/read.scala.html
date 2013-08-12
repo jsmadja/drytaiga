@@ -1,8 +1,12 @@
-@(position: Position, user: User, documentForm: Form[Document])
+@(position: Position, user: User, positionForm: Form[Position], documentForm: Form[Document])
 
 @main(user) {
 
     <h1>@position.name</h1>
+    <button id="updateCharacteristics" style="float: right;">Update</button>
+    @dialog("updateCharacteristics", "Characteristics") {
+        @positions.update(position.getId, positionForm, user, "updateCharacteristics")
+    }
 
     <h2>Candidates</h2>
     @table("candidates") {

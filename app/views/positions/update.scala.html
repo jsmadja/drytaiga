@@ -1,32 +1,28 @@
-@(id: Long, positionForm: Form[Position], user: User)
-
+@(id: Long, positionForm: Form[Position], user: User, dialog: String)
 @import helper._
-@main(user) {
 
-    <h1>Edit Position</h1>
+<form id="myform" action="@routes.Positions.update(id)" method="POST" onsubmit="submitForm();return false;">
+    <fieldset>
+        @inputText(positionForm("name"), '_label -> "Position name")
+    </fieldset>
+    <div class="actions">
+        <input type="submit" value="Save this position" class="btn primary"> or
+        <a href="@routes.Positions.read(id)" class="btn">Cancel</a>
+    </div>
+</form>
+<script type="text/javascript">
+    function submitForm() {
+        $.ajax({
+            url:  $("#myform").attr("action"),
+            type: $("#myform").attr("method"),
+            data: $("#myform").serialize(),
+            error: function() {
 
-    @form(routes.Positions.update(id)) {
+            },
+            success : function (data) {
+                window.location.replace('@routes.Positions.read(id)');
+            }
 
-        <fieldset>
-            @inputText(positionForm("name"), '_label -> "Position name")
-        </fieldset>
-
-        <div class="actions">
-            <input type="submit" value="Save this position" class="btn primary"> or
-            <a href="@routes.Positions.list()" class="btn">Cancel</a>
-        </div>
-
+        });
     }
-
-    @form(routes.Positions.upload(id), 'enctype -> "multipart/form-data") {
-        <input type="file" name="file">
-        <p>
-            <input type="submit">
-        </p>
-    }
-
-    @form(routes.Positions.delete(id), 'class -> "topRight") {
-        <input type="submit" value="Delete this position" class="btn danger">
-    }
-
-}
+</script>
