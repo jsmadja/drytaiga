@@ -3,23 +3,15 @@
     <h1>Positions</h1>
     <button id="newPosition" style="float: right;">New Position</button>
     @dialog("newPosition", "New position") {
-        @positions.create(positionForm, user)
+        @positions.create(positionForm)
     }
 
-    @table("positions") {
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-            </tr>
-        </thead>
-        <tbody>
+    @table("positions", headers = Seq("Id", "Name")) {
         @for(position <- user.company.positions) {
             <tr>
                 <td>@position.getId</td>
                 <td><a href="/positions/@position.getId">@position.name</a></td>
             </tr>
         }
-        </tbody>
     }
 }

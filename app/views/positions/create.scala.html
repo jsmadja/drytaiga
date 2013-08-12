@@ -1,10 +1,10 @@
-@(positionForm: Form[Position], user: User)
+@(positionForm: Form[Position])
 @import helper._
 @import play.i18n._
-<h1>Add a position</h1>
-@form(routes.Positions.save()) {
+<h1>Create Position</h1>
+@ajaxform(id = "createPosition", action = routes.Positions.save()) {
     <fieldset>
-    @inputText(positionForm("name"), '_label -> "Position name")
+        @inputText(positionForm("name"), '_label -> "Position name")
     </fieldset>
     <div class="actions">
         <input type="submit" value="Create this position" class="btn primary"> or

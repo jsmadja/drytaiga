@@ -1,28 +1,11 @@
-@(id: Long, positionForm: Form[Position], user: User, dialog: String)
+@(position: Position, positionForm: Form[Position])
 @import helper._
-
-<form id="myform" action="@routes.Positions.update(id)" method="POST" onsubmit="submitForm();return false;">
+@ajaxform(id = "updatePosition", action = routes.Positions.update(position.getId)) {
     <fieldset>
         @inputText(positionForm("name"), '_label -> "Position name")
     </fieldset>
     <div class="actions">
         <input type="submit" value="Save this position" class="btn primary"> or
-        <a href="@routes.Positions.read(id)" class="btn">Cancel</a>
+        <a href="@routes.Positions.read(position.getId)" class="btn">Cancel</a>
     </div>
-</form>
-<script type="text/javascript">
-    function submitForm() {
-        $.ajax({
-            url:  $("#myform").attr("action"),
-            type: $("#myform").attr("method"),
-            data: $("#myform").serialize(),
-            error: function() {
-
-            },
-            success : function (data) {
-                window.location.replace('@routes.Positions.read(id)');
-            }
-
-        });
-    }
-</script>
+}

@@ -5,21 +5,16 @@
     <h1>@position.name</h1>
     <button id="updateCharacteristics" style="float: right;">Update</button>
     @dialog("updateCharacteristics", "Characteristics") {
-        @positions.update(position.getId, positionForm, user, "updateCharacteristics")
+        @positions.update(position, positionForm)
     }
 
     <h2>Candidates</h2>
-    @table("candidates") {
-        <thead>
-            <th>Name</th>
-        </thead>
-        <tbody>
-            @for(candidate <- position.candidates) {
-            <tr>
-                <td>@candidate.lastname, @candidate.firstname</td>
-            </tr>
-            }
-        </tbody>
+    @table(id = "candidates", headers = Seq("Name")) {
+        @for(candidate <- position.candidates) {
+        <tr>
+            <td>@candidate.lastname, @candidate.firstname</td>
+        </tr>
+        }
     }
 
     @documents.cartridge(documentForm, position)

@@ -9,13 +9,7 @@
     @documents.create(form, documentable.getId())
 }
 
-@table("documents") {
-    <thead>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Size</th>
-    </thead>
-    <tbody>
+@table("documents", headers = Seq("Name", "Type", "Size")) {
     @if(documentable.getDocuments() != null) {
         @for(document <- documentable.getDocuments()) {
             <tr>
@@ -25,5 +19,4 @@
             </tr>
         }
     }
-    </tbody>
 }

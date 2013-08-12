@@ -34,10 +34,10 @@ public class StoragePlugin extends Plugin {
 
     private static Document storeInFileSystem(File file, String path, String contentType) {
         try {
-            Files.createParentDirs(file);
             Form<Document> form = form(Document.class).bindFromRequest();
             String name = form.data().get("name");
             String absolutePath = "/tmp/" + path;
+            Files.createParentDirs(new File(absolutePath));
             String url = "file://" + absolutePath;
             long contentLength = file.length();
             Files.copy(file, new File(absolutePath));
