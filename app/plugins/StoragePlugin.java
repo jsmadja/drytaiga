@@ -56,9 +56,7 @@ public class StoragePlugin extends Plugin {
     }
 
     private static S3File createS3File(File file, String path) {
-        S3File s3File = new S3File();
-        s3File.file = file;
-        s3File.name = path;
+        S3File s3File = new S3File(path, file);
         s3File.save();
         return s3File;
     }

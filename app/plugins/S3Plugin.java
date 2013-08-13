@@ -4,7 +4,6 @@ import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.Bucket;
 import play.Application;
 import play.Logger;
 import play.Plugin;
@@ -19,7 +18,7 @@ public class S3Plugin extends Plugin {
 
     public static AmazonS3 amazonS3;
 
-    public static String s3Bucket;
+    public static String bucket;
 
     public S3Plugin(Application application) {
         this.application = application;
@@ -29,13 +28,13 @@ public class S3Plugin extends Plugin {
     public void onStart() {
         String accessKey = application.configuration().getString(AWS_ACCESS_KEY);
         String secretKey = application.configuration().getString(AWS_SECRET_KEY);
-        s3Bucket = application.configuration().getString(AWS_S3_BUCKET);
+        bucket = application.configuration().getString(AWS_S3_BUCKET);
 
         if ((accessKey != null) && (secretKey != null)) {
             AWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
             amazonS3 = new AmazonS3Client(awsCredentials);
-            amazonS3.createBucket(s3Bucket);
-            Logger.info("Using S3 Bucket: " + s3Bucket);
+            amazonS3.createBucket(bucket);
+            Logger.info("Using S3 Bucket: " + bucket);
         }
     }
 

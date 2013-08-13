@@ -3,60 +3,45 @@ package models;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import play.db.ebean.Model;
 import plugins.S3Plugin;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Transient;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.UUID;
 
-@Entity
-public class S3File extends Model {
+import static plugins.S3Plugin.bucket;
 
-    @Id
-    public UUID id;
+public class S3File {
 
-    private String bucket;
+    private final String name;
+    private final File file;
 
-    public String name;
-
-    @Transient
-    public File file;
+    public S3File(String name, File file) {
+        this.name = name;
+        this.file = file;
+    }
 
     public URL getUrl() {
         try {
-            return new URL("https://s3.amazonaws.com/" + bucket + "/" + getActualFileName());
+            return new URL("https://s3.amazonaws.com/" + bucket + "/" + name);
         } catch (MalformedURLException e) {
             throw new IllegalStateException(e);
         }
     }
 
-    private String getActualFileName() {
-        return name;
-    }
-
-    @Override
     public void save() {
         if(S3Plugin.isEnabled()) {
-            this.bucket = S3Plugin.s3Bucket;
-            super.save();
-            PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, getActualFileName(), file);
+            PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, name, file);
             putObjectRequest.withCannedAcl(CannedAccessControlList.PublicRead);
             S3Plugin.amazonS3.putObject(putObjectRequest);
         }
     }
 
-    @Override
     public void delete() {
-        S3Plugin.amazonS3.deleteObject(bucket, getActualFileName());
-        super.delete();
+        S3Plugin.amazonS3.deleteObject(bucket, name);
     }
 
     public ObjectMetadata getObjectMetadata() {
-        return S3Plugin.amazonS3.getObject(bucket, getActualFileName()).getObjectMetadata();
+        return S3Plugin.amazonS3.getObject(bucket, name).getObjectMetadata();
     }
 }

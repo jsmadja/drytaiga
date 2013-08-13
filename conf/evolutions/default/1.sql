@@ -35,13 +35,6 @@ create table position (
   constraint pk_position primary key (id))
 ;
 
-create table s3file (
-  id                        varchar(40) not null,
-  bucket                    varchar(255),
-  name                      varchar(255),
-  constraint pk_s3file primary key (id))
-;
-
 create table account (
   id                        bigint auto_increment not null,
   email                     varchar(255),
@@ -86,8 +79,6 @@ drop table company;
 drop table document;
 
 drop table position;
-
-drop table s3file;
 
 drop table account;
 
