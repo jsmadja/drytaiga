@@ -1,4 +1,5 @@
 @(user: User)(body: Html)
+@import play.i18n._
 <html lang="en">
     @Html(com.newrelic.api.agent.NewRelic.getBrowserTimingHeader())
     <head>
@@ -31,20 +32,12 @@
             <a class="navbar-brand" href="/">Dry Taiga</a>
             <div class="nav-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="/positions">Positions</a></li>
-                    <li><a href="/candidates">Candidates</a></li>
+                    <li class="active"><a href="/positions">@Messages.get("positions.index.title")</a></li>
+                    <li><a href="#">@Messages.get("candidates.index.title")</a></li>
+                    <li><a href="#">@user.lastname @user.firstname</a></li>
+                    <li><a href="#">@user.company.name</a></li>
+                    <li><a href="/logout">@Messages.get("common.Logout")</a></li>
                 </ul>
-
-                @if(user != null) {
-                    <li class="active" style="color: white;">@user.firstname @user.company.name</li>
-                    <li><a href="/logout">logout</a></li>
-                } else {
-                    <form class="navbar-form form-inline pull-right">
-                        <input type="text" placeholder="Email">
-                        <input type="password" placeholder="Password">
-                        <button type="submit" class="btn">Sign in</button>
-                    </form>
-                }
             </div>
         </div>
     </div>

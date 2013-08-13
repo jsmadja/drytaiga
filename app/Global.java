@@ -13,8 +13,8 @@ public class Global extends GlobalSettings {
     static class InitialData {
         public static void insert(Application app) {
             if(Ebean.find(User.class).findRowCount() == 0) {
-                Company company = Company.create("xebia");
-                User user = new User("Julien", "Smadja", "jsmadja@xebia.fr", "password");
+                Company company = Company.create("My Company");
+                User user = new User("John", "Doe", "jdoe@mycompany.com", "password");
                 company.addMember(user);
                 Ebean.update(company);
             }

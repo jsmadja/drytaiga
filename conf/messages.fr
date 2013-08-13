@@ -1,5 +1,13 @@
 common.Cancel=Annuler
+common.Submit=Valider
+common.Logout=Se déconnecter
 
+positions.index.title=Postes
+positions.index.table.header.name=Libellé
+positions.button.newposition=Nouveau poste
 positions.form.name.alreadyexist=Une fiche de poste avec le nom {0} existe déjà
+positions.form.label.name=Libellé
+
+candidates.index.title=Candidats
 
 error.required=Champ requis

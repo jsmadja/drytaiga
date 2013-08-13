@@ -1,13 +1,12 @@
 @(positionForm: Form[Position])
 @import helper._
 @import play.i18n._
-<h1>Create Position</h1>
 @ajaxform(id = "createPosition", action = routes.Positions.save()) {
     <fieldset>
-        @inputText(positionForm("name"), '_label -> "Position name")
+        @inputText(positionForm("name"), '_label -> Messages.get("positions.form.label.name"))
     </fieldset>
     <div class="actions">
-        <input type="submit" value="Create this position" class="btn primary"> or
-        <a href="@routes.Positions.list()" class="btn">@Messages.get("common.Cancel")</a>
+        <input type="submit" value="@Messages.get("common.Submit")" class="btn btn-success">
+        <a href="@routes.Positions.list()" class="btn btn-danger">@Messages.get("common.Cancel")</a>
     </div>
 }

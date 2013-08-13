@@ -1,15 +1,19 @@
 @(user: User, positionForm: Form[Position])
+@import play.i18n._
+
 @main(user) {
-    <h1>Positions</h1>
-    <button id="newPosition" style="float: right;">New Position</button>
-    @dialog("newPosition", "New position") {
+    <h1>
+        @Messages.get("positions.index.title")
+
+        <button id="newPosition" style="float: right;">@Messages.get("positions.button.newposition")</button>
+    </h1>
+    @dialog("newPosition", Messages.get("positions.button.newposition"), height = 220) {
         @positions.create(positionForm)
     }
 
-    @table("positions", headers = Seq("Id", "Name")) {
+    @table("positions", headers = Seq(Messages.get("positions.index.table.header.name"))) {
         @for(position <- user.company.positions) {
             <tr>
-                <td>@position.getId</td>
                 <td><a href="/positions/@position.getId">@position.name</a></td>
             </tr>
         }
