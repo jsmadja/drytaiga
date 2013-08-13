@@ -6,7 +6,7 @@
     }
 </style>
 
-<form id="myform" action="@action" method="POST" onsubmit="submitForm();return false;">
+<form id="form_@id" action="@action" method="POST" onsubmit="submitForm();return false;">
     @body
 </form>
 <script type="text/javascript">
@@ -27,9 +27,9 @@
 
     function submitForm() {
         $.ajax({
-            url:  $("#myform").attr("action"),
-            type: $("#myform").attr("method"),
-            data: $("#myform").serialize(),
+            url:  $("#form_@id").attr("action"),
+            type: $("#form_@id").attr("method"),
+            data: $("#form_@id").serialize(),
             error: function(data) {
                 var json = window.JSON.parse(data.responseText);
                 json.forEach(function (field) {
