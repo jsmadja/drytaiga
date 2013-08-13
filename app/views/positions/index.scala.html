@@ -7,11 +7,11 @@
 
         <button id="newPosition" style="float: right;">@Messages.get("positions.button.newposition")</button>
     </h1>
-    @dialog("newPosition", Messages.get("positions.button.newposition"), height = 220) {
+    @components.dialog("newPosition", Messages.get("positions.button.newposition"), height = 220) {
         @positions.create(positionForm)
     }
 
-    @table("positions", headers = Seq(Messages.get("positions.index.table.header.name"))) {
+    @components.table("positions", headers = Seq(Messages.get("positions.index.table.header.name"))) {
         @for(position <- user.company.positions) {
             <tr>
                 <td><a href="/positions/@position.getId">@position.name</a></td>

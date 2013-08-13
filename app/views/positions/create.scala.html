@@ -1,9 +1,10 @@
 @(positionForm: Form[Position])
 @import helper._
 @import play.i18n._
-@ajaxform(id = "createPosition", action = routes.Positions.save()) {
+@import helper.twitterBootstrap._
+@components.ajaxform(id = "createPosition", action = routes.Positions.save()) {
     <fieldset>
-        @inputText(positionForm("name"), '_label -> Messages.get("positions.form.label.name"))
+        @inputText(positionForm("name"), '_label -> Messages.get("positions.form.label.name"), 'size -> 30, '_help -> "")
     </fieldset>
     <div class="actions">
         <input type="submit" value="@Messages.get("common.Submit")" class="btn btn-success">

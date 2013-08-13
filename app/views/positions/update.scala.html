@@ -1,6 +1,6 @@
 @(position: Position, positionForm: Form[Position])
 @import helper._
-@ajaxform(id = "updatePosition", action = routes.Positions.update(position.getId)) {
+@components.ajaxform(id = "updatePosition", action = routes.Positions.update(position.getId)) {
     <fieldset>
         @inputText(positionForm("name"), '_label -> "Position name")
     </fieldset>
