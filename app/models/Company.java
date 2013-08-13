@@ -1,5 +1,7 @@
 package models;
 
+import misc.FileSize;
+import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 import javax.persistence.CascadeType;
@@ -15,6 +17,7 @@ public class Company extends Model {
     @Id
     public Long id;
 
+    @Constraints.Required
     public String name;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
@@ -55,8 +58,8 @@ public class Company extends Model {
         return isMember(company.id, user);
     }
 
-    public double getUsedSpace() {
-        double usedSpace = 0;
+    public String getUsedSpace() {
+        long usedSpace = 0;
         List<Documentable> documentables = new ArrayList<Documentable>();
         documentables.addAll(positions);
         for (Documentable documentable : documentables) {
@@ -65,7 +68,7 @@ public class Company extends Model {
                 usedSpace += document.size;
             }
         }
-        return Math.round(usedSpace / (1024 * 1024));
+        return new FileSize(usedSpace).toString();
     }
 
     public long getTotalSpace() {
@@ -110,5 +113,9 @@ public class Company extends Model {
             }
         }
         return false;
+    }
+
+    public boolean contains(Position position) {
+        return positions.contains(position);
     }
 }

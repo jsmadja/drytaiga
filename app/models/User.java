@@ -59,5 +59,8 @@ public class User extends Model {
         return User.findByEmail(request.username());
     }
 
+    public boolean canAccessTo(Position position) {
+        return company.contains(position);
+    }
 }
 

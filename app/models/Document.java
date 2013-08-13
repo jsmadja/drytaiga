@@ -1,5 +1,6 @@
 package models;
 
+import misc.FileSize;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
@@ -40,6 +41,10 @@ public class Document extends Model {
 
     public void attachTo(Position position) {
         this.position = position;
+    }
+
+    public String sizeToString() {
+        return new FileSize(size).toString();
     }
 }
 

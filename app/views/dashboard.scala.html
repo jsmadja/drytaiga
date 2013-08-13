@@ -4,6 +4,6 @@
     <table class="table table-bordered table-condensed table-striped" style="width: 40%">
         <tr><td><b>Positions</b></td><td>@user.company.positions.size()</td></tr>
         <tr><td><b>Files</b></td><td>@user.company.getNumDocuments()</td></tr>
-        <tr><td><b>Space</b></td><td>@user.company.getUsedSpace() / @user.company.getTotalSpace()</td></tr>
+        <tr><td><b>Space (Max: @user.company.getTotalSpace() Mo)</b></td><td>@user.company.getUsedSpace()</td></tr>
     </table>
 }

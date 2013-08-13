@@ -26,7 +26,10 @@ public class Positions extends AjaxController {
 
     public static Result read(Long id) {
         Position position = Position.find.byId(id);
-        return ok(read.render(position, user(), positionForm(position), documentForm()));
+        if(user().canAccessTo(position)) {
+            return ok(read.render(position, user(), positionForm(position), documentForm()));
+        }
+        return forbidden();
     }
 
     public static Result save() {
@@ -56,9 +59,12 @@ public class Positions extends AjaxController {
             return badRequest(form);
         }
         Position position = Position.find.byId(id);
-        position.name = form.data().get("name");
-        position.update();
-        return ok(Positions.read(id));
+        if(user().canAccessTo(position)) {
+            position.name = form.data().get("name");
+            position.update();
+            return ok(Positions.read(id));
+        }
+        return forbidden();
     }
 
     private static void checkNameUnicity(Form<Position> form, Position position) {
