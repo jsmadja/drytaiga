@@ -10,18 +10,25 @@
     @body
 </form>
 <script type="text/javascript">
-    function insertErrors (errors, fieldName, fieldId) {
-        var span = document.createElement ("span");
-        span.innerHTML = "<ul>";
-        errors.forEach(function (error) {
-            span.innerHTML = span.innerHTML + "<li>" + error + "</li>" ;
-        });
-        span.innerHTML = span.innerHTML + "</ul>" ;
-        var spanId = fieldName + "_error";
-        span.setAttribute("id", spanId) ;
-        if ($("#"+spanId) != null) {
-            $(fieldId).parent().children().remove("#"+spanId);
+    function createSpan ( errorBlock, fieldName, fieldId ) {
+        var span = document.createElement ( "span" ) ;
+        span.innerHTML = errorBlock ;
+        var spanId = fieldName + "_error" ;
+        span.setAttribute ( "id", spanId ) ;
+        span.setAttribute ( "style", "display: inline-block;" ) ;
+        if ( $ ( "#" + spanId ) != null ) {
+            $ ( fieldId ).parent ( ).children ( ).remove ( "#" + spanId ) ;
         }
+        return span ;
+    }
+
+    function insertErrors (errors, fieldName, fieldId) {
+        var errorBlock = "<ul style='list-style: none; padding-left: 0px;'>";
+        errors.forEach(function (error) {
+            errorBlock += "<li class='error'>" + error + "</li>" ;
+        });
+        errorBlock += "</ul>";
+        var span = createSpan ( errorBlock, fieldName, fieldId ) ;
         $(fieldId).parent().append(span);
     }
 
