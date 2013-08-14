@@ -5,6 +5,26 @@
 @components.ajaxform(id = "createPosition", action = routes.Positions.save()) {
     <fieldset>
         @inputText(positionForm("name"), '_label -> Messages.get("positions.form.label.name"), 'size -> 30)
+
+        @inputDate(positionForm("startDate"), '_label -> "Start Date")
+
+        @select(
+            positionForm("salary"),
+            options = options(Salaries.list),
+            '_default -> "--- Choose a salary ---",
+            '_label -> "Salary"
+        )
+
+        @inputRadioGroup(
+            positionForm("sex"),
+            options = options("M"->"Male","F"->"Female"),
+            '_label -> "Sex"
+        )
+
+        @checkbox(field = positionForm("sexist"))
+
+        @textarea(field = positionForm("comment"), args = 'rows -> 3, 'cols -> 50)
+
     </fieldset>
     <div class="actions">
         <input type="submit" value="@Messages.get("common.Submit")" class="btn btn-success">

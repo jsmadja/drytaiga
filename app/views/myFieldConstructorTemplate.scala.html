@@ -2,7 +2,7 @@
 <div class="@if(elements.hasErrors) {error}">
     <label for="@elements.id">
         @elements.label
-        @if(elements.field.constraints.get(0)._1.equalsIgnoreCase("constraint.required")) {
+        @if(!elements.field.constraints.isEmpty && elements.field.constraints.get(0)._1.equalsIgnoreCase("constraint.required")) {
             <span style="color:red;"> *</span>
         }
     </label>
