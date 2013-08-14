@@ -4,10 +4,7 @@ import misc.FileSize;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,22 +18,20 @@ public class Company extends Model {
     public String name;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
-    public List<User> members = new ArrayList<User>();
+    public List<Member> members = new ArrayList<Member>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
     public List<Position> positions = new ArrayList<Position>();
 
-    private Company(String name) {
+    @OneToOne
+    private Account account;
+
+    public Company(String name, Account account) {
         this.name = name;
+        this.account = account;
     }
 
-    public static Company create(String name) {
-        Company company = new Company(name);
-        company.save();
-        return company;
-    }
-
-    public void addMember(User user) {
+    public void addMember(Member user) {
         user.company = this;
         members.add(user);
     }

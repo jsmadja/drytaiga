@@ -12,11 +12,19 @@ public class Global extends GlobalSettings {
 
     static class InitialData {
         public static void insert(Application app) {
-            if(Ebean.find(User.class).findRowCount() == 0) {
-                Company company = Company.create("My Company");
-                User user = new User("John", "Doe", "jdoe@mycompany.com", "password");
+            if(Ebean.find(Account.class).findRowCount() == 0) {
+                Account account = new Account(AccountType.EstablishedCompany);
+                Ebean.save(account);
+
+                Member user = new Member("John", "Doe", "jdoe@mycompany.com", "password");
+                Ebean.save(user);
+
+                account.setOwner(user);
+                Ebean.update(account);
+
+                Company company = new Company("My Company", account);
                 company.addMember(user);
-                Ebean.update(company);
+                Ebean.save(company);
             }
         }
     }

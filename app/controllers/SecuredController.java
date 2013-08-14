@@ -1,10 +1,10 @@
 package controllers;
 
 import models.Company;
-import models.User;
+import models.Member;
 import play.mvc.Controller;
 
-import static models.User.currentUser;
+import static models.Member.currentUser;
 
 public class SecuredController extends Controller {
 
@@ -12,7 +12,7 @@ public class SecuredController extends Controller {
         return user().company;
     }
 
-    protected static User user() {
+    protected static Member user() {
         return currentUser(request());
     }
 }

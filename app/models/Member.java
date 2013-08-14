@@ -11,8 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "account")
-public class User extends Model {
+@Table(name = "member")
+public class Member extends Model {
 
     @Id
     public Long id;
@@ -33,30 +33,30 @@ public class User extends Model {
     @ManyToOne
     public Company company;
 
-    public static Model.Finder<String,User> find = new Model.Finder(String.class, User.class);
+    public static Model.Finder<String,Member> find = new Model.Finder(String.class, Member.class);
 
-    public User(String firstname, String lastname, String email, String password) {
+    public Member(String firstname, String lastname, String email, String password) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.password = password;
     }
 
-    public static User authenticate(String email, String password) {
+    public static Member authenticate(String email, String password) {
         return find.where()
                 .eq("email", email)
                 .eq("password", password)
                 .findUnique();
     }
 
-    public static User findByEmail(String email) {
+    public static Member findByEmail(String email) {
         return find.where()
                 .eq("email", email)
                 .findUnique();
     }
 
-    public static User currentUser(Http.Request request) {
-        return User.findByEmail(request.username());
+    public static Member currentUser(Http.Request request) {
+        return Member.findByEmail(request.username());
     }
 
     public boolean canAccessTo(Position position) {
