@@ -9,7 +9,7 @@ import static models.Member.currentUser;
 public class SecuredController extends Controller {
 
     protected static Company company() {
-        return user().company;
+        return user().getCompany();
     }
 
     protected static Member user() {

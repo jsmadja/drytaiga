@@ -5,33 +5,33 @@ import play.data.validation.Constraints;
 import play.db.ebean.Model;
 import play.mvc.Http;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "member")
 public class Member extends Model {
 
     @Id
-    public Long id;
+    private Long id;
 
     @Constraints.Required
     @Formats.NonEmpty
-    public String email;
+    private String email;
 
     @Constraints.Required
-    public String firstname;
+    private String firstname;
 
     @Constraints.Required
-    public String lastname;
+    private String lastname;
 
     @Constraints.Required
-    public String password;
+    private String password;
 
     @ManyToOne
-    public Company company;
+    private Company company;
+
+    @OneToOne
+    private Account account;
 
     public static Model.Finder<String,Member> find = new Model.Finder(String.class, Member.class);
 
@@ -62,5 +62,22 @@ public class Member extends Model {
     public boolean canAccessTo(Position position) {
         return company.contains(position);
     }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
 }
 

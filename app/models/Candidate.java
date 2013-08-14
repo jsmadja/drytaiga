@@ -12,23 +12,26 @@ import java.util.List;
 public class Candidate extends Model implements Documentable {
 
     @Id
-    public Long id;
+    private Long id;
 
     @Constraints.Required
-    public String firstname;
+    private String firstname;
 
     @Constraints.Required
-    public String lastname;
+    private String lastname;
 
     @Constraints.Required
     @Formats.NonEmpty
-    public String email;
+    private String email;
 
     @ManyToMany
-    public List<Position> positions = new ArrayList<Position>();
+    private List<Position> positions = new ArrayList<Position>();
 
     @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
     private List<Document> documents = new ArrayList<Document>();
+
+    @OneToOne
+    private Account account;
 
     public Candidate(String firstname, String lastname, String email) {
         this.firstname = firstname;

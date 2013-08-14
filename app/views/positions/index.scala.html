@@ -12,9 +12,9 @@
     }
 
     @components.table("positions", headers = Seq(Messages.get("positions.index.table.header.name"))) {
-        @for(position <- user.company.positions) {
+        @for(position <- user.getCompany.getPositions) {
             <tr>
-                <td><a href="/positions/@position.getId">@position.name</a></td>
+                <td><a href="/positions/@position.getId">@position.getName</a></td>
             </tr>
         }
     }

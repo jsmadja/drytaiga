@@ -12,16 +12,16 @@ import java.util.List;
 public class Company extends Model {
 
     @Id
-    public Long id;
+    private Long id;
 
     @Constraints.Required
-    public String name;
+    private String name;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
-    public List<Member> members = new ArrayList<Member>();
+    private List<Member> members = new ArrayList<Member>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
-    public List<Position> positions = new ArrayList<Position>();
+    private List<Position> positions = new ArrayList<Position>();
 
     @OneToOne
     private Account account;
@@ -32,7 +32,7 @@ public class Company extends Model {
     }
 
     public void addMember(Member user) {
-        user.company = this;
+        user.setCompany(this);
         members.add(user);
     }
 
@@ -49,10 +49,6 @@ public class Company extends Model {
                 .findRowCount() > 0;
     }
 
-    public static boolean isMember(Company company, String user) {
-        return isMember(company.id, user);
-    }
-
     public String getUsedSpace() {
         long usedSpace = 0;
         List<Documentable> documentables = new ArrayList<Documentable>();
@@ -60,7 +56,7 @@ public class Company extends Model {
         for (Documentable documentable : documentables) {
             List<Document> documents = documentable.getDocuments();
             for (Document document : documents) {
-                usedSpace += document.size;
+                usedSpace += document.getSize();
             }
         }
         return new FileSize(usedSpace).toString();
@@ -112,5 +108,17 @@ public class Company extends Model {
 
     public boolean contains(Position position) {
         return positions.contains(position);
+    }
+
+    public List<Position> getPositions() {
+        return positions;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

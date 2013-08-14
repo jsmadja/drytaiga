@@ -7,30 +7,34 @@ import play.db.ebean.Model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Document extends Model {
 
     @Id
-    public Long id;
+    private Long id;
 
     @Constraints.Required
-    public String name;
+    private String name;
 
     @Constraints.Required
-    public String url;
+    private String url;
 
     @Constraints.Required
-    public Long size;
+    private Long size;
 
     @Constraints.Required
-    public String contentType;
+    private String contentType;
 
     @ManyToOne
     private Position position;
 
     @ManyToOne
     private Candidate candidate;
+
+    @OneToOne
+    private Account account;
 
     public Document(String name, String url, Long size, String contentType) {
         this.name = name;
@@ -41,10 +45,27 @@ public class Document extends Model {
 
     public void attachTo(Position position) {
         this.position = position;
+        this.account = position.getAccount();
     }
 
     public String sizeToString() {
         return new FileSize(size).toString();
+    }
+
+    public Long getSize() {
+        return size;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getName() {
+        return name;
     }
 }
 

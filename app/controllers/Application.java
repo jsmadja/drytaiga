@@ -1,7 +1,6 @@
 package controllers;
 
 import models.Member;
-import play.Routes;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -30,10 +29,9 @@ public class Application extends Controller {
         Form<LoginForm> loginForm = form(LoginForm.class).bindFromRequest();
         if (loginForm.hasErrors()) {
             return badRequest(views.html.login.render(loginForm));
-        } else {
-            session("email", loginForm.get().email);
-            return redirect(routes.Dashboard.index());
         }
+        session("email", loginForm.get().email);
+        return redirect(routes.Dashboard.index());
     }
 
     public static Result logout() {

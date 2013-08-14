@@ -14,16 +14,19 @@ public class Position extends Model implements Documentable {
     private Long id;
 
     @Constraints.Required
-    public String name;
+    private String name;
 
     @ManyToMany(mappedBy = "positions", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
-    public List<Candidate> candidates = new ArrayList<Candidate>();
+    private List<Candidate> candidates = new ArrayList<Candidate>();
 
     @OneToMany(mappedBy = "position", cascade = CascadeType.ALL)
     private List<Document> documents = new ArrayList<Document>();
 
     @ManyToOne
-    public Company company;
+    private Company company;
+
+    @OneToOne
+    private Account account;
 
     public static Model.Finder<Long,Position> find = new Model.Finder(Long.class, Position.class);
 
@@ -54,6 +57,26 @@ public class Position extends Model implements Documentable {
 
     public boolean hasName(String positionName) {
         return name.equals(positionName);
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Candidate> getCandidates() {
+        return candidates;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
 

@@ -50,7 +50,7 @@ public class Positions extends AjaxController {
     public static Result update(Long id) {
         Form<Position> form = positionForm().bindFromRequest();
         if (form.value().isDefined()) {
-            boolean nameHasChanged = !Position.find.byId(id).hasName(form.get().name);
+            boolean nameHasChanged = !Position.find.byId(id).hasName(form.get().getName());
             if(nameHasChanged) {
                 checkNameUnicity(form, form.get());
             }
@@ -60,7 +60,7 @@ public class Positions extends AjaxController {
         }
         Position position = Position.find.byId(id);
         if(user().canAccessTo(position)) {
-            position.name = form.data().get("name");
+            position.setName(form.data().get("name"));
             position.update();
             return ok(Positions.read(id));
         }
@@ -68,8 +68,8 @@ public class Positions extends AjaxController {
     }
 
     private static void checkNameUnicity(Form<Position> form, Position position) {
-        if (company().containsPositionWithName(position.name)) {
-            addError(form, "name", "positions.form.name.alreadyexist", position.name);
+        if (company().containsPositionWithName(position.getName())) {
+            addError(form, "name", "positions.form.name.alreadyexist", position.getName());
         }
     }
 

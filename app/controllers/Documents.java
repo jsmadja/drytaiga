@@ -31,7 +31,7 @@ public class Documents extends Controller {
     }
 
     private static String getPath(Position position) {
-        return format("companies/%d/positions/%d/%s", position.company.id, position.getId(), request().body().asMultipartFormData().getFile("file").getFilename());
+        return format("companies/%d/positions/%d/%s", position.getCompany().getId(), position.getId(), request().body().asMultipartFormData().getFile("file").getFilename());
     }
 
 }

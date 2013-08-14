@@ -6,15 +6,15 @@
 </h2>
 
 @components.dialog("newDocument", "Add Document") {
-    @documents.create(form, documentable.getId())
+    @documents.create(form, documentable.getId)
 }
 
 @components.table("documents", headers = Seq("Name", "Type", "Size")) {
-    @if(documentable.getDocuments() != null) {
-        @for(document <- documentable.getDocuments()) {
+    @if(documentable.getDocuments != null) {
+        @for(document <- documentable.getDocuments) {
             <tr>
-                <td><a href="@document.url">@document.name</a></td>
-                <td>@document.contentType</td>
+                <td><a href="@document.getUrl">@document.getName</a></td>
+                <td>@document.getContentType</td>
                 <td>@document.sizeToString</td>
             </tr>
         }

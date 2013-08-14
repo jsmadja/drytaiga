@@ -2,7 +2,7 @@
 
 @main(user) {
 
-    <h1>@position.name</h1>
+    <h1>@position.getName</h1>
     <button id="updateCharacteristics" style="float: right;">Update</button>
     @components.dialog("updateCharacteristics", "Characteristics") {
         @positions.update(position, positionForm)
@@ -10,9 +10,9 @@
 
     <h2>Candidates</h2>
     @components.table(id = "candidates", headers = Seq("Name")) {
-        @for(candidate <- position.candidates) {
+        @for(candidate <- position.getCandidates) {
         <tr>
-            <td>@candidate.lastname, @candidate.firstname</td>
+            <td>@candidate.getLastname, @candidate.getFirstname</td>
         </tr>
         }
     }

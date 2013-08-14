@@ -18,6 +18,7 @@ create table candidate (
   firstname                 varchar(255),
   lastname                  varchar(255),
   email                     varchar(255),
+  account_id                bigint,
   constraint pk_candidate primary key (id))
 ;
 
@@ -36,6 +37,7 @@ create table document (
   content_type              varchar(255),
   position_id               bigint,
   candidate_id              bigint,
+  account_id                bigint,
   constraint pk_document primary key (id))
 ;
 
@@ -46,6 +48,7 @@ create table member (
   lastname                  varchar(255),
   password                  varchar(255),
   company_id                bigint,
+  account_id                bigint,
   constraint pk_member primary key (id))
 ;
 
@@ -53,6 +56,7 @@ create table position (
   id                        bigint not null,
   name                      varchar(255),
   company_id                bigint,
+  account_id                bigint,
   constraint pk_position primary key (id))
 ;
 
@@ -76,16 +80,24 @@ create sequence position_seq;
 
 alter table account add constraint fk_account_owner_1 foreign key (owner_id) references member (id) on delete restrict on update restrict;
 create index ix_account_owner_1 on account (owner_id);
-alter table company add constraint fk_company_account_2 foreign key (account_id) references account (id) on delete restrict on update restrict;
-create index ix_company_account_2 on company (account_id);
-alter table document add constraint fk_document_position_3 foreign key (position_id) references position (id) on delete restrict on update restrict;
-create index ix_document_position_3 on document (position_id);
-alter table document add constraint fk_document_candidate_4 foreign key (candidate_id) references candidate (id) on delete restrict on update restrict;
-create index ix_document_candidate_4 on document (candidate_id);
-alter table member add constraint fk_member_company_5 foreign key (company_id) references company (id) on delete restrict on update restrict;
-create index ix_member_company_5 on member (company_id);
-alter table position add constraint fk_position_company_6 foreign key (company_id) references company (id) on delete restrict on update restrict;
-create index ix_position_company_6 on position (company_id);
+alter table candidate add constraint fk_candidate_account_2 foreign key (account_id) references account (id) on delete restrict on update restrict;
+create index ix_candidate_account_2 on candidate (account_id);
+alter table company add constraint fk_company_account_3 foreign key (account_id) references account (id) on delete restrict on update restrict;
+create index ix_company_account_3 on company (account_id);
+alter table document add constraint fk_document_position_4 foreign key (position_id) references position (id) on delete restrict on update restrict;
+create index ix_document_position_4 on document (position_id);
+alter table document add constraint fk_document_candidate_5 foreign key (candidate_id) references candidate (id) on delete restrict on update restrict;
+create index ix_document_candidate_5 on document (candidate_id);
+alter table document add constraint fk_document_account_6 foreign key (account_id) references account (id) on delete restrict on update restrict;
+create index ix_document_account_6 on document (account_id);
+alter table member add constraint fk_member_company_7 foreign key (company_id) references company (id) on delete restrict on update restrict;
+create index ix_member_company_7 on member (company_id);
+alter table member add constraint fk_member_account_8 foreign key (account_id) references account (id) on delete restrict on update restrict;
+create index ix_member_account_8 on member (account_id);
+alter table position add constraint fk_position_company_9 foreign key (company_id) references company (id) on delete restrict on update restrict;
+create index ix_position_company_9 on position (company_id);
+alter table position add constraint fk_position_account_10 foreign key (account_id) references account (id) on delete restrict on update restrict;
+create index ix_position_account_10 on position (account_id);
 
 
 
