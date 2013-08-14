@@ -1,8 +1,14 @@
+import org.slf4j.MDC;
 import play.*;
 
 import com.avaje.ebean.*;
 
 import models.*;
+import play.mvc.Action;
+import play.mvc.Http;
+import play.mvc.Result;
+
+import java.lang.reflect.Method;
 
 public class Global extends GlobalSettings {
 
@@ -29,4 +35,19 @@ public class Global extends GlobalSettings {
         }
     }
 
+    @Override
+    public Action onRequest(final Http.Request request, Method actionMethod) {
+        return new Action.Simple() {
+            public Result call(Http.Context ctx) throws Throwable {
+                MDC.put("user", ctx.session().get("email"));
+                MDC.put("uri", request.uri());
+                return delegate.call(ctx);
+            }
+        };
+    }
+
+    @Override
+    public Result onError(Http.RequestHeader requestHeader, Throwable throwable) {
+        return super.onError(requestHeader, throwable);
+    }
 }
