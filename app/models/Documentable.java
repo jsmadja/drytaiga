@@ -13,4 +13,6 @@ public interface Documentable {
     List<Document> getDocuments();
 
     String getFilePath(Http.MultipartFormData.FilePart file);
+
+    Class getType();
 }

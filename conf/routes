@@ -18,8 +18,8 @@ POST            /positions/:id                  controllers.Positions.update(id:
 
 # Position / Documents
 # ~~~~~~~~~~~~~~
-GET             /positions/:id/documents/new    controllers.Documents.create(id:Long)
-POST            /positions/:id/documents        controllers.Documents.save(id:Long)
+GET             /positions/:id/documents/new    controllers.Documents.create(id:Long, clazz: String, callback: String)
+POST            /positions/:id/documents        controllers.Documents.save(id:Long, clazz: String, callback: String)
 
 # Position / Lists
 # ~~~~~~~~~~~~~~

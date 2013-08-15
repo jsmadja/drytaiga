@@ -28,5 +28,10 @@ public class Account extends Model {
 
     public void setOwner(Member owner) {
         this.owner = owner;
+        this.owner.setAccount(this);
+    }
+
+    public AccountType getAccountType() {
+        return accountType;
     }
 }

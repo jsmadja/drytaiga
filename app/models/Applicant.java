@@ -101,4 +101,9 @@ public class Applicant extends Model implements Documentable {
     public String getFullname() {
         return new String(defaultString(firstname) + " " + defaultString(lastname)).trim();
     }
+
+    @Override
+    public Class getType() {
+        return Applicant.class;
+    }
 }

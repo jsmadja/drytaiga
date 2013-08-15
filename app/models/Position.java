@@ -86,5 +86,10 @@ public class Position extends Model implements Documentable {
     public String getFilePath(Http.MultipartFormData.FilePart file) {
         return format("companies/%d/positions/%d/%s", company.getId(), id, file.getFilename());
     }
+
+    @Override
+    public Class getType() {
+        return Position.class;
+    }
 }
 

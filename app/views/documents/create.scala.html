@@ -1,7 +1,7 @@
-@(documentForm: Form[Document], idPosition: Long)
+@(documentForm: Form[Document], id: Long, clazz: String, callback: String)
 @import helper._
 <h1>Add a document</h1>
-@form(routes.Documents.save(idPosition), 'enctype -> "multipart/form-data") {
+@form(routes.Documents.save(id, clazz, callback), 'enctype -> "multipart/form-data") {
     <fieldset>
         @inputText(documentForm("name"), '_label -> "Name")
 

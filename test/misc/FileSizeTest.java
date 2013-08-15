@@ -7,6 +7,11 @@ import static org.fest.assertions.Assertions.assertThat;
 public class FileSizeTest {
 
     @Test
+    public void should_convert_in_Go() {
+        assertThat(new FileSize(1L * 1024*1024*1024).toString()).isEqualTo("1.0 Go");
+    }
+
+    @Test
     public void should_convert_in_Mo() {
         assertThat(new FileSize(17846380L).toString()).isEqualTo("17.0 Mo");
         assertThat(new FileSize(17946380L).toString()).isEqualTo("17.1 Mo");

@@ -10,16 +10,25 @@ public class FileSize {
 
     @Override
     public String toString() {
-        if (size < (1024 * 1024)) {
+        if (size < Unity.MEGA.asBytes()) {
             return Unity.KILO.format(size);
         }
-        return Unity.MEGA.format(size);
+        if (size < Unity.GIGA.asBytes()) {
+            return Unity.MEGA.format(size);
+        }
+        return Unity.GIGA.format(size);
     }
 
-    private enum Unity {
+    public enum Unity {
         KILO {
-            private long asBytes() {
+            @Override
+            public long asBytes() {
                 return 1024;
+            }
+
+            @Override
+            public long toBytes(long value) {
+                return value * asBytes();
             }
 
             @Override
@@ -28,13 +37,34 @@ public class FileSize {
             }
         },
         MEGA {
-            private long asBytes() {
-                return 1024 * 1024;
+            public long asBytes() {
+                return KILO.asBytes() * KILO.asBytes();
+            }
+
+            @Override
+            public long toBytes(long value) {
+                return value * asBytes();
             }
 
             @Override
             String format(long size) {
                 return compute(size, asBytes()) + " Mo";
+            }
+        },
+
+        GIGA {
+            public long asBytes() {
+                return MEGA.asBytes() * KILO.asBytes();
+            }
+
+            @Override
+            public long toBytes(long value) {
+                return value * asBytes();
+            }
+
+            @Override
+            String format(long size) {
+                return compute(size, asBytes()) + " Go";
             }
         };
 
@@ -44,5 +74,9 @@ public class FileSize {
         }
 
         abstract String format(long size);
+
+        abstract long asBytes();
+
+        public abstract long toBytes(long value);
     }
 }

@@ -17,6 +17,6 @@
         }
     }
 
-    @documents.cartridge(documentForm, position)
+    @documents.cartridge(documentForm, position, routes.Positions.read(position.getId).url)
 
 }

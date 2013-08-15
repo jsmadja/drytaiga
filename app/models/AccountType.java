@@ -1,18 +1,32 @@
 package models;
 
 import com.avaje.ebean.annotation.EnumValue;
+import misc.FileSize;
+
+import static misc.FileSize.Unity.GIGA;
+import static misc.FileSize.Unity.MEGA;
 
 public enum AccountType {
 
     @EnumValue("free")
-    Free,
+    Free(MEGA.toBytes(250)),
 
     @EnumValue("startup")
-    Startup,
+    Startup(GIGA.toBytes(2)),
 
     @EnumValue("established_company")
-    EstablishedCompany,
+    EstablishedCompany(GIGA.toBytes(25)),
 
     @EnumValue("large_company")
-    LargeCompany
+    LargeCompany(GIGA.toBytes(200));
+
+    private final long totalSpace;
+
+    private AccountType(long totalSpace) {
+        this.totalSpace = totalSpace;
+    }
+
+    public long getTotalSpace() {
+        return totalSpace;
+    }
 }

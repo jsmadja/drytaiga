@@ -51,7 +51,7 @@ create table member (
   password                  varchar(255),
   company_id                bigint,
   account_id                bigint,
-  last_login                date,
+  last_login                timestamp,
   constraint pk_member primary key (id))
 ;
 

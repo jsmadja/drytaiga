@@ -47,9 +47,7 @@ public class Company extends Model {
 
     public String getUsedSpace() {
         long usedSpace = 0;
-        List<Documentable> documentables = new ArrayList<Documentable>();
-        documentables.addAll(positions);
-        for (Documentable documentable : documentables) {
+        for (Documentable documentable : getDocumentables()) {
             List<Document> documents = documentable.getDocuments();
             for (Document document : documents) {
                 usedSpace += document.getSize();
@@ -58,19 +56,24 @@ public class Company extends Model {
         return new FileSize(usedSpace).toString();
     }
 
-    public long getTotalSpace() {
-        return 100;
+    public String getTotalSpace() {
+        return new FileSize(account.getAccountType().getTotalSpace()).toString();
     }
 
     public int getNumDocuments() {
         int numDocuments = 0;
-        List<Documentable> documentables = new ArrayList<Documentable>();
-        documentables.addAll(positions);
-        for (Documentable documentable : documentables) {
+        for (Documentable documentable : getDocumentables()) {
             List<Document> documents = documentable.getDocuments();
             numDocuments += documents.size();
         }
         return numDocuments;
+    }
+
+    private List<Documentable> getDocumentables() {
+        List<Documentable> documentables = new ArrayList<Documentable>();
+        documentables.addAll(positions);
+        documentables.addAll(applicants);
+        return documentables;
     }
 
     @Override
