@@ -21,7 +21,7 @@ public class Company extends Model {
     private List<Member> members = new ArrayList<Member>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
-    private List<Position> positions = new ArrayList<Position>();
+    private List<Opening> openings = new ArrayList<Opening>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
     private List<Applicant> applicants = new ArrayList<Applicant>();
@@ -41,8 +41,8 @@ public class Company extends Model {
         members.add(user);
     }
 
-    public void addPosition(Position position) {
-        positions.add(position);
+    public void addOpening(Opening opening) {
+        openings.add(opening);
     }
 
     public String getUsedSpace() {
@@ -71,7 +71,7 @@ public class Company extends Model {
 
     private List<Documentable> getDocumentables() {
         List<Documentable> documentables = new ArrayList<Documentable>();
-        documentables.addAll(positions);
+        documentables.addAll(openings);
         documentables.addAll(applicants);
         return documentables;
     }
@@ -96,25 +96,25 @@ public class Company extends Model {
         return result;
     }
 
-    public boolean containsPositionWithName(String positionName) {
-        for (Position position : positions) {
-            if(position.hasName(positionName)) {
+    public boolean containsOpeningWithName(String positionName) {
+        for (Opening opening : openings) {
+            if(opening.hasName(positionName)) {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean contains(Position position) {
-        return positions.contains(position);
+    public boolean contains(Opening opening) {
+        return openings.contains(opening);
     }
 
     public boolean contains(Applicant applicant) {
         return applicants.contains(applicant);
     }
 
-    public List<Position> getPositions() {
-        return positions;
+    public List<Opening> getOpenings() {
+        return openings;
     }
 
     public String getName() {

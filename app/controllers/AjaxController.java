@@ -1,7 +1,7 @@
 package controllers;
 
 import misc.Resolver;
-import models.Position;
+import models.Opening;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
@@ -63,7 +63,7 @@ public abstract class AjaxController extends SecuredController {
         return ok(json);
     }
 
-    protected static void addError(Form<Position> form, String fieldName, String messageKey, Object ... arguments) {
+    protected static void addError(Form<Opening> form, String fieldName, String messageKey, Object ... arguments) {
         List<ValidationError> errors = form.errors().get(fieldName);
         if (errors == null) {
             errors = new ArrayList<ValidationError>();

@@ -31,7 +31,7 @@ public class Applicant extends Model implements Documentable {
     private String email;
 
     @ManyToMany
-    private List<Position> positions = new ArrayList<Position>();
+    private List<Opening> openings = new ArrayList<Opening>();
 
     @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL)
     private List<Document> documents = new ArrayList<Document>();
@@ -85,8 +85,8 @@ public class Applicant extends Model implements Documentable {
         return documents;
     }
 
-    public void addPosition(Position position) {
-        positions.add(position);
+    public void addOpening(Opening opening) {
+        openings.add(opening);
     }
 
     @Override

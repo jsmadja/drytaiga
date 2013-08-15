@@ -6,7 +6,7 @@
     <h1>Dashboard</h1>
     <table class="table table-bordered table-condensed table-striped" style="width: 40%">
         <tr><td><b>Account Type</b></td><td>@user.getAccount.getAccountType.name</td></tr>
-        <tr><td><b><a href="@routes.Positions.list()">Openings</a></b></td><td>@user.getCompany.getPositions.size()</td></tr>
+        <tr><td><b><a href="@routes.Openings.list()">Openings</a></b></td><td>@user.getCompany.getOpenings.size()</td></tr>
         <tr><td><b><a href="@routes.Applicants.list()">Applicants</a></b></td><td>@user.getCompany.getApplicants.size()</td></tr>
         <tr><td><b>Files</b></td><td>@user.getCompany.getNumDocuments</td></tr>
         <tr><td><b>Space (Max: @user.getCompany.getTotalSpace)</b></td><td>@user.getCompany.getUsedSpace</td></tr>

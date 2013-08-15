@@ -11,7 +11,7 @@ import java.util.List;
 import static java.lang.String.format;
 
 @Entity
-public class Position extends Model implements Documentable {
+public class Opening extends Model implements Documentable {
 
     @Id
     private Long id;
@@ -19,10 +19,10 @@ public class Position extends Model implements Documentable {
     @Constraints.Required
     private String name;
 
-    @ManyToMany(mappedBy = "positions", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
+    @ManyToMany(mappedBy = "openings", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
     private List<Applicant> applicants = new ArrayList<Applicant>();
 
-    @OneToMany(mappedBy = "position", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "opening", cascade = CascadeType.ALL)
     private List<Document> documents = new ArrayList<Document>();
 
     @ManyToOne
@@ -31,15 +31,15 @@ public class Position extends Model implements Documentable {
     @OneToOne
     private Account account;
 
-    public static Model.Finder<Long,Position> find = new Model.Finder(Long.class, Position.class);
+    public static Model.Finder<Long, Opening> find = new Model.Finder(Long.class, Opening.class);
 
-    public Position(String name) {
+    public Opening(String name) {
         this.name = name;
     }
 
     public void addCandidate(Applicant applicant) {
         this.applicants.add(applicant);
-        applicant.addPosition(this);
+        applicant.addOpening(this);
     }
 
     @Override
@@ -58,8 +58,8 @@ public class Position extends Model implements Documentable {
         return documents;
     }
 
-    public boolean hasName(String positionName) {
-        return name.equals(positionName);
+    public boolean hasName(String openingName) {
+        return name.equals(openingName);
     }
 
     public Account getAccount() {
@@ -84,12 +84,12 @@ public class Position extends Model implements Documentable {
 
     @Override
     public String getFilePath(Http.MultipartFormData.FilePart file) {
-        return format("companies/%d/positions/%d/%s", company.getId(), id, file.getFilename());
+        return format("companies/%d/openings/%d/%s", company.getId(), id, file.getFilename());
     }
 
     @Override
     public Class getType() {
-        return Position.class;
+        return Opening.class;
     }
 }
 

@@ -28,7 +28,7 @@ public class Document extends Model {
     private String contentType;
 
     @ManyToOne
-    private Position position;
+    private Opening opening;
 
     @ManyToOne
     private Applicant applicant;
@@ -43,9 +43,9 @@ public class Document extends Model {
         this.contentType = contentType;
     }
 
-    public void attachTo(Position position) {
-        this.position = position;
-        this.account = position.getAccount();
+    public void attachTo(Opening opening) {
+        this.opening = opening;
+        this.account = opening.getAccount();
     }
 
     public String sizeToString() {

@@ -1,22 +1,22 @@
-@(position: Position, user: Member, positionForm: Form[Position], documentForm: Form[Document])
+@(opening: Opening, user: Member, openingForm: Form[Opening], documentForm: Form[Document])
 
 @main(user) {
 
-    <h1>@position.getName</h1>
+    <h1>@opening.getName</h1>
     <button id="updateCharacteristics" style="float: right;">Update</button>
     @components.dialog("updateCharacteristics", "Characteristics") {
-        @positions.update(position, positionForm)
+        @openings.update(opening, openingForm)
     }
 
     <h2>Candidates</h2>
     @components.table(id = "candidates", headers = Seq("Name")) {
-        @for(candidate <- position.getApplicants) {
+        @for(candidate <- opening.getApplicants) {
         <tr>
             <td>@candidate.getLastname, @candidate.getFirstname</td>
         </tr>
         }
     }
 
-    @documents.cartridge(documentForm, position, routes.Positions.read(position.getId).url)
+    @documents.cartridge(documentForm, opening, routes.Openings.read(opening.getId).url)
 
 }

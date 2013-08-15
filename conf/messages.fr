@@ -2,11 +2,11 @@ common.Cancel=Annuler
 common.Submit=Valider
 common.Logout=Se déconnecter
 
-positions.index.title=Postes
-positions.index.table.header.name=Libellé
-positions.button.newposition=Nouveau poste
-positions.form.name.alreadyexist=Une fiche de poste avec le nom {0} existe déjà
-positions.form.label.name=Libellé
+openings.index.title=Postes
+openings.index.table.header.name=Libellé
+openings.button.newopening=Nouveau poste
+openings.form.name.alreadyexist=Une fiche de poste avec le nom {0} existe déjà
+openings.form.label.name=Libellé
 
 applicants.index.title=Candidats
 applicants.index.table.header.name=Nom

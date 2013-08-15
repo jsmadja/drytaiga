@@ -1,0 +1,21 @@
+@(user: Member, openingForm: Form[Opening])
+@import play.i18n._
+
+@main(user) {
+    <h1>
+        @Messages.get("openings.index.title")
+
+        <button id="newPosition" style="float: right;">@Messages.get("openings.button.newopening")</button>
+    </h1>
+    @components.dialog("newPosition", Messages.get("openings.button.newopening"), height = 220) {
+        @openings.create(openingForm)
+    }
+
+    @components.table("openings", headers = Seq(Messages.get("openings.index.table.header.name"))) {
+        @for(opening <- user.getCompany.getOpenings) {
+            <tr>
+                <td><a href="/openings/@opening.getId">@opening.getName</a></td>
+            </tr>
+        }
+    }
+}

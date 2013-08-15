@@ -1,6 +1,5 @@
 package models;
 
-import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
@@ -63,8 +62,8 @@ public class Member extends Model {
         return Member.findByEmail(request.username());
     }
 
-    public boolean canAccessTo(Position position) {
-        return company.contains(position);
+    public boolean canAccessTo(Opening opening) {
+        return company.contains(opening);
     }
 
     public boolean canAccessTo(Applicant applicant) {

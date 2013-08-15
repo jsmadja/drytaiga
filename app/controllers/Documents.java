@@ -3,7 +3,6 @@ package controllers;
 import com.avaje.ebean.Ebean;
 import models.Document;
 import models.Documentable;
-import models.Position;
 import play.db.ebean.Model;
 import play.mvc.Controller;
 import play.mvc.Http;

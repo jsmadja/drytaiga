@@ -4,7 +4,6 @@ import com.google.common.base.Predicate;
 import misc.Resolver;
 import models.Applicant;
 import models.Document;
-import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import play.data.Form;
@@ -36,7 +35,7 @@ public class Applicants extends AjaxController {
 
     public static Result read(Long id) {
         Applicant applicant = Applicant.find.byId(id);
-        if(user().canAccessTo(applicant)) {
+        if (user().canAccessTo(applicant)) {
             return ok(read.render(applicant, user(), documentForm()));
         }
         return forbidden();
