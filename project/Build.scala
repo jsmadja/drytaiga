@@ -16,7 +16,8 @@ object ApplicationBuild extends Build {
     "com.amazonaws" % "aws-java-sdk" % "1.3.11",
     "com.newrelic.agent.java" % "newrelic-agent" % "2.21.0",
     "com.newrelic.agent.java" % "newrelic-api" % "2.21.0",
-    "joda-time" % "joda-time" % "2.2"
+    "joda-time" % "joda-time" % "2.2",
+    "org.apache.commons" % "commons-lang3" % "3.1"
   )
 
   val main = play.Project(appName, appVersion, appDependencies).settings(

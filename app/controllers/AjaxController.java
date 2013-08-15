@@ -1,5 +1,6 @@
 package controllers;
 
+import misc.Resolver;
 import models.Position;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
@@ -42,12 +43,23 @@ public abstract class AjaxController extends SecuredController {
 
     protected static Result toJson(List<String> values) {
         ArrayNode json = JsonNodeFactory.instance.arrayNode();
-        ObjectNode jsonNodes = JsonNodeFactory.instance.objectNode();
         for (String value : values) {
+            ObjectNode jsonNodes = JsonNodeFactory.instance.objectNode();
             jsonNodes.put("key", values.indexOf(value));
             jsonNodes.put("value", value);
+            json.add(jsonNodes);
         }
-        json.add(jsonNodes);
+        return ok(json);
+    }
+
+    protected static <T> Result toJson(List<T> values, Resolver<T> keyResolver, Resolver<T> valueResolver) {
+        ArrayNode json = JsonNodeFactory.instance.arrayNode();
+        for (T value : values) {
+            ObjectNode jsonNodes = JsonNodeFactory.instance.objectNode();
+            jsonNodes.put("key", keyResolver.resolve(value));
+            jsonNodes.put("value", valueResolver.resolve(value));
+            json.add(jsonNodes);
+        }
         return ok(json);
     }
 

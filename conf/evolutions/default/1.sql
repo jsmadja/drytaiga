@@ -20,6 +20,7 @@ create table applicant (
   email                     varchar(255),
   account_id                bigint,
   company_id                bigint,
+  created_at                timestamp not null,
   constraint pk_applicant primary key (id))
 ;
 

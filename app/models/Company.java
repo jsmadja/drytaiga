@@ -29,6 +29,8 @@ public class Company extends Model {
     @OneToOne
     private Account account;
 
+    public static Model.Finder<Long, Company> find = new Model.Finder(Long.class, Company.class);
+
     public Company(String name, Account account) {
         this.name = name;
         this.account = account;
@@ -41,15 +43,6 @@ public class Company extends Model {
 
     public void addPosition(Position position) {
         positions.add(position);
-    }
-
-    public static Model.Finder<Long, Company> find = new Model.Finder(Long.class, Company.class);
-
-    public static boolean isMember(Long company, String user) {
-        return find.where()
-                .eq("members.email", user)
-                .eq("id", company)
-                .findRowCount() > 0;
     }
 
     public String getUsedSpace() {
@@ -111,6 +104,10 @@ public class Company extends Model {
 
     public boolean contains(Position position) {
         return positions.contains(position);
+    }
+
+    public boolean contains(Applicant applicant) {
+        return applicants.contains(applicant);
     }
 
     public List<Position> getPositions() {

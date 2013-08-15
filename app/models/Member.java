@@ -66,6 +66,10 @@ public class Member extends Model {
         return company.contains(position);
     }
 
+    public boolean canAccessTo(Applicant applicant) {
+        return company.contains(applicant);
+    }
+
     public Company getCompany() {
         return company;
     }

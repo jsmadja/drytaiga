@@ -1,0 +1,5 @@
+@(applicant: Applicant, user: Member, documentForm: Form[Document])
+@main(user) {
+    <h1>@applicant.getFullname</h1>
+    @documents.cartridge(documentForm, applicant)
+}

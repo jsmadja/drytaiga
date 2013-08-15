@@ -1,20 +1,46 @@
 @(user: Member)
 @import play.i18n._
 
-@main(user) {
+@head = {
+    <script type="text/javascript">
+    $(document).ready(function() {
+        var truc = setInterval(function() {
+            $.ajax({
+                url:  "/comet",
+                type: "GET",
+                data: null,
+                error: function(data) {
+                },
+                success : function (data) {
+                    var ul = "";
+                    for(var i= 0; i < data.length;i++) {
+                        ul += "<li>Le candidat <a href=\"/applicants/"+data[i].key+"\">"+  data[i].value + "</a> vient d'être ajouté</li>";
+                    }
+                    $("#latestData" ).html(ul);
+                }
+            });
+        }, 10000);
+    });
+    </script>
+}
+
+@mainWithHead(user)(head) {
     <h1>
         @Messages.get("applicants.index.title")
     </h1>
 
     <p class="alert-info">
-        You can create applicant by sending an email at <i>8a576278851e473b61ec+@user.getId@@cloudmailin.net</i>.
+        You can create applicant by sending an email at <i><b><a href="mailto:8a576278851e473b61ec+@user.getId@@cloudmailin.net">8a576278851e473b61ec+@user.getId@@cloudmailin.net</a></b></i>.
         Put the applicant's name as subject and attach related files.
     </p>
+
+    <div id="latestData" class="alert-success">
+    </div>
 
     @components.table("applicants", headers = Seq(Messages.get("applicants.index.table.header.name"))) {
         @for(applicant <- user.getCompany.getApplicants) {
             <tr>
-                <td>@applicant.getFirstname</td>
+                <td><a href="@routes.Applicants.read(applicant.getId)">@applicant.getFullname</a></td>
             </tr>
         }
     }
