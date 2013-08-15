@@ -40,6 +40,17 @@ public abstract class AjaxController extends SecuredController {
         return json;
     }
 
+    protected static Result toJson(List<String> values) {
+        ArrayNode json = JsonNodeFactory.instance.arrayNode();
+        ObjectNode jsonNodes = JsonNodeFactory.instance.objectNode();
+        for (String value : values) {
+            jsonNodes.put("key", values.indexOf(value));
+            jsonNodes.put("value", value);
+        }
+        json.add(jsonNodes);
+        return ok(json);
+    }
+
     protected static void addError(Form<Position> form, String fieldName, String messageKey, Object ... arguments) {
         List<ValidationError> errors = form.errors().get(fieldName);
         if (errors == null) {

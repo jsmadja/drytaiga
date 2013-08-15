@@ -19,6 +19,7 @@ POST            /positions/:id                  controllers.Positions.update(id:
 GET             /positions/:id/documents/new    controllers.Documents.create(id:Long)
 POST            /positions/:id/documents        controllers.Documents.save(id:Long)
 
+GET             /a                              controllers.Positions.a()
 
 # Map static resources from the /public folder to the /assets URL path
 GET             /assets/*file                   controllers.Assets.at(path="/public", file)

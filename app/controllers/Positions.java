@@ -10,6 +10,9 @@ import views.html.positions.create;
 import views.html.positions.index;
 import views.html.positions.read;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static controllers.routes.Positions;
 import static play.data.Form.form;
 
@@ -83,6 +86,14 @@ public class Positions extends AjaxController {
 
     private static Form<Document> documentForm() {
         return form(Document.class);
+    }
+
+    public static Result a() {
+        List<String> values = new ArrayList<String>();
+        values.add("A");
+        values.add("B");
+        values.add("C");
+        return toJson(values);
     }
 
 }

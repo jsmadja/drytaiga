@@ -1,7 +1,7 @@
 @(positionForm: Form[Position])
 @import play.i18n._
 @import helper._
-@implicitField = @{ FieldConstructor(myFieldConstructorTemplate.render) }
+@implicitField = @{ FieldConstructor(components.myFieldConstructorTemplate.render) }
 @components.ajaxform(id = "createPosition", action = routes.Positions.save()) {
     <fieldset>
         @inputText(positionForm("name"), '_label -> Messages.get("positions.form.label.name"), 'size -> 30)
@@ -25,9 +25,27 @@
 
         @textarea(field = positionForm("comment"), args = 'rows -> 3, 'cols -> 50)
 
+        @select(
+            positionForm("a"),
+            options = options(Salaries.list),
+            '_default -> "--- Choose A ---",
+            '_label -> "A"
+        )
+
+        @select(
+            positionForm("b"),
+            options = options(),
+            '_default -> "--- Choose B ---",
+            '_label -> "B"
+        )
+
     </fieldset>
     <div class="actions">
         <input type="submit" value="@Messages.get("common.Submit")" class="btn btn-success">
         <a href="@routes.Positions.list()" class="btn btn-danger">@Messages.get("common.Cancel")</a>
     </div>
+
+    <script type="text/javascript" charset="utf-8">
+        linkLists("#a", "#b", "/a");
+    </script>
 }
