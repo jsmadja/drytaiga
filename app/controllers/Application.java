@@ -30,7 +30,10 @@ public class Application extends Controller {
         if (loginForm.hasErrors()) {
             return badRequest(views.html.login.render(loginForm));
         }
-        session("email", loginForm.get().email);
+        String email = loginForm.get().email;
+        session("email", email);
+        Member member = Member.findByEmail(email);
+        member.updateLastLoginDate();
         return redirect(routes.Dashboard.index());
     }
 

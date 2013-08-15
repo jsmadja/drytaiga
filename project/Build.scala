@@ -15,7 +15,8 @@ object ApplicationBuild extends Build {
     "javax.mail" % "mail" % "1.4.1",
     "com.amazonaws" % "aws-java-sdk" % "1.3.11",
     "com.newrelic.agent.java" % "newrelic-agent" % "2.21.0",
-    "com.newrelic.agent.java" % "newrelic-api" % "2.21.0"
+    "com.newrelic.agent.java" % "newrelic-api" % "2.21.0",
+    "joda-time" % "joda-time" % "2.2"
   )
 
   val main = play.Project(appName, appVersion, appDependencies).settings(

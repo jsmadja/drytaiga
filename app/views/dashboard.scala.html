@@ -1,5 +1,8 @@
 @(user: Member)
 @main(user){
+
+    Last login date: @user.getLastLogin
+
     <h1>Dashboard</h1>
     <table class="table table-bordered table-condensed table-striped" style="width: 40%">
         <tr><td><b><a href="@routes.Positions.list()">Positions</a></b></td><td>@user.getCompany.getPositions.size()</td></tr>

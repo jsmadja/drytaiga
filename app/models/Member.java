@@ -1,5 +1,6 @@
 package models;
 
+import org.joda.time.DateMidnight;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
@@ -32,6 +33,8 @@ public class Member extends Model {
 
     @OneToOne
     private Account account;
+
+    private DateMidnight lastLogin;
 
     public static Model.Finder<String,Member> find = new Model.Finder(String.class, Member.class);
 
@@ -79,5 +82,13 @@ public class Member extends Model {
         return lastname;
     }
 
+    public void updateLastLoginDate() {
+        this.lastLogin = new DateMidnight();
+        update();
+    }
+
+    public DateMidnight getLastLogin() {
+        return lastLogin;
+    }
 }
 
