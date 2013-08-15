@@ -1,4 +1,6 @@
 GET             /                               controllers.Dashboard.index()
+GET             /pricing                        controllers.Pricing.index()
+
 
 # Authentication
 # ~~~~~~~~~~~~~~
