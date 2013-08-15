@@ -5,6 +5,12 @@
     <h1>
         @Messages.get("applicants.index.title")
     </h1>
+
+    <p class="alert-info">
+        You can create applicant by sending an email at <i>8a576278851e473b61ec+@user.getId@@cloudmailin.net</i>.
+        Put the applicant's name as subject and attach related files.
+    </p>
+
     @components.table("applicants", headers = Seq(Messages.get("applicants.index.table.header.name"))) {
         @for(applicant <- user.getCompany.getApplicants) {
             <tr>

@@ -94,5 +94,9 @@ public class Member extends Model {
     public Account getAccount() {
         return account;
     }
+
+    public Long getId() {
+        return id;
+    }
 }
 
