@@ -8,6 +8,7 @@ positions.button.newposition=Nouveau poste
 positions.form.name.alreadyexist=Une fiche de poste avec le nom {0} existe déjà
 positions.form.label.name=Libellé
 
-candidates.index.title=Candidats
+applicants.index.title=Candidats
+applicants.index.table.header.name=Nom
 
 error.required=Champ requis

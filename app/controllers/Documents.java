@@ -27,11 +27,7 @@ public class Documents extends Controller {
 
     private static Document storeDocumentFor(Position position) {
         Http.MultipartFormData.FilePart filePart = request().body().asMultipartFormData().getFile("file");
-        return StoragePlugin.store(filePart.getFile(), getPath(position), filePart.getContentType());
-    }
-
-    private static String getPath(Position position) {
-        return format("companies/%d/positions/%d/%s", position.getCompany().getId(), position.getId(), request().body().asMultipartFormData().getFile("file").getFilename());
+        return StoragePlugin.store(filePart.getFile(), position.getFilePath(filePart), filePart.getContentType());
     }
 
 }

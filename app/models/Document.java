@@ -31,7 +31,7 @@ public class Document extends Model {
     private Position position;
 
     @ManyToOne
-    private Candidate candidate;
+    private Applicant applicant;
 
     @OneToOne
     private Account account;

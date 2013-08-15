@@ -23,6 +23,9 @@ public class Company extends Model {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
     private List<Position> positions = new ArrayList<Position>();
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
+    private List<Applicant> applicants = new ArrayList<Applicant>();
+
     @OneToOne
     private Account account;
 
@@ -120,5 +123,13 @@ public class Company extends Model {
 
     public Long getId() {
         return id;
+    }
+
+    public void addApplicant(Applicant applicant) {
+        this.applicants.add(applicant);
+    }
+
+    public List<Applicant> getApplicants() {
+        return applicants;
     }
 }

@@ -2,10 +2,13 @@ package models;
 
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
+import play.mvc.Http;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.lang.String.format;
 
 @Entity
 public class Position extends Model implements Documentable {
@@ -17,7 +20,7 @@ public class Position extends Model implements Documentable {
     private String name;
 
     @ManyToMany(mappedBy = "positions", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
-    private List<Candidate> candidates = new ArrayList<Candidate>();
+    private List<Applicant> applicants = new ArrayList<Applicant>();
 
     @OneToMany(mappedBy = "position", cascade = CascadeType.ALL)
     private List<Document> documents = new ArrayList<Document>();
@@ -34,9 +37,9 @@ public class Position extends Model implements Documentable {
         this.name = name;
     }
 
-    public void addCandidate(Candidate candidate) {
-        this.candidates.add(candidate);
-        candidate.addPosition(this);
+    public void addCandidate(Applicant applicant) {
+        this.applicants.add(applicant);
+        applicant.addPosition(this);
     }
 
     @Override
@@ -67,8 +70,8 @@ public class Position extends Model implements Documentable {
         return name;
     }
 
-    public List<Candidate> getCandidates() {
-        return candidates;
+    public List<Applicant> getApplicants() {
+        return applicants;
     }
 
     public Company getCompany() {
@@ -77,6 +80,11 @@ public class Position extends Model implements Documentable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String getFilePath(Http.MultipartFormData.FilePart file) {
+        return format("companies/%d/positions/%d/%s", company.getId(), id, file.getFilename());
     }
 }
 

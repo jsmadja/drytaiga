@@ -90,5 +90,9 @@ public class Member extends Model {
     public DateMidnight getLastLogin() {
         return lastLogin;
     }
+
+    public Account getAccount() {
+        return account;
+    }
 }
 

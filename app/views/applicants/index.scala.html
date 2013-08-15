@@ -1,0 +1,15 @@
+@(user: Member)
+@import play.i18n._
+
+@main(user) {
+    <h1>
+        @Messages.get("applicants.index.title")
+    </h1>
+    @components.table("applicants", headers = Seq(Messages.get("applicants.index.table.header.name"))) {
+        @for(applicant <- user.getCompany.getApplicants) {
+            <tr>
+                <td>@applicant.getFirstname</td>
+            </tr>
+        }
+    }
+}

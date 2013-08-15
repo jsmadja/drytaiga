@@ -33,8 +33,8 @@
             <a class="navbar-brand" href="/">Dry Taiga</a>
             <div class="nav-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="@routes.Positions.list">@Messages.get("positions.index.title")</a></li>
-                    <li><a href="#">@Messages.get("candidates.index.title")</a></li>
+                    <li><a href="@routes.Positions.list">@Messages.get("positions.index.title")</a></li>
+                    <li><a href="@routes.Applicants.list">@Messages.get("applicants.index.title")</a></li>
                     <li><a href="@routes.Pricing.index">Pricing</a></li>
                     @if(user != null) {
                         <li><a href="#">@user.getLastname @user.getFirstname</a></li>

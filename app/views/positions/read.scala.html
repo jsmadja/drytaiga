@@ -10,7 +10,7 @@
 
     <h2>Candidates</h2>
     @components.table(id = "candidates", headers = Seq("Name")) {
-        @for(candidate <- position.getCandidates) {
+        @for(candidate <- position.getApplicants) {
         <tr>
             <td>@candidate.getLastname, @candidate.getFirstname</td>
         </tr>
