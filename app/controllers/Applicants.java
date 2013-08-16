@@ -3,6 +3,7 @@ package controllers;
 import com.google.common.base.Predicate;
 import misc.Resolver;
 import models.Applicant;
+import models.Comment;
 import models.Document;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -36,7 +37,7 @@ public class Applicants extends AjaxController {
     public static Result read(Long id) {
         Applicant applicant = Applicant.find.byId(id);
         if (user().canAccessTo(applicant)) {
-            return ok(read.render(applicant, user(), documentForm()));
+            return ok(read.render(applicant, user(), documentForm(), commentForm()));
         }
         return forbidden();
     }
@@ -48,6 +49,10 @@ public class Applicants extends AjaxController {
 
     private static Form<Document> documentForm() {
         return form(Document.class);
+    }
+
+    private static Form<Comment> commentForm() {
+        return form(Comment.class);
     }
 
     private static Resolver<Applicant> valueResolver() {

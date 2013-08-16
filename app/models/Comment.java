@@ -16,6 +16,9 @@ public class Comment extends BaseModel {
     private Opening opening;
 
     @ManyToOne
+    private Applicant applicant;
+
+    @ManyToOne
     private Member author;
 
     public Comment(String text, Member author) {
@@ -39,5 +42,8 @@ public class Comment extends BaseModel {
         return getCreatedAt();
     }
 
+    public void attachTo(Applicant applicant) {
+        this.applicant = applicant;
+    }
 }
 

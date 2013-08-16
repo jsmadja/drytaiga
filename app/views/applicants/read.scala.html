@@ -1,5 +1,6 @@
-@(applicant: Applicant, user: Member, documentForm: Form[Document])
+@(applicant: Applicant, user: Member, documentForm: Form[Document], commentForm: Form[Comment])
 @main(user) {
     <h1>@applicant.getFullname</h1>
     @documents.cartridge(documentForm, applicant, routes.Applicants.read(applicant.getId).url)
+    @comments.cartridge(commentForm, applicant, routes.Applicants.read(applicant.getId).url)
 }

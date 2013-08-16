@@ -46,6 +46,11 @@ public class Opening extends BaseModel implements Documentable, Commentable {
     }
 
     @Override
+    public List<Document> getDocuments() {
+        return documents;
+    }
+
+    @Override
     public void addComment(Comment comment) {
         comment.attachTo(this);
         this.comments.add(comment);
@@ -54,11 +59,6 @@ public class Opening extends BaseModel implements Documentable, Commentable {
     @Override
     public List<Comment> getComments() {
         return comments;
-    }
-
-    @Override
-    public List<Document> getDocuments() {
-        return documents;
     }
 
     public boolean hasName(String openingName) {

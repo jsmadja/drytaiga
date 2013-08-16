@@ -13,7 +13,7 @@ import static java.lang.String.format;
 import static org.apache.commons.lang3.StringUtils.defaultString;
 
 @Entity
-public class Applicant extends BaseModel implements Documentable {
+public class Applicant extends BaseModel implements Documentable, Commentable {
 
     @Constraints.Required
     private String firstname;
@@ -30,6 +30,9 @@ public class Applicant extends BaseModel implements Documentable {
 
     @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL)
     private List<Document> documents = new ArrayList<Document>();
+
+    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<Comment>();
 
     @ManyToOne
     private Company company;
@@ -84,5 +87,17 @@ public class Applicant extends BaseModel implements Documentable {
     @Override
     public Class getType() {
         return Applicant.class;
+    }
+
+
+    @Override
+    public void addComment(Comment comment) {
+        comment.attachTo(this);
+        this.comments.add(comment);
+    }
+
+    @Override
+    public List<Comment> getComments() {
+        return comments;
     }
 }
