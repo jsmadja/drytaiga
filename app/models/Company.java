@@ -13,8 +13,9 @@ public class Company extends BaseModel {
 
     public static Model.Finder<Long, Company> find = new Model.Finder(Long.class, Company.class);
 
-    public Company(String name) {
+    public Company(String name, Account account) {
         this.name = name;
+        this.account = account;
     }
 
     public String getName() {

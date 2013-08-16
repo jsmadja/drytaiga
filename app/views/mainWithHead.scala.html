@@ -36,6 +36,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="@routes.Openings.list">@Messages.get("openings.index.title")</a></li>
                     <li><a href="@routes.Applicants.list">@Messages.get("applicants.index.title")</a></li>
+                    <li><a href="@routes.Reporting.index">Reporting</a></li>
                     <li><a href="@routes.Pricing.index">Pricing</a></li>
                     @if(user != null) {
                         <li><a href="#">@user.getLastname @user.getFirstname</a></li>

@@ -24,6 +24,7 @@ public class Comment extends BaseModel {
     public Comment(String text, Member author) {
         this.text = text;
         this.author = author;
+        this.account = author.getAccount();
     }
 
     public void attachTo(Opening opening) {

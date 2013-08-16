@@ -1,0 +1,15 @@
+@(user: Member)
+@import play.i18n._
+
+@main(user) {
+    <h1>
+        Reporting
+    </h1>
+
+    <table class="table table-bordered table-condensed table-striped" style="width: 40%">
+        <tr>
+            <td>Taux de transformation Candidats / Embauches</td><td>@user.getAccount.getApplicants.filter(applicant => applicant.getApplianceStatus == ApplianceStatus.Hired).size / @user.getAccount.getApplicants.size</td>
+        </tr>
+    </table>
+
+}

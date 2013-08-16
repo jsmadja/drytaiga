@@ -40,5 +40,10 @@ POST        /applicants/:id/appliance_status controllers.Applicants.changeApplia
 # ~~~~~~~~~~~~~~
 POST        /incoming_mail                     controllers.IncomingMail.incomingMail()
 
+# Reporting
+# ~~~~~~~~~~~~~~
+GET         /reporting                          controllers.Reporting.index()
+
+
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                      controllers.Assets.at(path="/public", file)

@@ -4,10 +4,12 @@ import models.Account;
 import models.Company;
 import models.Member;
 import play.mvc.Controller;
+import play.mvc.Security;
 
 import static models.Member.currentUser;
 
-public class SecuredController extends Controller {
+@Security.Authenticated(Secured.class)
+public abstract class SecuredController extends Controller {
 
     protected static Account account() {
         return user().getAccount();

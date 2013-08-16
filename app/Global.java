@@ -31,7 +31,7 @@ public class Global extends GlobalSettings {
                 account.setOwner(user);
                 //Ebean.update(account);
 
-                Company company = new Company("My Company");
+                Company company = new Company("My Company", account);
                 account.setCompany(company);
 
                 account.addMember(user);

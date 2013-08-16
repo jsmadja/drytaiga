@@ -35,9 +35,6 @@ public class Applicant extends BaseModel implements Documentable, Commentable {
     @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<Comment>();
 
-    @ManyToOne
-    private Company company;
-
     private ApplianceStatus applianceStatus;
 
     public static Model.Finder<Long, Applicant> find = new Model.Finder(Long.class, Applicant.class);
@@ -83,7 +80,7 @@ public class Applicant extends BaseModel implements Documentable, Commentable {
 
     @Override
     public String getFilePath(Http.MultipartFormData.FilePart file) {
-        return format("companies/%d/applicants/%d/%s", company.getId(), getId(), file.getFilename());
+        return format("companies/%d/applicants/%d/%s", getAccount().getCompany().getId(), getId(), file.getFilename());
     }
 
     public String getFullname() {
