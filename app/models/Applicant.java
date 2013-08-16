@@ -39,10 +39,11 @@ public class Applicant extends BaseModel implements Documentable, Commentable {
 
     public static Model.Finder<Long, Applicant> find = new Model.Finder(Long.class, Applicant.class);
 
-    public Applicant(String firstname, String lastname, String email) {
+    public Applicant(String firstname, String lastname, String email, Account account) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
+        this.account = account;
     }
 
     public Applicant(String firstname, Account account) {

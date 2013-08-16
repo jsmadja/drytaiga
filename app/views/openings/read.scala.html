@@ -10,9 +10,9 @@
 
     <h2>Candidates</h2>
     @components.table(id = "candidates", headers = Seq("Name")) {
-        @for(candidate <- opening.getApplicants) {
+        @for(applicant <- opening.getApplicants) {
         <tr>
-            <td>@candidate.getLastname, @candidate.getFirstname</td>
+            <td><a href="@routes.Applicants.read(applicant.getId)">@applicant.getLastname, @applicant.getFirstname</a></td>
         </tr>
         }
     }

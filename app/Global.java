@@ -1,8 +1,5 @@
 import com.avaje.ebean.Ebean;
-import models.Account;
-import models.AccountType;
-import models.Company;
-import models.Member;
+import models.*;
 import org.slf4j.MDC;
 import play.Application;
 import play.GlobalSettings;
@@ -32,6 +29,14 @@ public class Global extends GlobalSettings {
 
                 Company company = new Company("My Company", account);
                 company.addMember(user);
+
+                Applicant applicant = new Applicant("Bob", "Lennon", "blenon@gmail.com", account);
+                applicant.addComment(new Comment("First comment on applicant", user));
+
+                Opening opening = new Opening("Programmer");
+                opening.addComment(new Comment("First comment on opening", user));
+                company.addOpening(opening);
+                opening.addApplicant(applicant);
                 Ebean.save(company);
             }
         }

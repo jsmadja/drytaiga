@@ -34,7 +34,7 @@ public class Opening extends BaseModel implements Documentable, Commentable {
         this.name = name;
     }
 
-    public void addCandidate(Applicant applicant) {
+    public void addApplicant(Applicant applicant) {
         this.applicants.add(applicant);
         applicant.addOpening(this);
     }
@@ -89,6 +89,10 @@ public class Opening extends BaseModel implements Documentable, Commentable {
     @Override
     public Class getType() {
         return Opening.class;
+    }
+
+    public boolean contains(Applicant applicant) {
+        return applicants.contains(applicant);
     }
 }
 

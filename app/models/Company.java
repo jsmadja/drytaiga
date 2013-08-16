@@ -86,7 +86,16 @@ public class Company extends BaseModel {
     }
 
     public boolean contains(Applicant applicant) {
-        return applicants.contains(applicant);
+        boolean contains = applicants.contains(applicant);
+        if(contains) {
+            return true;
+        }
+        for (Opening opening : openings) {
+            if(opening.contains(applicant)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<Opening> getOpenings() {
@@ -102,6 +111,10 @@ public class Company extends BaseModel {
     }
 
     public List<Applicant> getApplicants() {
+        List<Applicant> applicants = this.applicants;
+        for (Opening opening : openings) {
+            applicants.addAll(opening.getApplicants());
+        }
         return applicants;
     }
 }
