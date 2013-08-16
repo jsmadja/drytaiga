@@ -37,10 +37,11 @@
     <div id="latestData" class="alert-success">
     </div>
 
-    @components.table("applicants", headers = Seq(Messages.get("applicants.index.table.header.name"))) {
+    @components.table("applicants", headers = Seq(Messages.get("applicants.index.table.header.name"), "Status")) {
         @for(applicant <- user.getCompany.getApplicants) {
             <tr>
                 <td><a href="@routes.Applicants.read(applicant.getId)">@applicant.getFullname</a></td>
+                <td>@applicant.getApplianceStatus</td>
             </tr>
         }
     }

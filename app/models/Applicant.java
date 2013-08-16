@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.String.format;
+import static models.ApplianceStatus.ToContact;
 import static org.apache.commons.lang3.StringUtils.defaultString;
 
 @Entity
@@ -37,6 +38,8 @@ public class Applicant extends BaseModel implements Documentable, Commentable {
     @ManyToOne
     private Company company;
 
+    private ApplianceStatus applianceStatus;
+
     public static Model.Finder<Long, Applicant> find = new Model.Finder(Long.class, Applicant.class);
 
     public Applicant(String firstname, String lastname, String email, Account account) {
@@ -44,11 +47,13 @@ public class Applicant extends BaseModel implements Documentable, Commentable {
         this.lastname = lastname;
         this.email = email;
         this.account = account;
+        this.applianceStatus = ToContact;
     }
 
     public Applicant(String firstname, Account account) {
         this.firstname = firstname;
         this.account = account;
+        this.applianceStatus = ToContact;
     }
 
     public String getFirstname() {
@@ -100,5 +105,14 @@ public class Applicant extends BaseModel implements Documentable, Commentable {
     @Override
     public List<Comment> getComments() {
         return comments;
+    }
+
+    public void updateStatus(ApplianceStatus applianceStatus) {
+        this.applianceStatus = applianceStatus;
+        update();
+    }
+
+    public ApplianceStatus getApplianceStatus() {
+        return applianceStatus;
     }
 }

@@ -20,7 +20,9 @@ create table applicant (
   lastname                  varchar(255),
   email                     varchar(255),
   company_id                bigint,
+  appliance_status          varchar(30),
   created_at                timestamp not null,
+  constraint ck_applicant_appliance_status check (appliance_status in ('rejected_after_boss_interview','schedule_tech_interview','to_contact','refused_our_offer','hired','rejected_after_tech_interview','rejected_after_phone_interview','schedule_boss_interview','contacted')),
   constraint pk_applicant primary key (id))
 ;
 

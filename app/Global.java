@@ -17,7 +17,7 @@ public class Global extends GlobalSettings {
 
     static class InitialData {
         public static void insert(Application app) {
-            if(Ebean.find(Account.class).findRowCount() == 0) {
+            if (Ebean.find(Account.class).findRowCount() == 0) {
                 Account account = new Account(AccountType.EstablishedCompany);
                 Ebean.save(account);
 

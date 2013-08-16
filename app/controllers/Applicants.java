@@ -2,6 +2,7 @@ package controllers;
 
 import com.google.common.base.Predicate;
 import misc.Resolver;
+import models.ApplianceStatus;
 import models.Applicant;
 import models.Comment;
 import models.Document;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.common.collect.Collections2.filter;
+import static models.Applicant.find;
 import static play.data.Form.form;
 
 @Security.Authenticated(Secured.class)
@@ -35,7 +37,7 @@ public class Applicants extends AjaxController {
     }
 
     public static Result read(Long id) {
-        Applicant applicant = Applicant.find.byId(id);
+        Applicant applicant = find.byId(id);
         if (user().canAccessTo(applicant)) {
             return ok(read.render(applicant, user(), documentForm(), commentForm()));
         }
@@ -45,6 +47,16 @@ public class Applicants extends AjaxController {
     public static Result index() {
         List<Applicant> values = new ArrayList<Applicant>(filter(user().getCompany().getApplicants(), recentlyCreated));
         return toJson(values, keyResolver(), valueResolver());
+    }
+
+    public static Result changeApplianceStatus(Long id) {
+        Applicant applicant = find.byId(id);
+        if (user().canAccessTo(applicant)) {
+            ApplianceStatus applianceStatus = ApplianceStatus.values()[Integer.valueOf(form().bindFromRequest().data().get("applianceStatus"))];
+            applicant.updateStatus(applianceStatus);
+            return ok();
+        }
+        return forbidden();
     }
 
     private static Form<Document> documentForm() {

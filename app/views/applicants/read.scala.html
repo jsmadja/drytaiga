@@ -1,6 +1,29 @@
 @(applicant: Applicant, user: Member, documentForm: Form[Document], commentForm: Form[Comment])
+
+@selectApplianceStatus = {
+    <div style="float:right;">
+        <select id="applianceStatus">
+        @for(status <- ApplianceStatus.values()) {
+            <option @if(status == applicant.getApplianceStatus) {selected} value="@status.ordinal">@status.name</option>
+        }
+        </select>
+    </div>
+    <script>
+        $('#applianceStatus').change(function () {
+            var applianceStatusId = $("#applianceStatus option:selected")[0].value;
+            $.post(
+                "@routes.Applicants.changeApplianceStatus(applicant.getId).url",
+                { applianceStatus: applianceStatusId }
+            );
+            });
+    </script>
+}
+
 @main(user) {
-    <h1>@applicant.getFullname</h1>
+    <h1>
+        @applicant.getFullname
+        @selectApplianceStatus
+    </h1>
     @documents.cartridge(documentForm, applicant, routes.Applicants.read(applicant.getId).url)
     @comments.cartridge(commentForm, applicant, routes.Applicants.read(applicant.getId).url)
 }

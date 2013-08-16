@@ -1,44 +1,45 @@
-GET             /                               controllers.Dashboard.index()
-GET             /pricing                        controllers.Pricing.index()
+GET         /                                  controllers.Dashboard.index()
+GET         /pricing                           controllers.Pricing.index()
 
 
 # Authentication
 # ~~~~~~~~~~~~~~
-GET             /login                          controllers.Application.login()
-POST            /login                          controllers.Application.authenticate()
-GET             /logout                         controllers.Application.logout()
+GET         /login                             controllers.Application.login()
+POST        /login                             controllers.Application.authenticate()
+GET         /logout                            controllers.Application.logout()
 
 # Openings
 # ~~~~~~~~~~~~~~
-GET             /openings                      controllers.Openings.list()
-GET             /openings/new                  controllers.Openings.create()
-POST            /openings                      controllers.Openings.save()
-GET             /openings/:id                  controllers.Openings.read(id:Long)
-POST            /openings/:id                  controllers.Openings.update(id:Long)
+GET         /openings                          controllers.Openings.list()
+GET         /openings/new                      controllers.Openings.create()
+POST        /openings                          controllers.Openings.save()
+GET         /openings/:id                      controllers.Openings.read(id:Long)
+POST        /openings/:id                      controllers.Openings.update(id:Long)
 
 # Openings / Documents
 # ~~~~~~~~~~~~~~
-GET             /openings/:id/documents/new    controllers.Documents.create(id:Long, clazz: String, callback: String)
-POST            /openings/:id/documents        controllers.Documents.save(id:Long, clazz: String, callback: String)
+GET         /openings/:id/documents/new        controllers.Documents.create(id:Long, clazz: String, callback: String)
+POST        /openings/:id/documents            controllers.Documents.save(id:Long, clazz: String, callback: String)
 
 # Openings / Coments
 # ~~~~~~~~~~~~~~
-GET             /openings/:id/comments/new    controllers.Comments.create(id:Long, clazz: String, callback: String)
-POST            /openings/:id/comments        controllers.Comments.save(id:Long, clazz: String, callback: String)
+GET         /openings/:id/comments/new         controllers.Comments.create(id:Long, clazz: String, callback: String)
+POST        /openings/:id/comments             controllers.Comments.save(id:Long, clazz: String, callback: String)
 
 # Openings / Lists
 # ~~~~~~~~~~~~~~
-GET             /a                              controllers.Openings.a()
+GET         /a                                 controllers.Openings.a()
 
 # Applicant
 # ~~~~~~~~~~~~~~
-GET             /applicants                     controllers.Applicants.list()
-GET             /applicants/:id                 controllers.Applicants.read(id:Long)
-GET             /comet                          controllers.Applicants.index()
+GET         /applicants                        controllers.Applicants.list()
+GET         /applicants/:id                    controllers.Applicants.read(id:Long)
+GET         /comet                             controllers.Applicants.index()
+POST        /applicants/:id/appliance_status controllers.Applicants.changeApplianceStatus(id: Long)
 
 # Mail
 # ~~~~~~~~~~~~~~
-POST    /incoming_mail                          controllers.IncomingMail.incomingMail()
+POST        /incoming_mail                     controllers.IncomingMail.incomingMail()
 
 # Map static resources from the /public folder to the /assets URL path
-GET             /assets/*file                   controllers.Assets.at(path="/public", file)
+GET         /assets/*file                      controllers.Assets.at(path="/public", file)
