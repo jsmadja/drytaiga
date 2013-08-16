@@ -28,6 +28,9 @@ public enum ApplianceStatus {
     @EnumValue("refused_our_offer")
     RefusedOurOffer,
 
+    @EnumValue("rejected")
+    Rejected,
+
     @EnumValue("hired")
     Hired;
 

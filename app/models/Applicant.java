@@ -109,7 +109,6 @@ public class Applicant extends BaseModel implements Documentable, Commentable {
 
     public void updateStatus(ApplianceStatus applianceStatus) {
         this.applianceStatus = applianceStatus;
-        update();
     }
 
     public ApplianceStatus getApplianceStatus() {

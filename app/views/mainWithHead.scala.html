@@ -39,7 +39,7 @@
                     <li><a href="@routes.Pricing.index">Pricing</a></li>
                     @if(user != null) {
                         <li><a href="#">@user.getLastname @user.getFirstname</a></li>
-                        <li><a href="#">@user.getCompany.getName</a></li>
+                        <li><a href="#">@user.getAccount.getCompany.getName</a></li>
                         <li><a href="/logout">@Messages.get("common.Logout")</a></li>
                     }
                 </ul>

@@ -1,9 +1,6 @@
 package controllers;
 
-import models.Comment;
-import models.Company;
-import models.Document;
-import models.Opening;
+import models.*;
 import play.data.Form;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -45,9 +42,9 @@ public class Openings extends AjaxController {
             return badRequest(form);
         }
         Opening opening = form.get();
-        Company company = company();
-        company.addOpening(opening);
-        company.update();
+        Account account = account();
+        account.addOpening(opening);
+        account.update();
         return ok(Openings.read(opening.getId()));
     }
 
@@ -72,7 +69,7 @@ public class Openings extends AjaxController {
     }
 
     private static void checkNameUnicity(Form<Opening> form, Opening opening) {
-        if (company().containsOpeningWithName(opening.getName())) {
+        if (account().containsOpeningWithName(opening.getName())) {
             addError(form, "name", "openings.form.name.alreadyexist", opening.getName());
         }
     }

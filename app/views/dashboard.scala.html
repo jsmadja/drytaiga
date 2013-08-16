@@ -1,4 +1,15 @@
 @(user: Member)
+
+@interviews(applianceStatus: ApplianceStatus) = {
+    @components.table("table_@applianceStatus") {
+        @for(applicant <- user.getAccount.getApplicants.filter(a => a.getApplianceStatus == applianceStatus)) {
+            <tr>
+                <td><a href="@routes.Applicants.read(applicant.getId)">@applicant.getFullname</a></td>
+            </tr>
+        }
+    }
+}
+
 @main(user){
 
     Last login date: @user.getLastLogin
@@ -6,9 +17,21 @@
     <h1>Dashboard</h1>
     <table class="table table-bordered table-condensed table-striped" style="width: 40%">
         <tr><td><b>Plan</b></td><td>@user.getAccount.getAccountType.name</td></tr>
-        <tr><td><b><a href="@routes.Openings.list()">Openings</a></b></td><td>@user.getCompany.getOpenings.size()</td></tr>
-        <tr><td><b><a href="@routes.Applicants.list()">Applicants</a></b></td><td>@user.getCompany.getApplicants.size()</td></tr>
-        <tr><td><b>Files</b></td><td>@user.getCompany.getNumDocuments</td></tr>
-        <tr><td><b>Space (Max: @user.getCompany.getTotalSpace)</b></td><td>@user.getCompany.getUsedSpace</td></tr>
+        <tr><td><b><a href="@routes.Openings.list()">Openings</a></b></td><td>@user.getAccount.getOpenings.size()</td></tr>
+        <tr><td><b><a href="@routes.Applicants.list()">Applicants</a></b></td><td>@user.getAccount.getApplicants.size()</td></tr>
+        <tr><td><b>Files</b></td><td>@user.getAccount.getNumDocuments</td></tr>
+        <tr><td><b>Space (Max: @user.getAccount.getTotalSpace)</b></td><td>@user.getAccount.getUsedSpace</td></tr>
     </table>
+
+    <h2>Actions</h2>
+
+    <h3>To Contact ASAP</h3>
+    @interviews(ApplianceStatus.ToContact)
+
+    <h3>Schedule Tech Interviews</h3>
+    @interviews(ApplianceStatus.ScheduleTechInterview)
+
+    <h3>Schedule Boss Interviews</h3>
+    @interviews(ApplianceStatus.ScheduleBossInterview)
+
 }

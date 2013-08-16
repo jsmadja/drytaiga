@@ -25,13 +25,6 @@ import static play.data.Form.form;
 @Security.Authenticated(Secured.class)
 public class Applicants extends AjaxController {
 
-    public static final Predicate<Applicant> recentlyCreated = new Predicate<Applicant>() {
-        @Override
-        public boolean apply(@Nullable Applicant applicant) {
-            return applicant.getCreatedAt().after(new DateTime().minus(Duration.standardMinutes(5)).toDate());
-        }
-    };
-
     public static Result list() {
         return ok(index.render(user()));
     }
@@ -44,16 +37,12 @@ public class Applicants extends AjaxController {
         return forbidden();
     }
 
-    public static Result index() {
-        List<Applicant> values = new ArrayList<Applicant>(filter(user().getCompany().getApplicants(), recentlyCreated));
-        return toJson(values, keyResolver(), valueResolver());
-    }
-
     public static Result changeApplianceStatus(Long id) {
         Applicant applicant = find.byId(id);
         if (user().canAccessTo(applicant)) {
             ApplianceStatus applianceStatus = ApplianceStatus.values()[Integer.valueOf(form().bindFromRequest().data().get("applianceStatus"))];
             applicant.updateStatus(applianceStatus);
+            applicant.update();
             return ok();
         }
         return forbidden();
@@ -65,24 +54,6 @@ public class Applicants extends AjaxController {
 
     private static Form<Comment> commentForm() {
         return form(Comment.class);
-    }
-
-    private static Resolver<Applicant> valueResolver() {
-        return new Resolver<Applicant>() {
-            @Override
-            public String resolve(Applicant value) {
-                return value.getFullname();
-            }
-        };
-    }
-
-    private static Resolver<Applicant> keyResolver() {
-        return new Resolver<Applicant>() {
-            @Override
-            public String resolve(Applicant value) {
-                return value.getId().toString();
-            }
-        };
     }
 
 }

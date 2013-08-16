@@ -33,8 +33,8 @@ public class ApplicantProducerPlugin extends Plugin {
 
     private static Applicant addApplicantInCompany(String firstname, Member member) {
         final Applicant applicant = new Applicant(firstname, member.getAccount());
-        member.getCompany().addApplicant(applicant);
-        member.getCompany().update();
+        member.getAccount().addApplicant(applicant);
+        member.getAccount().update();
         return applicant;
     }
 

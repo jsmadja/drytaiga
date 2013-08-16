@@ -34,7 +34,6 @@ GET         /a                                 controllers.Openings.a()
 # ~~~~~~~~~~~~~~
 GET         /applicants                        controllers.Applicants.list()
 GET         /applicants/:id                    controllers.Applicants.read(id:Long)
-GET         /comet                             controllers.Applicants.index()
 POST        /applicants/:id/appliance_status controllers.Applicants.changeApplianceStatus(id: Long)
 
 # Mail

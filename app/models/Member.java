@@ -28,9 +28,6 @@ public class Member extends BaseModel {
     @Constraints.Required
     private String password;
 
-    @ManyToOne
-    private Company company;
-
     @OneToMany(mappedBy = "author")
     private List<Comment> comments;
 
@@ -63,19 +60,11 @@ public class Member extends BaseModel {
     }
 
     public boolean canAccessTo(Opening opening) {
-        return company.contains(opening);
+        return account.contains(opening);
     }
 
     public boolean canAccessTo(Applicant applicant) {
-        return company.contains(applicant);
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
+        return account.contains(applicant);
     }
 
     public String getFirstname() {

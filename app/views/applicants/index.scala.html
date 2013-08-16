@@ -1,30 +1,6 @@
 @(user: Member)
 @import play.i18n._
-
-@head = {
-    <script type="text/javascript">
-    $(document).ready(function() {
-        var truc = setInterval(function() {
-            $.ajax({
-                url:  "/comet",
-                type: "GET",
-                data: null,
-                error: function(data) {
-                },
-                success : function (data) {
-                    var ul = "";
-                    for(var i= 0; i < data.length;i++) {
-                        ul += "<li>Le candidat <a href=\"/applicants/"+data[i].key+"\">"+  data[i].value + "</a> vient d'être ajouté</li>";
-                    }
-                    $("#latestData" ).html(ul);
-                }
-            });
-        }, 10000);
-    });
-    </script>
-}
-
-@mainWithHead(user)(head) {
+@main(user) {
     <h1>
         @Messages.get("applicants.index.title")
     </h1>
@@ -34,11 +10,8 @@
         Put the applicant's name as subject and attach related files.
     </p>
 
-    <div id="latestData" class="alert-success">
-    </div>
-
     @components.table("applicants", headers = Seq(Messages.get("applicants.index.table.header.name"), "Status")) {
-        @for(applicant <- user.getCompany.getApplicants) {
+        @for(applicant <- user.getAccount.getApplicants) {
             <tr>
                 <td><a href="@routes.Applicants.read(applicant.getId)">@applicant.getFullname</a></td>
                 <td>@applicant.getApplianceStatus</td>
