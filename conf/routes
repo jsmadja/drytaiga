@@ -21,6 +21,11 @@ POST            /openings/:id                  controllers.Openings.update(id:Lo
 GET             /openings/:id/documents/new    controllers.Documents.create(id:Long, clazz: String, callback: String)
 POST            /openings/:id/documents        controllers.Documents.save(id:Long, clazz: String, callback: String)
 
+# Openings / Coments
+# ~~~~~~~~~~~~~~
+GET             /openings/:id/comments/new    controllers.Comments.create(id:Long, clazz: String, callback: String)
+POST            /openings/:id/comments        controllers.Comments.save(id:Long, clazz: String, callback: String)
+
 # Openings / Lists
 # ~~~~~~~~~~~~~~
 GET             /a                              controllers.Openings.a()

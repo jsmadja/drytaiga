@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Comment;
 import models.Company;
 import models.Document;
 import models.Opening;
@@ -30,7 +31,7 @@ public class Openings extends AjaxController {
     public static Result read(Long id) {
         Opening opening = Opening.find.byId(id);
         if(user().canAccessTo(opening)) {
-            return ok(read.render(opening, user(), openingForm(opening), documentForm()));
+            return ok(read.render(opening, user(), openingForm(opening), documentForm(), commentForm()));
         }
         return forbidden();
     }
@@ -86,6 +87,10 @@ public class Openings extends AjaxController {
 
     private static Form<Document> documentForm() {
         return form(Document.class);
+    }
+
+    private static Form<Comment> commentForm() {
+        return form(Comment.class);
     }
 
     public static Result a() {

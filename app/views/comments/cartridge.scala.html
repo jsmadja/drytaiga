@@ -1,0 +1,22 @@
+@(form: Form[Comment], commentable: Commentable, callback: String)
+
+<h2>
+    Comments
+    <button id="newComment" style="float: right;">New Comment</button>
+</h2>
+
+@components.dialog("newComment", "Add Comment") {
+    @comments.create(form, commentable.getId, commentable.getType.getName, callback)
+}
+
+@components.table("comments", headers = Seq("Text", "Author", "Date")) {
+    @if(commentable.getComments != null) {
+        @for(comment <- commentable.getComments) {
+            <tr>
+                <td>@comment.getText</a></td>
+                <td>@comment.getAuthor.getFullname</td>
+                <td>@comment.getDate</td>
+            </tr>
+        }
+    }
+}

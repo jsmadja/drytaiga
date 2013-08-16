@@ -1,6 +1,5 @@
 package models;
 
-import com.avaje.ebean.annotation.CreatedTimestamp;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
@@ -8,17 +7,13 @@ import play.mvc.Http;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static java.lang.String.format;
 import static org.apache.commons.lang3.StringUtils.defaultString;
 
 @Entity
-public class Applicant extends Model implements Documentable {
-
-    @Id
-    private Long id;
+public class Applicant extends BaseModel implements Documentable {
 
     @Constraints.Required
     private String firstname;
@@ -36,15 +31,8 @@ public class Applicant extends Model implements Documentable {
     @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL)
     private List<Document> documents = new ArrayList<Document>();
 
-    @OneToOne
-    private Account account;
-
     @ManyToOne
     private Company company;
-
-    @CreatedTimestamp
-    @Column(name = "created_at")
-    private Date createdAt;
 
     public static Model.Finder<Long, Applicant> find = new Model.Finder(Long.class, Applicant.class);
 
@@ -76,11 +64,6 @@ public class Applicant extends Model implements Documentable {
     }
 
     @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
     public List<Document> getDocuments() {
         return documents;
     }
@@ -91,11 +74,7 @@ public class Applicant extends Model implements Documentable {
 
     @Override
     public String getFilePath(Http.MultipartFormData.FilePart file) {
-        return format("companies/%d/applicants/%d/%s", company.getId(), id, file.getFilename());
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
+        return format("companies/%d/applicants/%d/%s", company.getId(), getId(), file.getFilename());
     }
 
     public String getFullname() {

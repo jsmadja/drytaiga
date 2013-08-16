@@ -1,7 +1,6 @@
 package models;
 
 import com.avaje.ebean.annotation.EnumValue;
-import misc.FileSize;
 
 import static misc.FileSize.Unity.GIGA;
 import static misc.FileSize.Unity.MEGA;

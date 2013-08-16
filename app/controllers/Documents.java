@@ -11,7 +11,6 @@ import plugins.StoragePlugin;
 
 import java.lang.reflect.Field;
 
-import static java.lang.String.format;
 import static play.data.Form.form;
 
 public class Documents extends Controller {

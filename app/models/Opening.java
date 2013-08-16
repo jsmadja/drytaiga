@@ -11,10 +11,7 @@ import java.util.List;
 import static java.lang.String.format;
 
 @Entity
-public class Opening extends Model implements Documentable {
-
-    @Id
-    private Long id;
+public class Opening extends BaseModel implements Documentable, Commentable {
 
     @Constraints.Required
     private String name;
@@ -25,11 +22,11 @@ public class Opening extends Model implements Documentable {
     @OneToMany(mappedBy = "opening", cascade = CascadeType.ALL)
     private List<Document> documents = new ArrayList<Document>();
 
+    @OneToMany(mappedBy = "opening", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<Comment>();
+
     @ManyToOne
     private Company company;
-
-    @OneToOne
-    private Account account;
 
     public static Model.Finder<Long, Opening> find = new Model.Finder(Long.class, Opening.class);
 
@@ -49,8 +46,14 @@ public class Opening extends Model implements Documentable {
     }
 
     @Override
-    public Long getId() {
-        return id;
+    public void addComment(Comment comment) {
+        comment.attachTo(this);
+        this.comments.add(comment);
+    }
+
+    @Override
+    public List<Comment> getComments() {
+        return comments;
     }
 
     @Override
@@ -60,10 +63,6 @@ public class Opening extends Model implements Documentable {
 
     public boolean hasName(String openingName) {
         return name.equals(openingName);
-    }
-
-    public Account getAccount() {
-        return account;
     }
 
     public String getName() {
@@ -84,7 +83,7 @@ public class Opening extends Model implements Documentable {
 
     @Override
     public String getFilePath(Http.MultipartFormData.FilePart file) {
-        return format("companies/%d/openings/%d/%s", company.getId(), id, file.getFilename());
+        return format("companies/%d/openings/%d/%s", company.getId(), getId(), file.getFilename());
     }
 
     @Override

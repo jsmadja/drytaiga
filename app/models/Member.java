@@ -1,19 +1,19 @@
 package models;
 
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 import play.mvc.Http;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
-@Table(name = "member")
-public class Member extends Model {
-
-    @Id
-    private Long id;
+public class Member extends BaseModel {
 
     @Constraints.Required
     @Formats.NonEmpty
@@ -31,8 +31,8 @@ public class Member extends Model {
     @ManyToOne
     private Company company;
 
-    @OneToOne
-    private Account account;
+    @OneToMany(mappedBy = "author")
+    private List<Comment> comments;
 
     private DateTime lastLogin;
 
@@ -86,6 +86,10 @@ public class Member extends Model {
         return lastname;
     }
 
+    public String getFullname() {
+        return (StringUtils.defaultString(lastname)+" "+StringUtils.defaultString(firstname)).trim();
+    }
+
     public void updateLastLoginDate() {
         this.lastLogin = new DateTime();
         update();
@@ -95,16 +99,5 @@ public class Member extends Model {
         return lastLogin;
     }
 
-    public Account getAccount() {
-        return account;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
 }
 

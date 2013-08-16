@@ -1,9 +1,11 @@
+import com.avaje.ebean.Ebean;
+import models.Account;
+import models.AccountType;
+import models.Company;
+import models.Member;
 import org.slf4j.MDC;
-import play.*;
-
-import com.avaje.ebean.*;
-
-import models.*;
+import play.Application;
+import play.GlobalSettings;
 import play.mvc.Action;
 import play.mvc.Http;
 import play.mvc.Result;

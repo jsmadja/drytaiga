@@ -4,15 +4,14 @@ import misc.FileSize;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Company extends Model {
-
-    @Id
-    private Long id;
+public class Company extends BaseModel {
 
     @Constraints.Required
     private String name;
@@ -25,9 +24,6 @@ public class Company extends Model {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
     private List<Applicant> applicants = new ArrayList<Applicant>();
-
-    @OneToOne
-    private Account account;
 
     public static Model.Finder<Long, Company> find = new Model.Finder(Long.class, Company.class);
 
@@ -76,26 +72,6 @@ public class Company extends Model {
         return documentables;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-
-        Company company = (Company) o;
-
-        if (!name.equals(company.name)) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + name.hashCode();
-        return result;
-    }
-
     public boolean containsOpeningWithName(String positionName) {
         for (Opening opening : openings) {
             if(opening.hasName(positionName)) {
@@ -119,10 +95,6 @@ public class Company extends Model {
 
     public String getName() {
         return name;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public void addApplicant(Applicant applicant) {

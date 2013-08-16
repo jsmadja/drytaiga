@@ -1,0 +1,13 @@
+@(commentForm: Form[Comment], id: Long, clazz: String, callback: String)
+@import helper._
+@implicitField = @{ FieldConstructor(components.myFieldConstructorTemplate.render) }
+
+<h1>Add a comment</h1>
+@form(routes.Comments.save(id, clazz, callback)) {
+    <fieldset>
+        @inputText(commentForm("text"), '_label -> "Text")
+    </fieldset>
+    <div class="actions">
+        <input type="submit" value="Add this comment" class="btn primary">
+    </div>
+}

@@ -1,4 +1,4 @@
-@(opening: Opening, user: Member, openingForm: Form[Opening], documentForm: Form[Document])
+@(opening: Opening, user: Member, openingForm: Form[Opening], documentForm: Form[Document], commentForm: Form[Comment])
 
 @main(user) {
 
@@ -18,5 +18,7 @@
     }
 
     @documents.cartridge(documentForm, opening, routes.Openings.read(opening.getId).url)
+
+    @comments.cartridge(commentForm, opening, routes.Openings.read(opening.getId).url)
 
 }
