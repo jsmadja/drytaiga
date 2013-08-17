@@ -50,4 +50,5 @@ public abstract class BaseModel extends Model {
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
     }
+
 }
