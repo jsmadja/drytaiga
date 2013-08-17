@@ -21,9 +21,25 @@
         <link rel="stylesheet" href="@routes.Assets.at("stylesheets/datatables/css/demo_page.css")">
         <link rel="stylesheet" href="@routes.Assets.at("stylesheets/datatables/css/demo_table.css")">
         <link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
+
+        <style>
+            .ui-autocomplete-loading {
+                background: white url(@routes.Assets.at("images/ui-anim_basic_16x16.gif") right center no-repeat;
+            }
+
+            .ui-autocomplete-category {
+                font-weight: bold;
+                padding: .2em .4em;
+                margin: .8em 0 .2em;
+                line-height: 1.5;
+            }
+        </style>
+
+
         @head
     </head>
 
+    <body style="margin-left: 10%; margin-right: 10%;">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
@@ -44,12 +60,13 @@
                         <li><a href="/logout">@Messages.get("common.Logout")</a></li>
                     }
                 </ul>
+                <input id="search" placeholder="Search" style="float:right; margin-top: 10px;"/>
             </div>
         </div>
     </div>
 
-    <div class="container">
-        <div class="body-content" style="margin-top: 100px;">
+    <div class="container-fluid">
+        <div class="body-content" style="margin-top: 70px;">
             @body
             <hr>
             <footer>
@@ -61,5 +78,6 @@
             </footer>
         </div>
     </div>
+    </body>
     @Html(com.newrelic.api.agent.NewRelic.getBrowserTimingFooter())
 </html>

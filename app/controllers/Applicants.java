@@ -1,24 +1,15 @@
 package controllers;
 
-import com.google.common.base.Predicate;
-import misc.Resolver;
 import models.ApplianceStatus;
 import models.Applicant;
 import models.Comment;
 import models.Document;
-import org.joda.time.DateTime;
-import org.joda.time.Duration;
 import play.data.Form;
 import play.mvc.Result;
 import play.mvc.Security;
 import views.html.applicants.index;
 import views.html.applicants.read;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.google.common.collect.Collections2.filter;
 import static models.Applicant.find;
 import static play.data.Form.form;
 
