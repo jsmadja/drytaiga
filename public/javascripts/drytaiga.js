@@ -68,25 +68,18 @@ function submitForm(id) {
 
 // ----------------------------------------------
 // global search
-
-function split(val) {
-    return val.split(/,\s*/);
-}
-
-function extractLast(term) {
-    return split(term).pop();
-}
-
 $.widget( "custom.catcomplete", $.ui.autocomplete, {
     _renderMenu: function( ul, items ) {
-        var that = this,
-            currentCategory = "";
-            $.each( items, function( index, item ) {
+        var that = this, currentCategory = "";
+        $.each( items, function( index, item ) {
             if ( item.category != currentCategory ) {
-                ul.append( "<li class='ui-autocomplete-category'>" + item.category + "</li>" );
+                ul.append( "<li class='ui-autocomplete-category'>" + item.category + "</li>");
                 currentCategory = item.category;
             }
-            that._renderItemData( ul, item );
+            that._renderItemData(ul, item).
+                click(function () {
+                    $(location).attr('href',item.url)
+                });
         });
     }
 });
@@ -95,8 +88,8 @@ $(function() {
     $( "#search" ).catcomplete({
         delay: 0,
         source: function(request, response) {
-            $.getJSON("search", {
-                term: extractLast(request.term)
+            $.getJSON("/search", {
+                term: request.term
             }, response );
         }
     });
