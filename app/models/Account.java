@@ -33,6 +33,8 @@ public class Account extends Model {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
     private List<Applicant> applicants = new ArrayList<Applicant>();
 
+    public static Model.Finder<String, Account> find = new Model.Finder(String.class, Account.class);
+
     public Account(AccountType accountType) {
         this.accountType = accountType;
         this.status = AccountStatus.Active;
@@ -57,11 +59,11 @@ public class Account extends Model {
 
     public boolean contains(Applicant applicant) {
         boolean contains = applicants.contains(applicant);
-        if(contains) {
+        if (contains) {
             return true;
         }
         for (Opening opening : openings) {
-            if(opening.contains(applicant)) {
+            if (opening.contains(applicant)) {
                 return true;
             }
         }
@@ -105,7 +107,7 @@ public class Account extends Model {
 
     public boolean containsOpeningWithName(String positionName) {
         for (Opening opening : openings) {
-            if(opening.hasName(positionName)) {
+            if (opening.hasName(positionName)) {
                 return true;
             }
         }

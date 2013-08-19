@@ -80,7 +80,9 @@ create table member (
   lastname                  varchar(255),
   password                  varchar(255),
   last_login                timestamp,
+  profile                   varchar(13),
   created_at                timestamp not null,
+  constraint ck_member_profile check (profile in ('customer','administrator')),
   constraint pk_member primary key (id))
 ;
 

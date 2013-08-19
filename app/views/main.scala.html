@@ -45,10 +45,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">Dry Taiga</a>
+
+                @if(user.isAdministrator) {
+                    <a class="navbar-brand" href="@routes.AdministratorDashboard.index">Dry Taiga</a>
+                } else {
+                    <a class="navbar-brand" href="@routes.Dashboard.index">Dry Taiga</a>
+                }
                 <div class="nav-collapse collapse">
                     <ul class="nav navbar-nav">
-                        @if(user != null) {
+                        @if(user != null && user.isCustomer) {
                             <li class="@Application.currentCategory("openings")"><a href="@routes.Openings.list">@Messages.get("openings.index.title")</a></li>
                             <li class="@Application.currentCategory("applicants")"><a href="@routes.Applicants.list">@Messages.get("applicants.index.title")</a></li>
                             <li class="@Application.currentCategory("reporting")"><a href="@routes.Reporting.index">Reporting</a></li>
@@ -58,11 +63,12 @@
 
                         @if(user != null) {
                             <li><a href="#">@user.getLastname @user.getFirstname</a></li>
-                            <li><a href="#">@user.getAccount.getCompany.getName</a></li>
                             <li><a href="/logout">@Messages.get("common.Logout")</a></li>
                         }
                     </ul>
-                    <input id="search" placeholder="Search" style="float:right; margin-top: 10px; z-index: 10000"/>
+                    @if(user != null && user.isCustomer) {
+                        <input id="search" placeholder="Search" style="float:right; margin-top: 10px; z-index: 10000"/>
+                    }
                 </div>
             </div>
         </div>

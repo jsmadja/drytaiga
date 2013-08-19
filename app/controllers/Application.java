@@ -34,6 +34,10 @@ public class Application extends Controller {
         session("email", email);
         Member member = Member.findByEmail(email);
         member.updateLastLoginDate();
+
+        if(member.isAdministrator()) {
+            return redirect(routes.AdministratorDashboard.index());
+        }
         return redirect(routes.Dashboard.index());
     }
 

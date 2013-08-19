@@ -7,10 +7,12 @@ import play.data.validation.Constraints;
 import play.db.ebean.Model;
 import play.mvc.Http;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+
+import static models.Profile.Administrator;
+import static models.Profile.Customer;
 
 @Entity
 public class Member extends BaseModel {
@@ -35,11 +37,15 @@ public class Member extends BaseModel {
 
     public static Model.Finder<String,Member> find = new Model.Finder(String.class, Member.class);
 
-    public Member(String firstname, String lastname, String email, String password) {
+    @Enumerated(EnumType.STRING)
+    private Profile profile;
+
+    public Member(String firstname, String lastname, String email, String password, Profile profile) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.password = password;
+        this.profile = profile;
     }
 
     public static Member authenticate(String email, String password) {
@@ -89,7 +95,11 @@ public class Member extends BaseModel {
     }
 
     public boolean isAdministrator() {
-        return true;
+        return profile == Administrator;
+    }
+
+    public boolean isCustomer() {
+        return profile == Customer;
     }
 
 }
