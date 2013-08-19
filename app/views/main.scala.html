@@ -49,12 +49,12 @@
                 <div class="nav-collapse collapse">
                     <ul class="nav navbar-nav">
                         @if(user != null) {
-                            <li><a href="@routes.Openings.list">@Messages.get("openings.index.title")</a></li>
-                            <li><a href="@routes.Applicants.list">@Messages.get("applicants.index.title")</a></li>
-                            <li><a href="@routes.Reporting.index">Reporting</a></li>
+                            <li class="@Application.currentCategory("openings")"><a href="@routes.Openings.list">@Messages.get("openings.index.title")</a></li>
+                            <li class="@Application.currentCategory("applicants")"><a href="@routes.Applicants.list">@Messages.get("applicants.index.title")</a></li>
+                            <li class="@Application.currentCategory("reporting")"><a href="@routes.Reporting.index">Reporting</a></li>
                         }
-                    <li><a href="@routes.Pricing.index">Pricing</a></li>
-                    <li><a href="@routes.Blog.index">Blog</a></li>
+                    <li class="@Application.currentCategory("pricing")"><a href="@routes.Pricing.index">Pricing</a></li>
+                    <li class="@Application.currentCategory("blog")"><a href="@routes.Blog.index">Blog</a></li>
 
                         @if(user != null) {
                             <li><a href="#">@user.getLastname @user.getFirstname</a></li>

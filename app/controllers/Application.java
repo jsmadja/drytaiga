@@ -2,7 +2,6 @@ package controllers;
 
 import models.Member;
 import play.data.Form;
-import play.data.format.Formatters;
 import play.mvc.Controller;
 import play.mvc.Result;
 
@@ -41,6 +40,10 @@ public class Application extends Controller {
     public static Result logout() {
         session().clear();
         return redirect(routes.Application.login());
+    }
+
+    public static String currentCategory(String category) {
+        return request().uri().startsWith("/" + category) ? "active" : "";
     }
 
 }
