@@ -88,5 +88,9 @@ public class Member extends BaseModel {
         return lastLogin;
     }
 
+    public boolean isAdministrator() {
+        return true;
+    }
+
 }
 

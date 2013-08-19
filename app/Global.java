@@ -29,11 +29,7 @@ public class Global extends GlobalSettings {
                 Ebean.save(user);
 
                 account.setOwner(user);
-                //Ebean.update(account);
-
-                Company company = new Company("My Company", account);
-                account.setCompany(company);
-
+                account.setCompany(new Company("My Company", account));
                 account.addMember(user);
 
                 Opening opening = new Opening("Programmer");
@@ -65,8 +61,4 @@ public class Global extends GlobalSettings {
         };
     }
 
-    @Override
-    public Result onError(Http.RequestHeader requestHeader, Throwable throwable) {
-        return super.onError(requestHeader, throwable);
-    }
 }

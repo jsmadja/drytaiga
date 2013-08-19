@@ -1,21 +1,10 @@
 @(form: Form[Application.LoginForm])
-<html>
-    <head>
-        <title>DT</title>
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/login.css")">
-    </head>
-    <body>
+@main(){
     @helper.form(routes.Application.authenticate, 'id -> "loginForm") {
         <h1>Sign in</h1>
         @if(form.hasGlobalErrors) {
             <p class="error">
-            @form.globalError.message
-            </p>
-        }
-        @if(flash.contains("success")) {
-            <p class="success">
-            @flash.get("success")
+               @form.globalError.message
             </p>
         }
         <p>
@@ -28,8 +17,4 @@
             <button id="submit" type="submit">Login</button>
         </p>
     }
-    </body>
-</html>
-
-
-
+}

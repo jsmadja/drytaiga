@@ -1,19 +1,18 @@
 package controllers;
 
 import com.avaje.ebean.Ebean;
+import controllers.security.SecuredController;
 import models.Comment;
 import models.Commentable;
 import play.data.Form;
 import play.db.ebean.Model;
 import play.mvc.Result;
-import play.mvc.Security;
 
 import java.lang.reflect.Field;
 import java.util.Map;
 
 import static play.data.Form.form;
 
-@Security.Authenticated(Secured.class)
 public class Comments extends SecuredController {
 
     public static Result create(Long id, String clazz, String callback) {

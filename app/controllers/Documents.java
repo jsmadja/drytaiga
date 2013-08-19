@@ -1,10 +1,10 @@
 package controllers;
 
 import com.avaje.ebean.Ebean;
+import controllers.security.SecuredController;
 import models.Document;
 import models.Documentable;
 import play.db.ebean.Model;
-import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 import plugins.StoragePlugin;
@@ -13,7 +13,7 @@ import java.lang.reflect.Field;
 
 import static play.data.Form.form;
 
-public class Documents extends Controller {
+public class Documents extends SecuredController {
 
     public static Result create(Long id, String clazz, String callback) {
         return ok(views.html.documents.create.render(form(Document.class), id, clazz, callback));

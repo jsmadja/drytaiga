@@ -1,7 +1,6 @@
-package controllers;
+package controllers.security;
 
 import models.Account;
-import models.Company;
 import models.Member;
 import play.mvc.Controller;
 import play.mvc.Security;

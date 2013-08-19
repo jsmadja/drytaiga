@@ -1,5 +1,6 @@
 package controllers;
 
+import controllers.security.SecuredController;
 import play.mvc.Result;
 import views.html.reporting.index;
 

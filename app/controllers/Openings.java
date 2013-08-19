@@ -1,9 +1,11 @@
 package controllers;
 
-import models.*;
+import models.Account;
+import models.Comment;
+import models.Document;
+import models.Opening;
 import play.data.Form;
 import play.mvc.Result;
-import play.mvc.Security;
 import views.html.openings.create;
 import views.html.openings.index;
 import views.html.openings.read;
@@ -14,7 +16,6 @@ import java.util.List;
 import static controllers.routes.Openings;
 import static play.data.Form.form;
 
-@Security.Authenticated(Secured.class)
 public class Openings extends AjaxController {
 
     public static Result list() {
@@ -27,7 +28,7 @@ public class Openings extends AjaxController {
 
     public static Result read(Long id) {
         Opening opening = Opening.find.byId(id);
-        if(user().canAccessTo(opening)) {
+        if (user().canAccessTo(opening)) {
             return ok(read.render(opening, user(), openingForm(opening), documentForm(), commentForm()));
         }
         return forbidden();
@@ -52,7 +53,7 @@ public class Openings extends AjaxController {
         Form<Opening> form = openingForm().bindFromRequest();
         if (form.value().isDefined()) {
             boolean nameHasChanged = !Opening.find.byId(id).hasName(form.get().getName());
-            if(nameHasChanged) {
+            if (nameHasChanged) {
                 checkNameUnicity(form, form.get());
             }
         }
@@ -60,7 +61,7 @@ public class Openings extends AjaxController {
             return badRequest(form);
         }
         Opening opening = Opening.find.byId(id);
-        if(user().canAccessTo(opening)) {
+        if (user().canAccessTo(opening)) {
             opening.setName(form.data().get("name"));
             opening.update();
             return ok(Openings.read(id));

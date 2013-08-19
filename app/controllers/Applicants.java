@@ -6,14 +6,12 @@ import models.Comment;
 import models.Document;
 import play.data.Form;
 import play.mvc.Result;
-import play.mvc.Security;
 import views.html.applicants.index;
 import views.html.applicants.read;
 
 import static models.Applicant.find;
 import static play.data.Form.form;
 
-@Security.Authenticated(Secured.class)
 public class Applicants extends AjaxController {
 
     public static Result list() {

@@ -1,21 +1,34 @@
 @(user: Member, blogPost: BlogPost, form: Form[BlogPost])
-@main(user){
-    <h1>
-        Blog
-        <button id="newBlogPost" style="float: right;">New Post</button>
-    </h1>
+
+@createButton = {
+    <button id="newBlogPost" style="float: right;">New Post</button>
     @components.dialog("newBlogPost", "New Post", width = 1024) {
         @blog.create(form)
     }
+}
+
+@editButton = {
+    <button id="editBlogPost" style="float: right;">Edit</button>
+    @components.dialog("editBlogPost", "Edit Post", width = 1024) {
+        @blog.edit(blogPost)
+    }
+}
+
+@main(user){
+    <h1>
+        Blog
+        @if(user != null && user.isAdministrator()) {
+            @createButton
+        }
+    </h1>
     @if(blogPost == null) {
         No post to display
     } else {
         <p>
             @blogPost.getCreatedAt
 
-            <button id="editBlogPost" style="float: right;">Edit</button>
-            @components.dialog("editBlogPost", "Edit Post", width = 1024) {
-                @blog.edit(blogPost)
+            @if(user != null && user.isAdministrator()) {
+                @editButton
             }
         </p>
         @Html(blogPost.getText)
