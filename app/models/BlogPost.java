@@ -18,6 +18,8 @@ public class BlogPost extends Model {
     @Column(name = "created_at")
     private Date createdAt;
 
+    public static Model.Finder<Long, BlogPost> find = new Model.Finder(Long.class, BlogPost.class);
+
     public BlogPost() {
     }
 

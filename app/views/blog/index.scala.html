@@ -2,13 +2,22 @@
 @main(user){
     <h1>
         Blog
-
         <button id="newBlogPost" style="float: right;">New Post</button>
     </h1>
-
-    @components.dialog("newBlogPost", "New Post") {
+    @components.dialog("newBlogPost", "New Post", width = 1024) {
         @blog.create(form)
     }
+    @if(blogPost == null) {
+        No post to display
+    } else {
+        <p>
+            @blogPost.getCreatedAt
 
-    @Html(blogPost.getText)
+            <button id="editBlogPost" style="float: right;">Edit</button>
+            @components.dialog("editBlogPost", "Edit Post", width = 1024) {
+                @blog.edit(blogPost)
+            }
+        </p>
+        @Html(blogPost.getText)
+    }
 }

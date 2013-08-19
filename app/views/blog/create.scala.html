@@ -1,6 +1,5 @@
 @(blogPostForm: Form[BlogPost])
 @import helper._
-@implicitField = @{ FieldConstructor(components.myFieldConstructorTemplate.render) }
 
 @form(routes.Blog.save()) {
     <fieldset>

@@ -1,0 +1,11 @@
+@(blogPost: BlogPost)
+@import helper._
+
+@form(routes.Blog.update()) {
+    <fieldset>
+        <textarea class="ckeditor" name="text" id="text">@blogPost.getText</textarea>
+    </fieldset>
+    <div class="actions">
+        <input type="submit" value="Update" class="btn primary">
+    </div>
+}

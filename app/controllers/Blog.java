@@ -5,10 +5,16 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import java.util.Iterator;
+
 public class Blog extends Controller {
 
     public static Result index() {
-        BlogPost blogPost = new BlogPost("<b>Content</b>");
+        Iterator<BlogPost> iterator = BlogPost.find.all().iterator();
+        BlogPost blogPost = null;
+        if(iterator.hasNext()) {
+            blogPost = iterator.next();
+        }
         return ok(views.html.blog.index.render(null, blogPost, blogPostForm()));
     }
 
@@ -16,6 +22,18 @@ public class Blog extends Controller {
         Form<BlogPost> blogPostForm = blogPostForm().bindFromRequest();
         BlogPost blogPost = blogPostForm.get();
         blogPost.save();
+        return ok(views.html.blog.index.render(null, blogPost, blogPostForm()));
+    }
+
+    public static Result edit(Long id) {
+        Form<BlogPost> form = blogPostForm();
+        return ok(views.html.blog.index.render(null, BlogPost.find.byId(id), form));
+    }
+
+    public static Result update() {
+        Form<BlogPost> blogPostForm = blogPostForm().bindFromRequest();
+        BlogPost blogPost = blogPostForm.get();
+        blogPost.update();
         return ok(views.html.blog.index.render(null, blogPost, blogPostForm()));
     }
 
