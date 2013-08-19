@@ -1,0 +1,12 @@
+@(blogPostForm: Form[BlogPost])
+@import helper._
+@implicitField = @{ FieldConstructor(components.myFieldConstructorTemplate.render) }
+
+@form(routes.Blog.save()) {
+    <fieldset>
+        <textarea class="ckeditor" name="text" id="text"></textarea>
+    </fieldset>
+    <div class="actions">
+        <input type="submit" value="Add" class="btn primary">
+    </div>
+}

@@ -1,0 +1,14 @@
+@(user: Member, blogPost: BlogPost, form: Form[BlogPost])
+@main(user){
+    <h1>
+        Blog
+
+        <button id="newBlogPost" style="float: right;">New Post</button>
+    </h1>
+
+    @components.dialog("newBlogPost", "New Post") {
+        @blog.create(form)
+    }
+
+    @Html(blogPost.getText)
+}

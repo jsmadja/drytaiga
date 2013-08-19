@@ -33,6 +33,13 @@ create table base_model (
   constraint pk_base_model primary key (id))
 ;
 
+create table blog_post (
+  id                        bigint not null,
+  text                      varchar(255),
+  created_at                timestamp not null,
+  constraint pk_blog_post primary key (id))
+;
+
 create table comment (
   id                        bigint not null,
   account_id                bigint,
@@ -97,6 +104,8 @@ create sequence applicant_seq;
 
 create sequence base_model_seq;
 
+create sequence blog_post_seq;
+
 create sequence comment_seq;
 
 create sequence company_seq;
@@ -154,6 +163,8 @@ drop table if exists applicant_opening;
 
 drop table if exists base_model;
 
+drop table if exists blog_post;
+
 drop table if exists comment;
 
 drop table if exists company;
@@ -171,6 +182,8 @@ drop sequence if exists account_seq;
 drop sequence if exists applicant_seq;
 
 drop sequence if exists base_model_seq;
+
+drop sequence if exists blog_post_seq;
 
 drop sequence if exists comment_seq;
 

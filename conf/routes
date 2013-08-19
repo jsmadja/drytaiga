@@ -1,6 +1,8 @@
 GET         /                                  controllers.Dashboard.index()
 GET         /pricing                           controllers.Pricing.index()
 
+GET         /blog                              controllers.Blog.index()
+POST        /blog                              controllers.Blog.save()
 
 # Authentication
 # ~~~~~~~~~~~~~~

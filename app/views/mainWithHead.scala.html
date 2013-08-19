@@ -16,6 +16,7 @@
         <script src="@routes.Assets.at("javascripts/jquery.dataTables.min.js")"></script>
         <script src="@routes.Assets.at("javascripts/bootstrap.min.js")"></script>
         <script src="@routes.Assets.at("javascripts/drytaiga.js")"></script>
+        <script src="@routes.Assets.at("javascripts/ckeditor/ckeditor.js")"></script>
 
         <link rel="stylesheet" href="@routes.Assets.at("stylesheets/jquery-ui/minified/jquery-ui.min.css")">
         <link rel="stylesheet" href="@routes.Assets.at("stylesheets/datatables/css/demo_page.css")">
@@ -54,6 +55,7 @@
                     <li><a href="@routes.Applicants.list">@Messages.get("applicants.index.title")</a></li>
                     <li><a href="@routes.Reporting.index">Reporting</a></li>
                     <li><a href="@routes.Pricing.index">Pricing</a></li>
+                    <li><a href="@routes.Blog.index">Blog</a></li>
                     @if(user != null) {
                         <li><a href="#">@user.getLastname @user.getFirstname</a></li>
                         <li><a href="#">@user.getAccount.getCompany.getName</a></li>
