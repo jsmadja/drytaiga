@@ -38,9 +38,11 @@ GET         /a                                 controllers.Openings.a()
 
 # Applicant
 # ~~~~~~~~~~~~~~
-GET         /applicants                        controllers.Applicants.list()
-GET         /applicants/:id                    controllers.Applicants.read(id:Long)
-POST        /applicants/:id/appliance_status controllers.Applicants.changeApplianceStatus(id: Long)
+GET         /applicants                                  controllers.Applicants.list()
+GET         /applicants/all                              controllers.Applicants.all()
+GET         /applicants/by_status/:appliance_status      controllers.Applicants.filter(appliance_status: String)
+GET         /applicants/:id                              controllers.Applicants.read(id:Long)
+POST        /applicants/:id/appliance_status             controllers.Applicants.changeApplianceStatus(id: Long)
 
 # Mail
 # ~~~~~~~~~~~~~~

@@ -10,12 +10,5 @@
         Put the applicant's name as subject and attach related files.
     </p>
 
-    @components.table("applicants", headers = Seq(Messages.get("applicants.index.table.header.name"), "Status")) {
-        @for(applicant <- user.getAccount.getApplicants) {
-            <tr>
-                <td><a href="@routes.Applicants.read(applicant.getId)">@applicant.getFullname</a></td>
-                <td>@applicant.getApplianceStatus</td>
-            </tr>
-        }
-    }
+    @components.ajaxtable("applicants", headers = Seq(Messages.get("applicants.index.table.header.name"), "Status"), source = routes.Applicants.all().url)
 }

@@ -1,0 +1,30 @@
+@(id: String, headers: Seq[String], source: String)
+<script>
+    $(document).ready(function() {
+        $('#@id').dataTable(
+            {
+                "oLanguage": {
+                    "sUrl": "@routes.Assets.at("language/datatables/" +lang().language()+".txt")"
+                },
+                "sAjaxSource": "@source",
+                "bProcessing": true,
+                "aaSorting": [[ 0, "asc" ]],
+                "bServerSide": true,
+                "bJQueryUI": true
+            });
+    });
+</script>
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="@id" width="100%">
+    <thead>
+        <tr>
+            @for(header <- headers) {
+                <th>@header</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Row 1 Data 1</td>
+        </tr>
+    </tbody>
+</table>

@@ -1,24 +1,22 @@
 @(id: String, headers: Seq[String])(body: Html)
-<!-- Ajax version see: http://feadro.com/play-framework-2-0-datatables-server-side-processing/ -->
 <script>
     $(document).ready(function() {
-        $('#@id').dataTable(
-            {
-                "oLanguage": {
+        $('#@id').dataTable({
+            "oLanguage": {
                 "sUrl": "@routes.Assets.at("language/datatables/" +lang().language()+".txt")"
             }
         });
     });
 </script>
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="@id" width="100%">
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="@id">
     <thead>
         <tr>
-            @for(header <- headers) {
-                <th>@header</th>
-            }
+        @for(header <- headers) {
+            <th>@header</th>
+        }
         </tr>
     </thead>
     <tbody>
-        @body
+    @body
     </tbody>
 </table>

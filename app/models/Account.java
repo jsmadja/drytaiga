@@ -7,6 +7,9 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.avaje.ebean.Expr.and;
+import static com.avaje.ebean.Expr.eq;
+
 @Entity
 @Table(name = "account")
 public class Account extends Model {
@@ -132,5 +135,9 @@ public class Account extends Model {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public int getApplicantCount() {
+        return Applicant.find.where(eq("account", this)).findRowCount();
     }
 }

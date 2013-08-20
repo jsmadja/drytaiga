@@ -1,5 +1,9 @@
 package controllers;
 
+import com.avaje.ebean.Expression;
+import com.avaje.ebean.Query;
+import misc.ColumnValueResolver;
+import misc.TableFilter;
 import models.ApplianceStatus;
 import models.Applicant;
 import models.Comment;
@@ -9,6 +13,9 @@ import play.mvc.Result;
 import views.html.applicants.index;
 import views.html.applicants.read;
 
+import static com.avaje.ebean.Expr.and;
+import static com.avaje.ebean.Expr.eq;
+import static misc.TableFilter.createNode;
 import static models.Applicant.find;
 import static play.data.Form.form;
 
@@ -16,6 +23,35 @@ public class Applicants extends AjaxController {
 
     public static Result list() {
         return ok(index.render(user()));
+    }
+
+    public static Result all() {
+        return filter("");
+    }
+
+    public static Result filter(String status) {
+        return ok(createNode(request(), accountApplicants(status),
+                new ColumnValueResolver<Applicant>() {
+                    @Override
+                    public String resolve(Applicant value) {
+                        return TableFilter.url(routes.Applicants.read(value.getId()), value.getFullname());
+                    }
+                },
+                new ColumnValueResolver<Applicant>() {
+                    @Override
+                    public String resolve(Applicant value) {
+                        return value.getApplianceStatus().name();
+                    }
+                }
+        ));
+    }
+
+    private static Query<Applicant> accountApplicants(String applianceStatus) {
+        Expression expression = eq("account", account());
+        if (!applianceStatus.isEmpty()) {
+            expression = and(expression, eq("applianceStatus", ApplianceStatus.valueOf(applianceStatus)));
+        }
+        return Applicant.find.where(expression);
     }
 
     public static Result read(Long id) {

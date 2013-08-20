@@ -1,41 +1,25 @@
 @(user: Member)
 
 @interviews(applianceStatus: ApplianceStatus) = {
-    @components.table("table_"+applianceStatus.name(), headers=Seq("Applicants")) {
-        @for(applicant <- user.getAccount.getApplicants.filter(a => a.getApplianceStatus == applianceStatus)) {
-            <tr>
-                <td><a href="@routes.Applicants.read(applicant.getId)">@applicant.getFullname</a></td>
-            </tr>
-        }
-    }
+    @components.ajaxtable("table_"+applianceStatus.name, headers=Seq("Applicants"), source = routes.Applicants.filter(applianceStatus.name).url)
 }
 
 @main(user){
-    <div style="display: block; width: 100%;">
-        <div style="display: inline-block; width: 45%; margin-right: 3%;">
-            <h3>Applicants to contact</h3>
-            @interviews(ApplianceStatus.ToContact)
-        </div>
-        <div style="display: inline-block; width: 45%;">
-            <h3>Dashboard</h3>
-            <table class="table table-bordered table-condensed table-striped">
-                <tr><td><b>Plan</b></td><td>@user.getAccount.getAccountType.name</td></tr>
-                <tr><td><b><a href="@routes.Openings.list()">Openings</a></b></td><td>@formatters.NumberFormatter.format(user.getAccount.getOpenings.size())</td></tr>
-                <tr><td><b><a href="@routes.Applicants.list()">Applicants</a></b></td><td>@formatters.NumberFormatter.format(user.getAccount.getApplicants.size())</td></tr>
-                <tr><td><b>Files</b></td><td>@user.getAccount.getNumDocuments</td></tr>
-                <tr><td><b>Space (Max: @user.getAccount.getTotalSpace)</b></td><td>@user.getAccount.getUsedSpace</td></tr>
-            </table>
-        </div>
-    </div>
+    <h3>Dashboard</h3>
+    <table class="table table-bordered table-condensed table-striped">
+        <tr><td><b>Plan</b></td><td>@user.getAccount.getAccountType.name</td></tr>
+        <tr><td><b><a href="@routes.Openings.list()">Openings</a></b></td><td>@formatters.NumberFormatter.format(user.getAccount.getOpenings.size())</td></tr>
+        <tr><td><b><a href="@routes.Applicants.list()">Applicants</a></b></td><td>@formatters.NumberFormatter.format(user.getAccount.getApplicantCount)</td></tr>
+        <tr><td><b>Files</b></td><td>@user.getAccount.getNumDocuments</td></tr>
+        <tr><td><b>Space (Max: @user.getAccount.getTotalSpace)</b></td><td>@user.getAccount.getUsedSpace</td></tr>
+    </table>
 
-    <div style="display: block; width: 100%;">
-        <div style="display: inline-block;width: 45%; margin-right: 3%;">
-            <h3>Tech Interviews to schedule</h3>
-            @interviews(ApplianceStatus.ScheduleTechInterview)
-        </div>
-        <div style="display: inline-block;width: 45%;">
-            <h3>Boss Interviews to schedule</h3>
-            @interviews(ApplianceStatus.ScheduleBossInterview)
-        </div>
-    </div>
+    <h3>Applicants to contact</h3>
+    @interviews(ApplianceStatus.ToContact)
+
+    <h3>Tech Interviews to schedule</h3>
+    @interviews(ApplianceStatus.ScheduleTechInterview)
+
+    <h3>Boss Interviews to schedule</h3>
+    @interviews(ApplianceStatus.ScheduleBossInterview)
 }

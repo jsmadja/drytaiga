@@ -23,7 +23,7 @@ public class Global extends GlobalSettings {
         public static void insert(Application app) {
             if (Ebean.find(Account.class).findRowCount() == 0) {
                 createAdministrator();
-                for (int accountNumber = 0; accountNumber <= 26; accountNumber++) {
+                for (int accountNumber = 0; accountNumber <= 2/*6*/; accountNumber++) {
                     createAccount(accountNumber);
                 }
             }
