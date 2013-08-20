@@ -4,6 +4,7 @@ import com.avaje.ebean.Expression;
 import com.avaje.ebean.Query;
 import com.google.common.base.Joiner;
 import misc.ColumnValueResolver;
+import misc.TableFilter;
 import models.ApplianceStatus;
 import models.Applicant;
 import models.Comment;
@@ -17,10 +18,22 @@ import static com.avaje.ebean.Expr.and;
 import static com.avaje.ebean.Expr.eq;
 import static controllers.routes.Applicants;
 import static misc.TableFilter.createNode;
-import static misc.TableFilter.url;
 import static play.data.Form.form;
 
 public class Applicants extends AjaxController {
+
+    private static ColumnValueResolver<Applicant> fullnameResolver = new ColumnValueResolver<Applicant>() {
+        @Override
+        public String resolve(Applicant applicant) {
+            return TableFilter.url(Applicants.read(applicant), applicant.getFullname());
+        }
+    };
+    private static ColumnValueResolver<Applicant> applianceStatusResolver = new ColumnValueResolver<Applicant>() {
+        @Override
+        public String resolve(Applicant applicant) {
+            return applicant.getApplianceStatus().name();
+        }
+    };;
 
     public static Result list() {
         return ok(index.render(user()));
@@ -32,20 +45,7 @@ public class Applicants extends AjaxController {
 
     public static Result filter(String s) {
         ApplianceStatus status = s == null ? null : ApplianceStatus.valueOf(s);
-        return ok(createNode(request(), accountApplicants(status),
-                new ColumnValueResolver<Applicant>() {
-                    @Override
-                    public String resolve(Applicant applicant) {
-                        return url(Applicants.read(applicant), applicant.getFullname());
-                    }
-                },
-                new ColumnValueResolver<Applicant>() {
-                    @Override
-                    public String resolve(Applicant applicant) {
-                        return applicant.getApplianceStatus().name();
-                    }
-                }
-        ));
+        return ok(createNode(request(), accountApplicants(status), fullnameResolver, applianceStatusResolver));
     }
 
     private static Query<Applicant> accountApplicants(ApplianceStatus applianceStatus) {
