@@ -33,7 +33,7 @@ public class Search extends AjaxController {
         }));
         filteredApplicants = filteredApplicants.subList(0, Math.min(5, filteredApplicants.size()));
         for (Applicant applicant : filteredApplicants) {
-            json.add(createNode("Applicants", applicant, applicant.getFullname(), routes.Applicants.read(applicant.getId())));
+            json.add(createNode("Applicants", applicant, applicant.getFullname(), routes.Applicants.read(applicant)));
         }
     }
 
@@ -45,7 +45,7 @@ public class Search extends AjaxController {
         }));
         filteredOpenings = filteredOpenings.subList(0, Math.min(5, filteredOpenings.size()));
         for (Opening opening : filteredOpenings) {
-            json.add(createNode("Openings", opening, opening.getName(), routes.Openings.read(opening.getId())));
+            json.add(createNode("Openings", opening, opening.getName(), routes.Openings.read(opening)));
         }
     }
 

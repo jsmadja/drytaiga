@@ -4,7 +4,6 @@ import com.avaje.ebean.Expression;
 import com.avaje.ebean.Query;
 import com.google.common.base.Joiner;
 import misc.ColumnValueResolver;
-import misc.TableFilter;
 import models.ApplianceStatus;
 import models.Applicant;
 import models.Comment;
@@ -19,7 +18,6 @@ import static com.avaje.ebean.Expr.eq;
 import static controllers.routes.Applicants;
 import static misc.TableFilter.createNode;
 import static misc.TableFilter.url;
-import static models.Applicant.find;
 import static play.data.Form.form;
 
 public class Applicants extends AjaxController {
@@ -29,44 +27,43 @@ public class Applicants extends AjaxController {
     }
 
     public static Result all() {
-        return filter("");
+        return filter(null);
     }
 
-    public static Result filter(String status) {
+    public static Result filter(String s) {
+        ApplianceStatus status = s == null ? null : ApplianceStatus.valueOf(s);
         return ok(createNode(request(), accountApplicants(status),
                 new ColumnValueResolver<Applicant>() {
                     @Override
-                    public String resolve(Applicant value) {
-                        return url(Applicants.read(value.getId()), value.getFullname());
+                    public String resolve(Applicant applicant) {
+                        return url(Applicants.read(applicant), applicant.getFullname());
                     }
                 },
                 new ColumnValueResolver<Applicant>() {
                     @Override
-                    public String resolve(Applicant value) {
-                        return value.getApplianceStatus().name();
+                    public String resolve(Applicant applicant) {
+                        return applicant.getApplianceStatus().name();
                     }
                 }
         ));
     }
 
-    private static Query<Applicant> accountApplicants(String applianceStatus) {
+    private static Query<Applicant> accountApplicants(ApplianceStatus applianceStatus) {
         Expression expression = eq("account", account());
-        if (!applianceStatus.isEmpty()) {
-            expression = and(expression, eq("applianceStatus", ApplianceStatus.valueOf(applianceStatus)));
+        if (applianceStatus != null) {
+            expression = and(expression, eq("applianceStatus", applianceStatus));
         }
         return Applicant.find.where(expression);
     }
 
-    public static Result read(Long id) {
-        Applicant applicant = find.byId(id);
+    public static Result read(Applicant applicant) {
         if (user().canAccessTo(applicant)) {
             return ok(read.render(applicant, user(), documentForm(), commentForm()));
         }
         return forbidden();
     }
 
-    public static Result changeApplianceStatus(Long id) {
-        Applicant applicant = find.byId(id);
+    public static Result changeApplianceStatus(Applicant applicant) {
         if (user().canAccessTo(applicant)) {
             ApplianceStatus applianceStatus = ApplianceStatus.values()[Integer.valueOf(form().bindFromRequest().data().get("applianceStatus"))];
             applicant.updateStatus(applianceStatus);

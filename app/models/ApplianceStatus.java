@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.annotation.EnumValue;
+import play.mvc.PathBindable;
 
 public enum ApplianceStatus {
 

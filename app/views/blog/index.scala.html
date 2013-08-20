@@ -37,13 +37,13 @@
 
         @if(Blog.hasPrevious(blogPost)) {
             @defining(Blog.previousOf(blogPost)) { previousPost =>
-                <a style="float: left;" href="@routes.Blog.read(previousPost.getId)">Previous : @previousPost.getTitle</a>
+                <a style="float: left;" href="@routes.Blog.read(previousPost)">Previous : @previousPost.getTitle</a>
             }
         }
 
         @if(Blog.hasNext(blogPost)) {
             @defining(Blog.nextOf(blogPost)) { nextPost =>
-            <a style="float: right;" href="@routes.Blog.read(nextPost.getId)">Next : @nextPost.getTitle</a>
+            <a style="float: right;" href="@routes.Blog.read(nextPost)">Next : @nextPost.getTitle</a>
             }
         }
     }

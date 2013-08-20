@@ -15,7 +15,7 @@ import static models.Profile.Administrator;
 import static models.Profile.Customer;
 
 @Entity
-public class Member extends BaseModel {
+public class Member extends BaseModel<Member> {
 
     @Constraints.Required
     @Formats.NonEmpty
@@ -108,6 +108,11 @@ public class Member extends BaseModel {
 
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    protected Finder getFinder() {
+        return find;
     }
 }
 

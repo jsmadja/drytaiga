@@ -6,7 +6,7 @@ import play.db.ebean.Model;
 import javax.persistence.Entity;
 
 @Entity
-public class Company extends BaseModel {
+public class Company extends BaseModel<Company> {
 
     @Constraints.Required
     private String name;
@@ -22,4 +22,8 @@ public class Company extends BaseModel {
         return name;
     }
 
+    @Override
+    protected Finder getFinder() {
+        return find;
+    }
 }

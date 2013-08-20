@@ -8,8 +8,8 @@
     <h3>Dashboard</h3>
     <table class="table table-bordered table-condensed table-striped">
         <tr><td><b>Plan</b></td><td>@user.getAccount.getAccountType.name</td></tr>
-        <tr><td><b><a href="@routes.Openings.list()">Openings</a></b></td><td>@formatters.NumberFormatter.format(user.getAccount.getOpeningCount)</td></tr>
-        <tr><td><b><a href="@routes.Applicants.list()">Applicants</a></b></td><td>@formatters.NumberFormatter.format(user.getAccount.getApplicantCount)</td></tr>
+        <tr><td><b><a href="@routes.Openings.list">Openings</a></b></td><td>@formatters.NumberFormatter.format(user.getAccount.getOpeningCount)</td></tr>
+        <tr><td><b><a href="@routes.Applicants.list">Applicants</a></b></td><td>@formatters.NumberFormatter.format(user.getAccount.getApplicantCount)</td></tr>
         <tr><td><b>Files</b></td><td>@user.getAccount.getDocumentCount</td></tr>
         <tr><td><b>Space (Max: @user.getAccount.getTotalSpace)</b></td><td>@user.getAccount.getUsedSpace</td></tr>
     </table>

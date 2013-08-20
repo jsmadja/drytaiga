@@ -14,7 +14,7 @@ import static models.ApplianceStatus.ToContact;
 import static org.apache.commons.lang3.StringUtils.defaultString;
 
 @Entity
-public class Applicant extends BaseModel implements Documentable, Commentable, Taggable {
+public class Applicant extends BaseModel<Applicant> implements Documentable, Commentable, Taggable {
 
     @Constraints.Required
     private String firstname;
@@ -131,4 +131,8 @@ public class Applicant extends BaseModel implements Documentable, Commentable, T
         this.tags.remove(tag);
     }
 
+    @Override
+    protected Finder getFinder() {
+        return find;
+    }
 }

@@ -60,8 +60,7 @@ public class Blog extends UnsecuredController {
         return BlogPost.find.all();
     }
 
-    public static Result read(Long id) {
-        BlogPost blogPost = BlogPost.find.byId(id);
+    public static Result read(BlogPost blogPost) {
         return ok(views.html.blog.index.render(user(), blogPost, blogPostForm()));
     }
 
@@ -81,8 +80,8 @@ public class Blog extends UnsecuredController {
         return ok(views.html.blog.index.render(user(), blogPost, blogPostForm()));
     }
 
-    public static Result edit(Long id) {
-        return ok(views.html.blog.index.render(user(), BlogPost.find.byId(id), blogPostForm()));
+    public static Result edit(BlogPost blogPost) {
+        return ok(views.html.blog.index.render(user(), blogPost, blogPostForm()));
     }
 
     public static Result update() {

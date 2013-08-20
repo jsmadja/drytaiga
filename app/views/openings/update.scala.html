@@ -1,11 +1,11 @@
 @(opening: Opening, openingForm: Form[Opening])
 @import helper._
-@components.ajaxform(id = "updateOpening", action = routes.Openings.update(opening.getId)) {
+@components.ajaxform(id = "updateOpening", action = routes.Openings.update(opening)) {
     <fieldset>
         @inputText(openingForm("name"), '_label -> "Opening name")
     </fieldset>
     <div class="actions">
         <input type="submit" value="Save this opening" class="btn primary"> or
-        <a href="@routes.Openings.read(opening.getId)" class="btn">Cancel</a>
+        <a href="@routes.Openings.read(opening)" class="btn">Cancel</a>
     </div>
 }

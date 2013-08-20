@@ -2,6 +2,7 @@ package models;
 
 import com.avaje.ebean.annotation.CreatedTimestamp;
 import play.db.ebean.Model;
+import play.mvc.PathBindable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +10,7 @@ import javax.persistence.Id;
 import java.util.Date;
 
 @Entity
-public class BlogPost extends Model {
+public class BlogPost extends Model implements PathBindable<BlogPost> {
 
     @Id
     private Long id;
@@ -73,4 +74,18 @@ public class BlogPost extends Model {
         return id != null ? id.hashCode() : 0;
     }
 
+    @Override
+    public BlogPost bind(String key, String text) {
+        return find.byId(Long.valueOf(text));
+    }
+
+    @Override
+    public String unbind(String key) {
+        return id.toString();
+    }
+
+    @Override
+    public String javascriptUnbind() {
+        return null;
+    }
 }

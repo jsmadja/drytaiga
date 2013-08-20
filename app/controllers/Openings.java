@@ -26,8 +26,7 @@ public class Openings extends AjaxController {
         return ok(create.render(openingForm()));
     }
 
-    public static Result read(Long id) {
-        Opening opening = Opening.find.byId(id);
+    public static Result read(Opening opening) {
         if (user().canAccessTo(opening)) {
             return ok(read.render(opening, user(), openingForm(opening), documentForm(), commentForm()));
         }
@@ -46,13 +45,13 @@ public class Openings extends AjaxController {
         Account account = account();
         account.addOpening(opening);
         account.update();
-        return ok(Openings.read(opening.getId()));
+        return ok(Openings.read(opening));
     }
 
-    public static Result update(Long id) {
+    public static Result update(Opening opening) {
         Form<Opening> form = openingForm().bindFromRequest();
         if (form.value().isDefined()) {
-            boolean nameHasChanged = !Opening.find.byId(id).hasName(form.get().getName());
+            boolean nameHasChanged = !opening.hasName(form.get().getName());
             if (nameHasChanged) {
                 checkNameUnicity(form, form.get());
             }
@@ -60,11 +59,10 @@ public class Openings extends AjaxController {
         if (form.hasErrors()) {
             return badRequest(form);
         }
-        Opening opening = Opening.find.byId(id);
         if (user().canAccessTo(opening)) {
             opening.setName(form.data().get("name"));
             opening.update();
-            return ok(Openings.read(id));
+            return ok(Openings.read(opening));
         }
         return forbidden();
     }

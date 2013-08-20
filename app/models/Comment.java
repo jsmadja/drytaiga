@@ -1,13 +1,14 @@
 package models;
 
 import play.data.validation.Constraints;
+import play.db.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import java.util.Date;
 
 @Entity
-public class Comment extends BaseModel {
+public class Comment extends BaseModel<Comment> {
 
     @Constraints.Required
     private String text;
@@ -20,6 +21,8 @@ public class Comment extends BaseModel {
 
     @ManyToOne
     private Member author;
+
+    public static Model.Finder<Long, Comment> find = new Model.Finder(Long.class, Comment.class);
 
     public Comment(String text, Member author) {
         this.text = text;
@@ -45,6 +48,11 @@ public class Comment extends BaseModel {
 
     public void attachTo(Applicant applicant) {
         this.applicant = applicant;
+    }
+
+    @Override
+    protected Finder getFinder() {
+        return find;
     }
 }
 

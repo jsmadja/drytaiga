@@ -12,7 +12,7 @@
         $('#applianceStatus').
         change(function () {
             $.post(
-                "@routes.Applicants.changeApplianceStatus(applicant.getId).url",
+                "@routes.Applicants.changeApplianceStatus(applicant).url",
                 {
                     applianceStatus: $("#applianceStatus option:selected")[0].value
                 }
@@ -28,6 +28,6 @@
     </h1>
 
     @tags.cartridge(Applicants.getTags(applicant), routes.Tags.save(applicant.getId, applicant.getClass.getName).url, routes.Tags.delete(applicant.getId, applicant.getClass.getName).url)
-    @documents.cartridge(documentForm, applicant, routes.Applicants.read(applicant.getId).url)
-    @comments.cartridge(commentForm, applicant, routes.Applicants.read(applicant.getId).url)
+    @documents.cartridge(documentForm, applicant, routes.Applicants.read(applicant).url)
+    @comments.cartridge(commentForm, applicant, routes.Applicants.read(applicant).url)
 }

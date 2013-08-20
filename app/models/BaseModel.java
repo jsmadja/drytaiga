@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.annotation.CreatedTimestamp;
+import play.mvc.PathBindable;
 import play.db.ebean.Model;
 
 import javax.persistence.Column;
@@ -10,10 +11,10 @@ import javax.persistence.OneToOne;
 import java.util.Date;
 
 @Entity
-public abstract class BaseModel extends Model {
+public abstract class BaseModel<T extends BaseModel<T>> extends Model implements PathBindable<T> {
 
     @Id
-    private Long id;
+    protected Long id;
 
     @CreatedTimestamp
     @Column(name = "created_at")
@@ -21,6 +22,8 @@ public abstract class BaseModel extends Model {
 
     @OneToOne
     protected Account account;
+
+    protected abstract Finder getFinder();
 
     public Long getId() {
         return id;
@@ -51,4 +54,18 @@ public abstract class BaseModel extends Model {
         return id != null ? id.hashCode() : 0;
     }
 
+    @Override
+    public T bind(String key, String value) {
+        return (T) getFinder().byId(Long.valueOf(value));
+    }
+
+    @Override
+    public String unbind(String s) {
+        return id.toString();
+    }
+
+    @Override
+    public String javascriptUnbind() {
+        return null;
+    }
 }

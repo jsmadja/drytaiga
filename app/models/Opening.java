@@ -3,6 +3,7 @@ package models;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 import play.mvc.Http;
+import play.mvc.PathBindable;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.List;
 import static java.lang.String.format;
 
 @Entity
-public class Opening extends BaseModel implements Documentable, Commentable {
+public class Opening extends BaseModel<Opening> implements Documentable, Commentable {
 
     @Constraints.Required
     private String name;
@@ -87,5 +88,11 @@ public class Opening extends BaseModel implements Documentable, Commentable {
     public boolean contains(Applicant applicant) {
         return applicants.contains(applicant);
     }
+
+    @Override
+    protected Finder getFinder() {
+        return find;
+    }
+
 }
 

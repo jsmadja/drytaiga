@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Document extends BaseModel {
+public class Document extends BaseModel<Document> {
 
     @Constraints.Required
     private String name;
@@ -60,6 +60,11 @@ public class Document extends BaseModel {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    protected Finder getFinder() {
+        return find;
     }
 }
 

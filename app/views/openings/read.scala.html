@@ -12,12 +12,12 @@
     @components.table(id = "candidates", headers = Seq("Name")) {
         @for(applicant <- opening.getApplicants) {
         <tr>
-            <td><a href="@routes.Applicants.read(applicant.getId)">@applicant.getLastname, @applicant.getFirstname</a></td>
+            <td><a href="@routes.Applicants.read(applicant)">@applicant.getLastname, @applicant.getFirstname</a></td>
         </tr>
         }
     }
 
-    @documents.cartridge(documentForm, opening, routes.Openings.read(opening.getId).url)
-    @comments.cartridge(commentForm, opening, routes.Openings.read(opening.getId).url)
+    @documents.cartridge(documentForm, opening, routes.Openings.read(opening).url)
+    @comments.cartridge(commentForm, opening, routes.Openings.read(opening).url)
 
 }
