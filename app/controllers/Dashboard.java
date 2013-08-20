@@ -9,8 +9,10 @@ import static models.Member.currentUser;
 public class Dashboard extends SecuredController {
 
     public static Result index() {
-        Member user = currentUser(request());
-        return ok(views.html.dashboard.render(user));
+//        if(user().isAdministrator()) {
+//            return AdministratorDashboard.index();
+//        }
+        return ok(views.html.dashboard.render(user()));
     }
 
 }

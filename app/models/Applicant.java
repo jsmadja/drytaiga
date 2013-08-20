@@ -111,4 +111,5 @@ public class Applicant extends BaseModel implements Documentable, Commentable {
     public ApplianceStatus getApplianceStatus() {
         return applianceStatus;
     }
+
 }

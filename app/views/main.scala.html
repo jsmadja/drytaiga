@@ -46,7 +46,7 @@
                     <span class="icon-bar"></span>
                 </button>
 
-                @if(user.isAdministrator) {
+                @if(user != null && user.isAdministrator) {
                     <a class="navbar-brand" href="@routes.AdministratorDashboard.index">Dry Taiga</a>
                 } else {
                     <a class="navbar-brand" href="@routes.Dashboard.index">Dry Taiga</a>

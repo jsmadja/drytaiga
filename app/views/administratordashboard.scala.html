@@ -16,18 +16,18 @@
                     @defining(accountTypes.get(accountType)) { entry =>
                         <tr>
                             <td style="text-align: left;" >@accountType</td>
-                            <td>@entry.get.size</td>
+                            <td>@formatters.NumberFormatter.format(entry.get.size)</td>
                             <td>@accountType.getPrice €</td>
-                            <td>@(entry.get.size * accountType.getPrice) €</td>
+                            <td>@(Math.round(entry.get.size * accountType.getPrice)) €</td>
                         </tr>
                     }
                 }
             }
             <tr>
                 <td></td>
-                <td style="font-weight: bold;">@AdministratorDashboard.getAccounts.size</td>
+                <td style="font-weight: bold;">@formatters.NumberFormatter.format(AdministratorDashboard.getAccounts.size)</td>
                 <td></td>
-                <td style="font-weight: bold;">@(Math.round(AdministratorDashboard.getAccounts.map(a => a.getAccountType.getPrice).sum)) €</td>
+                <td style="font-weight: bold;">@formatters.NumberFormatter.format((Math.round(AdministratorDashboard.getAccounts.map(a => a.getAccountType.getPrice).sum))) €</td>
             </tr>
         </tbody>
     </table>
