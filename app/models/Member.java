@@ -102,5 +102,12 @@ public class Member extends BaseModel {
         return profile == Customer;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }
 

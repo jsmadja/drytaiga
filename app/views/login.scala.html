@@ -16,5 +16,28 @@
         <p>
             <button id="submit" type="submit">Login</button>
         </p>
+
+        <h1>Accounts</h1>
+
+        <table class="table table-bordered table-condensed table-striped">
+            <thead>
+                <th>Account</th>
+                <th>Login</th>
+                <th>Password</th>
+            </thead>
+            <tr>
+                <td>Administrator</td>
+                <td>julien.smadja@@gmail.com</td>
+                <td>password</td>
+            </tr>
+            @for(account <- Account.find.all()) {
+             <tr>
+                 <td>@account.getApplicantCount applicants</td>
+                 <td>@account.getMembers.get(0).getEmail</td>
+                 <td>@account.getMembers.get(0).getPassword</td>
+             </tr>
+            }
+        </table>
+
     }
 }

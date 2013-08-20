@@ -136,4 +136,7 @@ public class Account extends Model {
         return eq("account", this);
     }
 
+    public List<Member> getMembers() {
+        return members;
+    }
 }
