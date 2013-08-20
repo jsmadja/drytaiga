@@ -14,9 +14,13 @@ public class BlogPost extends Model {
     @Id
     private Long id;
 
+    private String title;
+
     @CreatedTimestamp
     @Column(name = "created_at")
     private Date createdAt;
+
+    private String text;
 
     public static Model.Finder<Long, BlogPost> find = new Model.Finder(Long.class, BlogPost.class);
 
@@ -27,11 +31,14 @@ public class BlogPost extends Model {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }
 
-    private String text;
 
     public BlogPost(String text) {
         this.text = text;
@@ -43,6 +50,14 @@ public class BlogPost extends Model {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Override

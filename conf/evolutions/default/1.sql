@@ -35,6 +35,7 @@ create table base_model (
 
 create table blog_post (
   id                        bigint not null,
+  title                     varchar(255),
   text                      varchar(255),
   created_at                timestamp not null,
   constraint pk_blog_post primary key (id))

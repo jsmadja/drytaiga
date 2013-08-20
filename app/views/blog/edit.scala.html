@@ -3,6 +3,8 @@
 
 @form(routes.Blog.update()) {
     <fieldset>
+        <input type="hidden" name="id" id="id" value="@blogPost.getId" />
+        <input type="text" name="title" id="title" value="@blogPost.getTitle">
         <textarea class="ckeditor" name="text" id="text">@blogPost.getText</textarea>
     </fieldset>
     <div class="actions">

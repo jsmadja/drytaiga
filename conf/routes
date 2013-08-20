@@ -5,7 +5,8 @@ GET         /pricing                           controllers.Pricing.index()
 GET         /blog                              controllers.Blog.index()
 POST        /blog                              controllers.Blog.save()
 GET         /blog/:id                          controllers.Blog.edit(id: Long)
-POST        /blog                              controllers.Blog.update()
+POST        /blog/update                              controllers.Blog.update()
+GET         /blog/post/:id                     controllers.Blog.read(id: Long)
 
 # Authentication
 # ~~~~~~~~~~~~~~
