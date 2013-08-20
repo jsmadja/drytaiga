@@ -1,5 +1,6 @@
 package models;
 
+import com.avaje.ebean.*;
 import misc.FileSize;
 import play.db.ebean.Model;
 
@@ -79,33 +80,15 @@ public class Account extends Model {
 
     public String getUsedSpace() {
         long usedSpace = 0;
-        for (Documentable documentable : getDocumentables()) {
-            List<Document> documents = documentable.getDocuments();
-            for (Document document : documents) {
-                usedSpace += document.getSize();
-            }
+        List<Document> list = Document.find.where(thisAccount()).findList();
+        for (Document document : list) {
+            usedSpace += document.getSize();
         }
         return new FileSize(usedSpace).toString();
     }
 
     public String getTotalSpace() {
         return new FileSize(accountType.getTotalSpace()).toString();
-    }
-
-    public int getNumDocuments() {
-        int numDocuments = 0;
-        for (Documentable documentable : getDocumentables()) {
-            List<Document> documents = documentable.getDocuments();
-            numDocuments += documents.size();
-        }
-        return numDocuments;
-    }
-
-    private List<Documentable> getDocumentables() {
-        List<Documentable> documentables = new ArrayList<Documentable>();
-        documentables.addAll(openings);
-        documentables.addAll(applicants);
-        return documentables;
     }
 
     public boolean containsOpeningWithName(String positionName) {
@@ -138,6 +121,19 @@ public class Account extends Model {
     }
 
     public int getApplicantCount() {
-        return Applicant.find.where(eq("account", this)).findRowCount();
+        return Applicant.find.where(thisAccount()).findRowCount();
     }
+
+    public int getOpeningCount() {
+        return Opening.find.where(thisAccount()).findRowCount();
+    }
+
+    public int getDocumentCount() {
+        return Document.find.where(thisAccount()).findRowCount();
+    }
+
+    private Expression thisAccount() {
+        return eq("account", this);
+    }
+
 }
