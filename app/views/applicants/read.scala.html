@@ -9,13 +9,15 @@
         </select>
     </div>
     <script>
-        $('#applianceStatus').change(function () {
-            var applianceStatusId = $("#applianceStatus option:selected")[0].value;
+        $('#applianceStatus').
+        change(function () {
             $.post(
                 "@routes.Applicants.changeApplianceStatus(applicant.getId).url",
-                { applianceStatus: applianceStatusId }
+                {
+                    applianceStatus: $("#applianceStatus option:selected")[0].value
+                }
             );
-            });
+        });
     </script>
 }
 
@@ -24,6 +26,8 @@
         @applicant.getFullname
         @selectApplianceStatus
     </h1>
+
+    @tags.cartridge(Applicants.getTags(applicant), routes.Tags.save(applicant.getId, applicant.getClass.getName).url, routes.Tags.delete(applicant.getId, applicant.getClass.getName).url)
     @documents.cartridge(documentForm, applicant, routes.Applicants.read(applicant.getId).url)
     @comments.cartridge(commentForm, applicant, routes.Applicants.read(applicant.getId).url)
 }

@@ -1,0 +1,27 @@
+@(values: String, postUrl: String, deleteUrl: String)
+<div>
+    <input name="tags" id="tags" value="@values" />
+</div>
+<script>
+    $('#tags').tagsInput({
+        height: '50px',
+        width: '100%',
+        onAddTag: function(value) {
+            $.post(
+                "@postUrl",
+                {
+                    text: value
+                }
+            );
+        },
+        onRemoveTag: function(value) {
+            $.ajax({
+                type: "DELETE",
+                url: "@deleteUrl",
+                data: {
+                    text: value
+                }
+            });
+        }
+    });
+</script>

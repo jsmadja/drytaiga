@@ -2,6 +2,7 @@ package controllers;
 
 import com.avaje.ebean.Expression;
 import com.avaje.ebean.Query;
+import com.google.common.base.Joiner;
 import misc.ColumnValueResolver;
 import misc.TableFilter;
 import models.ApplianceStatus;
@@ -15,7 +16,9 @@ import views.html.applicants.read;
 
 import static com.avaje.ebean.Expr.and;
 import static com.avaje.ebean.Expr.eq;
+import static controllers.routes.Applicants;
 import static misc.TableFilter.createNode;
+import static misc.TableFilter.url;
 import static models.Applicant.find;
 import static play.data.Form.form;
 
@@ -34,7 +37,7 @@ public class Applicants extends AjaxController {
                 new ColumnValueResolver<Applicant>() {
                     @Override
                     public String resolve(Applicant value) {
-                        return TableFilter.url(routes.Applicants.read(value.getId()), value.getFullname());
+                        return url(Applicants.read(value.getId()), value.getFullname());
                     }
                 },
                 new ColumnValueResolver<Applicant>() {
@@ -79,6 +82,10 @@ public class Applicants extends AjaxController {
 
     private static Form<Comment> commentForm() {
         return form(Comment.class);
+    }
+
+    public static String getTags(Applicant applicant) {
+        return Joiner.on(",").join(applicant.getTags());
     }
 
 }

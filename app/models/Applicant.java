@@ -14,7 +14,7 @@ import static models.ApplianceStatus.ToContact;
 import static org.apache.commons.lang3.StringUtils.defaultString;
 
 @Entity
-public class Applicant extends BaseModel implements Documentable, Commentable {
+public class Applicant extends BaseModel implements Documentable, Commentable, Taggable {
 
     @Constraints.Required
     private String firstname;
@@ -34,6 +34,9 @@ public class Applicant extends BaseModel implements Documentable, Commentable {
 
     @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<Comment>();
+
+    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL)
+    private List<Tag> tags = new ArrayList<Tag>();
 
     private ApplianceStatus applianceStatus;
 
@@ -110,6 +113,22 @@ public class Applicant extends BaseModel implements Documentable, Commentable {
 
     public ApplianceStatus getApplianceStatus() {
         return applianceStatus;
+    }
+
+    @Override
+    public void addTag(Tag tag) {
+        tag.attachTo(this);
+        this.tags.add(tag);
+    }
+
+    @Override
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    @Override
+    public void removeTag(Tag tag) {
+        this.tags.remove(tag);
     }
 
 }

@@ -94,6 +94,15 @@ create table opening (
   constraint pk_opening primary key (id))
 ;
 
+create table tag (
+  id                        bigint not null,
+  account_id                bigint,
+  text                      varchar(255),
+  applicant_id              bigint,
+  created_at                timestamp not null,
+  constraint pk_tag primary key (id))
+;
+
 
 create table applicant_opening (
   applicant_id                   bigint not null,
@@ -117,6 +126,8 @@ create sequence document_seq;
 create sequence member_seq;
 
 create sequence opening_seq;
+
+create sequence tag_seq;
 
 alter table account add constraint fk_account_owner_1 foreign key (owner_id) references member (id) on delete restrict on update restrict;
 create index ix_account_owner_1 on account (owner_id);
@@ -146,6 +157,10 @@ alter table member add constraint fk_member_account_13 foreign key (account_id) 
 create index ix_member_account_13 on member (account_id);
 alter table opening add constraint fk_opening_account_14 foreign key (account_id) references account (id) on delete restrict on update restrict;
 create index ix_opening_account_14 on opening (account_id);
+alter table tag add constraint fk_tag_account_15 foreign key (account_id) references account (id) on delete restrict on update restrict;
+create index ix_tag_account_15 on tag (account_id);
+alter table tag add constraint fk_tag_applicant_16 foreign key (applicant_id) references applicant (id) on delete restrict on update restrict;
+create index ix_tag_applicant_16 on tag (applicant_id);
 
 
 
@@ -177,6 +192,8 @@ drop table if exists member;
 
 drop table if exists opening;
 
+drop table if exists tag;
+
 SET REFERENTIAL_INTEGRITY TRUE;
 
 drop sequence if exists account_seq;
@@ -196,4 +213,6 @@ drop sequence if exists document_seq;
 drop sequence if exists member_seq;
 
 drop sequence if exists opening_seq;
+
+drop sequence if exists tag_seq;
 
