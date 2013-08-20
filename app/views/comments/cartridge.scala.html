@@ -15,7 +15,7 @@
             <tr>
                 <td>@comment.getText</a></td>
                 <td>@comment.getAuthor.getFullname</td>
-                <td>@comment.getDate</td>
+                <td>@formatters.DateFormatter.format_DD_MM_YYYY(comment.getDate)</td>
             </tr>
         }
     }
