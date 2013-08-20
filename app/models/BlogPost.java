@@ -7,6 +7,7 @@ import play.mvc.PathBindable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import java.util.Date;
 
 @Entity
@@ -21,6 +22,7 @@ public class BlogPost extends Model implements PathBindable<BlogPost> {
     @Column(name = "created_at")
     private Date createdAt;
 
+    @Lob
     private String text;
 
     public static Model.Finder<Long, BlogPost> find = new Model.Finder(Long.class, BlogPost.class);

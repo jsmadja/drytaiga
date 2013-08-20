@@ -18,6 +18,7 @@
     <h1>
         @if(blogPost != null) {
             @blogPost.getTitle
+            @formatters.DateFormatter.format_DD_MM_YYYY(blogPost.getCreatedAt)
         }
         @if(user != null && user.isAdministrator()) {
             @createButton
@@ -27,7 +28,6 @@
         No post to display
     } else {
         <p>
-            @blogPost.getCreatedAt
 
             @if(user != null && user.isAdministrator()) {
                 @editButton
