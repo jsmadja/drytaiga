@@ -4,7 +4,7 @@
 # --- !Ups
 
 create table account (
-  id                        bigint auto_increment not null,
+  id                        bigint not null,
   account_type              varchar(19),
   owner_id                  bigint,
   status                    varchar(9),
@@ -15,52 +15,52 @@ create table account (
 ;
 
 create table applicant (
-  id                        bigint auto_increment not null,
+  id                        bigint not null,
   account_id                bigint,
   firstname                 varchar(255),
   lastname                  varchar(255),
   email                     varchar(255),
   appliance_status          varchar(30),
-  created_at                datetime not null,
+  created_at                timestamp not null,
   constraint ck_applicant_appliance_status check (appliance_status in ('rejected_after_boss_interview','schedule_tech_interview','to_contact','refused_our_offer','hired','rejected_after_tech_interview','rejected','rejected_after_phone_interview','schedule_boss_interview','contacted')),
   constraint pk_applicant primary key (id))
 ;
 
 create table base_model (
-  id                        bigint auto_increment not null,
+  id                        bigint not null,
   account_id                bigint,
-  created_at                datetime not null,
+  created_at                timestamp not null,
   constraint pk_base_model primary key (id))
 ;
 
 create table blog_post (
-  id                        bigint auto_increment not null,
+  id                        bigint not null,
   text                      varchar(255),
-  created_at                datetime not null,
+  created_at                timestamp not null,
   constraint pk_blog_post primary key (id))
 ;
 
 create table comment (
-  id                        bigint auto_increment not null,
+  id                        bigint not null,
   account_id                bigint,
   text                      varchar(255),
   opening_id                bigint,
   applicant_id              bigint,
   author_id                 bigint,
-  created_at                datetime not null,
+  created_at                timestamp not null,
   constraint pk_comment primary key (id))
 ;
 
 create table company (
-  id                        bigint auto_increment not null,
+  id                        bigint not null,
   account_id                bigint,
   name                      varchar(255),
-  created_at                datetime not null,
+  created_at                timestamp not null,
   constraint pk_company primary key (id))
 ;
 
 create table document (
-  id                        bigint auto_increment not null,
+  id                        bigint not null,
   account_id                bigint,
   name                      varchar(255),
   url                       varchar(255),
@@ -68,29 +68,29 @@ create table document (
   content_type              varchar(255),
   opening_id                bigint,
   applicant_id              bigint,
-  created_at                datetime not null,
+  created_at                timestamp not null,
   constraint pk_document primary key (id))
 ;
 
 create table member (
-  id                        bigint auto_increment not null,
+  id                        bigint not null,
   account_id                bigint,
   email                     varchar(255),
   firstname                 varchar(255),
   lastname                  varchar(255),
   password                  varchar(255),
-  last_login                datetime,
+  last_login                timestamp,
   profile                   varchar(13),
-  created_at                datetime not null,
+  created_at                timestamp not null,
   constraint ck_member_profile check (profile in ('customer','administrator')),
   constraint pk_member primary key (id))
 ;
 
 create table opening (
-  id                        bigint auto_increment not null,
+  id                        bigint not null,
   account_id                bigint,
   name                      varchar(255),
-  created_at                datetime not null,
+  created_at                timestamp not null,
   constraint pk_opening primary key (id))
 ;
 
@@ -100,6 +100,24 @@ create table applicant_opening (
   opening_id                     bigint not null,
   constraint pk_applicant_opening primary key (applicant_id, opening_id))
 ;
+create sequence account_seq;
+
+create sequence applicant_seq;
+
+create sequence base_model_seq;
+
+create sequence blog_post_seq;
+
+create sequence comment_seq;
+
+create sequence company_seq;
+
+create sequence document_seq;
+
+create sequence member_seq;
+
+create sequence opening_seq;
+
 alter table account add constraint fk_account_owner_1 foreign key (owner_id) references member (id) on delete restrict on update restrict;
 create index ix_account_owner_1 on account (owner_id);
 alter table account add constraint fk_account_company_2 foreign key (company_id) references company (id) on delete restrict on update restrict;
@@ -131,33 +149,51 @@ create index ix_opening_account_14 on opening (account_id);
 
 
 
-alter table applicant_opening add constraint fk_applicant_opening_applicant_01 foreign key (applicant_id) references applicant (id) on delete restrict on update restrict;
+alter table applicant_opening add constraint fk_applicant_opening_applican_01 foreign key (applicant_id) references applicant (id) on delete restrict on update restrict;
 
 alter table applicant_opening add constraint fk_applicant_opening_opening_02 foreign key (opening_id) references opening (id) on delete restrict on update restrict;
 
 # --- !Downs
 
-SET FOREIGN_KEY_CHECKS=0;
+SET REFERENTIAL_INTEGRITY FALSE;
 
-drop table account;
+drop table if exists account;
 
-drop table applicant;
+drop table if exists applicant;
 
-drop table applicant_opening;
+drop table if exists applicant_opening;
 
-drop table base_model;
+drop table if exists base_model;
 
-drop table blog_post;
+drop table if exists blog_post;
 
-drop table comment;
+drop table if exists comment;
 
-drop table company;
+drop table if exists company;
 
-drop table document;
+drop table if exists document;
 
-drop table member;
+drop table if exists member;
 
-drop table opening;
+drop table if exists opening;
 
-SET FOREIGN_KEY_CHECKS=1;
+SET REFERENTIAL_INTEGRITY TRUE;
+
+drop sequence if exists account_seq;
+
+drop sequence if exists applicant_seq;
+
+drop sequence if exists base_model_seq;
+
+drop sequence if exists blog_post_seq;
+
+drop sequence if exists comment_seq;
+
+drop sequence if exists company_seq;
+
+drop sequence if exists document_seq;
+
+drop sequence if exists member_seq;
+
+drop sequence if exists opening_seq;
 
