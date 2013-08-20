@@ -10,12 +10,21 @@ import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 
 public class TestValues {
 
-    public static void createAdministrator() {
+    public static void createValues() {
+        if (Ebean.find(Account.class).findRowCount() == 0) {
+            createAdministrator();
+            for (int accountNumber = 0; accountNumber <= 10/*26*/; accountNumber++) {
+                createAccount(accountNumber);
+            }
+        }
+    }
+
+    private static void createAdministrator() {
         Member user = new Member("Julien", "Smadja", "julien.smadja@gmail.com", "password", Administrator);
         Ebean.save(user);
     }
 
-    public static void createAccount(int accountNumber) {
+    private static void createAccount(int accountNumber) {
         Account account = new Account(AccountType.values()[accountNumber % AccountType.values().length]);
         Ebean.save(account);
 

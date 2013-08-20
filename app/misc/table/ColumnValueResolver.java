@@ -1,4 +1,4 @@
-package misc;
+package misc.table;
 
 public interface ColumnValueResolver<T> {
 

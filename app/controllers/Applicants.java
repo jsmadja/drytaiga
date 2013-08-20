@@ -3,8 +3,8 @@ package controllers;
 import com.avaje.ebean.Expression;
 import com.avaje.ebean.Query;
 import com.google.common.base.Joiner;
-import misc.ColumnValueResolver;
-import misc.TableFilter;
+import misc.table.ColumnValueResolver;
+import misc.table.TableFilter;
 import models.ApplianceStatus;
 import models.Applicant;
 import models.Comment;
@@ -17,7 +17,7 @@ import views.html.applicants.read;
 import static com.avaje.ebean.Expr.and;
 import static com.avaje.ebean.Expr.eq;
 import static controllers.routes.Applicants;
-import static misc.TableFilter.createNode;
+import static misc.table.TableFilter.createNode;
 import static play.data.Form.form;
 
 public class Applicants extends AjaxController {

@@ -1,4 +1,4 @@
-package misc;
+package misc.table;
 
 import com.avaje.ebean.Page;
 import com.avaje.ebean.Query;
