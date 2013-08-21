@@ -11,7 +11,7 @@
         }
         @if(percent != 100 && down != Integer.MAX_VALUE) {
             <div class="progress" style="height: 10px; margin-bottom: 0px; width: 100px;" title="@up/@down">
-                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="@percent" aria-valuemin="0" aria-valuemax="100" style="width: @percent%;"></div>
+                <div class="progress-bar" role="progressbar" aria-valuenow="@percent" aria-valuemin="0" aria-valuemax="100" style="width: @percent%;"></div>
             </div>
         }
     }
