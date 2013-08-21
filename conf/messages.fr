@@ -11,4 +11,6 @@ openings.form.label.name=Libellé
 applicants.index.title=Candidats
 applicants.index.table.header.name=Nom
 
+feedbacks.index.title=Feedbacks
+
 error.required=Champ requis

@@ -73,6 +73,17 @@ create table document (
   constraint pk_document primary key (id))
 ;
 
+create table feedback (
+  id                        bigint not null,
+  account_id                bigint,
+  text                      clob,
+  author_id                 bigint,
+  feedback_type             varchar(7),
+  created_at                timestamp not null,
+  constraint ck_feedback_feedback_type check (feedback_type in ('support','bug','remark','idea')),
+  constraint pk_feedback primary key (id))
+;
+
 create table member (
   id                        bigint not null,
   account_id                bigint,
@@ -124,6 +135,8 @@ create sequence company_seq;
 
 create sequence document_seq;
 
+create sequence feedback_seq;
+
 create sequence member_seq;
 
 create sequence opening_seq;
@@ -154,14 +167,18 @@ alter table document add constraint fk_document_opening_11 foreign key (opening_
 create index ix_document_opening_11 on document (opening_id);
 alter table document add constraint fk_document_applicant_12 foreign key (applicant_id) references applicant (id) on delete restrict on update restrict;
 create index ix_document_applicant_12 on document (applicant_id);
-alter table member add constraint fk_member_account_13 foreign key (account_id) references account (id) on delete restrict on update restrict;
-create index ix_member_account_13 on member (account_id);
-alter table opening add constraint fk_opening_account_14 foreign key (account_id) references account (id) on delete restrict on update restrict;
-create index ix_opening_account_14 on opening (account_id);
-alter table tag add constraint fk_tag_account_15 foreign key (account_id) references account (id) on delete restrict on update restrict;
-create index ix_tag_account_15 on tag (account_id);
-alter table tag add constraint fk_tag_applicant_16 foreign key (applicant_id) references applicant (id) on delete restrict on update restrict;
-create index ix_tag_applicant_16 on tag (applicant_id);
+alter table feedback add constraint fk_feedback_account_13 foreign key (account_id) references account (id) on delete restrict on update restrict;
+create index ix_feedback_account_13 on feedback (account_id);
+alter table feedback add constraint fk_feedback_author_14 foreign key (author_id) references member (id) on delete restrict on update restrict;
+create index ix_feedback_author_14 on feedback (author_id);
+alter table member add constraint fk_member_account_15 foreign key (account_id) references account (id) on delete restrict on update restrict;
+create index ix_member_account_15 on member (account_id);
+alter table opening add constraint fk_opening_account_16 foreign key (account_id) references account (id) on delete restrict on update restrict;
+create index ix_opening_account_16 on opening (account_id);
+alter table tag add constraint fk_tag_account_17 foreign key (account_id) references account (id) on delete restrict on update restrict;
+create index ix_tag_account_17 on tag (account_id);
+alter table tag add constraint fk_tag_applicant_18 foreign key (applicant_id) references applicant (id) on delete restrict on update restrict;
+create index ix_tag_applicant_18 on tag (applicant_id);
 
 
 
@@ -189,6 +206,8 @@ drop table if exists company;
 
 drop table if exists document;
 
+drop table if exists feedback;
+
 drop table if exists member;
 
 drop table if exists opening;
@@ -210,6 +229,8 @@ drop sequence if exists comment_seq;
 drop sequence if exists company_seq;
 
 drop sequence if exists document_seq;
+
+drop sequence if exists feedback_seq;
 
 drop sequence if exists member_seq;
 

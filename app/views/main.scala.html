@@ -1,7 +1,19 @@
 @(user: Member = null)(body: Html)
-    @import play.i18n._
-    <html lang="en">
-        @Html(com.newrelic.api.agent.NewRelic.getBrowserTimingHeader())
+
+@feedback = {
+    @components.dialog("feedback", "Feedback") {
+        @feedbacks.create()
+    }
+    @if(user != null && user.isCustomer) {
+        <div id="feedback" class="btn btn-primary" style="position: fixed; right: -3px; top: 300px;">
+            Feedback
+        </div>
+    }
+}
+
+@import play.i18n._
+<html lang="en">
+    @Html(com.newrelic.api.agent.NewRelic.getBrowserTimingHeader())
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,16 +39,12 @@
         <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/jquery.tagsinput.css")">
 
         <style>
-        .ui-autocomplete-loading {
-        background: white url(@routes.Assets.at("images/ui-anim_basic_16x16.gif") right center no-repeat;
-        }
-
-        .ui-autocomplete-category {
-        font-weight: bold;
-        padding: .2em .4em;
-        margin: .8em 0 .2em;
-        line-height: 1.5;
-        }
+            .ui-autocomplete-category {
+                font-weight: bold;
+                padding: .2em .4em;
+                margin: .8em 0 .2em;
+                line-height: 1.5;
+            }
         </style>
     </head>
 
@@ -61,9 +69,12 @@
                             <li class="@Application.currentCategory("applicants")"><a href="@routes.Applicants.list">@Messages.get("applicants.index.title")</a></li>
                             <li class="@Application.currentCategory("reporting")"><a href="@routes.Reporting.index">Reporting</a></li>
                         }
-                    <li class="@Application.currentCategory("pricing")"><a href="@routes.Pricing.index">Pricing</a></li>
-                    <li class="@Application.currentCategory("blog")"><a href="@routes.Blog.index">Blog</a></li>
 
+                        @if(user !=null && user.isAdministrator) {
+                            <li class="@Application.currentCategory("feedbacks")"><a href="@routes.Feedbacks.list">@Messages.get("feedbacks.index.title")</a></li>
+                        }
+                        <li class="@Application.currentCategory("pricing")"><a href="@routes.Pricing.index">Pricing</a></li>
+                        <li class="@Application.currentCategory("blog")"><a href="@routes.Blog.index">Blog</a></li>
                         @if(user != null) {
                             <li><a href="#">@user.getLastname @user.getFirstname</a></li>
                             <li><a href="/logout">@Messages.get("common.Logout")</a></li>
@@ -77,6 +88,7 @@
         </div>
 
         <div class="container-fluid">
+            @feedback
             <div class="body-content" style="margin-top: 70px;">
                 @body
             <hr>

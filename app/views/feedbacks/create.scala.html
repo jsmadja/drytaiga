@@ -1,0 +1,15 @@
+@import helper._
+@implicitField = @{ FieldConstructor(components.myFieldConstructorTemplate.render) }
+@components.ajaxform(id = "feedback", action = routes.Feedbacks.save) {
+    <fieldset>
+        <select id="feedbackType" name="feedbackType" >
+            @for(feedbackType <- FeedbackType.values) {
+                <option value="@feedbackType.name">@feedbackType.name</option>
+            }
+        </select>
+        <textarea id="text" name="text" cols="70" rows="10" placeholder="Saisissez votre commentaire ici ..."></textarea>
+    </fieldset>
+    <div class="actions">
+        <input type="submit" value="Add Feedback" class="btn primary">
+    </div>
+}

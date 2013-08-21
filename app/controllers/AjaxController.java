@@ -1,7 +1,6 @@
 package controllers;
 
 import controllers.security.SecuredController;
-import misc.Resolver;
 import models.Opening;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.JsonNodeFactory;

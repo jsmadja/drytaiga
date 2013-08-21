@@ -1,0 +1,17 @@
+@(user: Member)
+@import play.i18n._
+@main(user) {
+    <h1>
+        @Messages.get("feedbacks.index.title")
+    </h1>
+    @components.table("feedbacks", headers = Seq("Type", "Text", "Author", "Account")) {
+        @for(feedback <- Feedback.find.all) {
+            <tr>
+                <td>@feedback.getFeedbackType</td>
+                <td>@feedback.getText</td>
+                <td>@feedback.getAuthor.getFullname</td>
+                <td>@feedback.getAccount.getCompany.getName</td>
+            </tr>
+        }
+    }
+}
