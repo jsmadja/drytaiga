@@ -56,6 +56,9 @@ POST        /openings/:id/documents             controllers.Documents.save(id: L
 POST        /feedbacks                          controllers.Feedbacks.save
 GET         /feedbacks                          controllers.Feedbacks.list
 
+# Accounts
+#~~~~~~~~~~~~~~~
+GET         /accounts                           controllers.Accounts.list
 
 # Mail
 # ~~~~~~~~~~~~~~

@@ -87,6 +87,15 @@ public class Account extends Model {
         return new FileSize(usedSpace).toString();
     }
 
+    public long getUsedSpaceSize() {
+        long usedSpace = 0;
+        List<Document> list = Document.find.where(thisAccount()).findList();
+        for (Document document : list) {
+            usedSpace += document.getSize();
+        }
+        return usedSpace;
+    }
+
     public String getTotalSpace() {
         return new FileSize(accountType.getTotalSpace()).toString();
     }
@@ -130,6 +139,10 @@ public class Account extends Model {
 
     public int getDocumentCount() {
         return Document.find.where(thisAccount()).findRowCount();
+    }
+
+    public int getMemberCount() {
+        return Member.find.where(thisAccount()).findRowCount();
     }
 
     private Expression thisAccount() {

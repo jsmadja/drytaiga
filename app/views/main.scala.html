@@ -71,6 +71,7 @@
                         }
 
                         @if(user !=null && user.isAdministrator) {
+                            <li class="@Application.currentCategory("accounts")"><a href="@routes.Accounts.list">@Messages.get("accounts.index.title")</a></li>
                             <li class="@Application.currentCategory("feedbacks")"><a href="@routes.Feedbacks.list">@Messages.get("feedbacks.index.title")</a></li>
                         }
                         <li class="@Application.currentCategory("pricing")"><a href="@routes.Pricing.index">Pricing</a></li>

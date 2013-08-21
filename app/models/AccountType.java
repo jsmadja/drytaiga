@@ -2,30 +2,38 @@ package models;
 
 import com.avaje.ebean.annotation.EnumValue;
 
+import static java.lang.Integer.MAX_VALUE;
 import static misc.FileSize.Unity.GIGA;
 import static misc.FileSize.Unity.MEGA;
 
 public enum AccountType {
 
     @EnumValue("free")
-    Free(MEGA.toBytes(250), 0),
+    Free(0, 1, 1, 100, MEGA.toBytes(250)),
 
     @EnumValue("startup")
-    Startup(GIGA.toBytes(2), 24.99),
+    Startup(24.99, 5, 10, 1000, GIGA.toBytes(2)),
 
     @EnumValue("established_company")
-    EstablishedCompany(GIGA.toBytes(25), 34.99),
+    EstablishedCompany(34.99, 25, 25, 5000, GIGA.toBytes(25)),
 
     @EnumValue("large_company")
-    LargeCompany(GIGA.toBytes(200), 69.99);
+    LargeCompany(69.99, MAX_VALUE, MAX_VALUE, MAX_VALUE, GIGA.toBytes(200));
 
     private final long totalSpace;
 
     private final double price;
 
-    private AccountType(long totalSpace, double price) {
+    private int maxUsers;
+    private int maxOpenings;
+    private int maxApplicants;
+
+    private AccountType(double price, int maxUsers, int maxOpenings, int maxApplicants, long totalSpace) {
         this.totalSpace = totalSpace;
         this.price = price;
+        this.maxUsers = maxUsers;
+        this.maxOpenings = maxOpenings;
+        this.maxApplicants = maxApplicants;
     }
 
     public long getTotalSpace() {
@@ -34,5 +42,17 @@ public enum AccountType {
 
     public double getPrice() {
         return price;
+    }
+
+    public int getMaxUsers() {
+        return maxUsers;
+    }
+
+    public int getMaxOpenings() {
+        return maxOpenings;
+    }
+
+    public int getMaxApplicants() {
+        return maxApplicants;
     }
 }

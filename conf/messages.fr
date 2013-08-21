@@ -13,4 +13,6 @@ applicants.index.table.header.name=Nom
 
 feedbacks.index.title=Feedbacks
 
+accounts.index.title=Comptes
+
 error.required=Champ requis
