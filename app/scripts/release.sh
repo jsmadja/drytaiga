@@ -1,2 +1,2 @@
 #!/bin/bash
-git push heroku && heroku logs -t --app drytaiga
+git push github && git push heroku && heroku logs -t --app drytaiga
