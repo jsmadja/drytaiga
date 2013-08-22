@@ -11,11 +11,6 @@
         @openings.create(openingForm)
     }
 
-    @components.table("openings", headers = Seq(Messages.get("openings.index.table.header.name"))) {
-        @for(opening <- user.getAccount.getOpenings) {
-            <tr>
-                <td><a href="/openings/@opening.getId">@opening.getName</a></td>
-            </tr>
-        }
-    }
+    @components.ajaxtable("openings", headers = Seq(Messages.get("openings.index.table.header.name")), source = routes.Openings.all().url)
+
 }

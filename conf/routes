@@ -1,78 +1,79 @@
-GET         /                                   controllers.Dashboard.index
-GET         /administrationdashboard            controllers.AdministratorDashboard.index
-GET         /pricing                            controllers.Pricing.index
+GET           /                                              controllers.Dashboard.index
+GET           /administrationdashboard                       controllers.AdministratorDashboard.index
+GET           /pricing                                       controllers.Pricing.index
 
 # Blog
 # ~~~~~~~~~~~~~~
-GET         /blog                               controllers.Blog.index
-POST        /blog                               controllers.Blog.save
-GET         /blog/:id                           controllers.Blog.edit(id: models.BlogPost)
-POST        /blog/update                        controllers.Blog.update
-GET         /blog/post/:id                      controllers.Blog.read(id: models.BlogPost)
+GET           /blog                                          controllers.Blog.index
+POST          /blog                                          controllers.Blog.save
+GET           /blog/:id                                      controllers.Blog.edit(id: models.BlogPost)
+POST          /blog/update                                   controllers.Blog.update
+GET           /blog/post/:id                                 controllers.Blog.read(id: models.BlogPost)
 
 # Authentication
 # ~~~~~~~~~~~~~~
-GET         /login                              controllers.Application.login
-POST        /login                              controllers.Application.authenticate
-GET         /logout                             controllers.Application.logout
+GET           /login                                         controllers.Application.login
+POST          /login                                         controllers.Application.authenticate
+GET           /logout                                        controllers.Application.logout
 
 # Openings
 # ~~~~~~~~~~~~~~
-GET         /openings                           controllers.Openings.list
-GET         /openings/new                       controllers.Openings.create
-POST        /openings                           controllers.Openings.save
-GET         /openings/:id                       controllers.Openings.read(id: models.Opening)
-POST        /openings/:id                       controllers.Openings.update(id: models.Opening)
+GET           /openings                                      controllers.Openings.list
+GET           /openings/all                                  controllers.Openings.all
+GET           /openings/new                                  controllers.Openings.create
+POST          /openings                                      controllers.Openings.save
+GET           /openings/:id                                  controllers.Openings.read(id: models.Opening)
+POST          /openings/:id                                  controllers.Openings.update(id: models.Opening)
 
 # Openings / Lists
 # ~~~~~~~~~~~~~~
-GET         /a                                  controllers.Openings.a
+GET           /a                                             controllers.Openings.a
 
 # Applicant
 # ~~~~~~~~~~~~~~
-GET         /applicants                                  controllers.Applicants.list
-GET         /applicants/all                              controllers.Applicants.all
-GET         /applicants/by_status/:appliance_status      controllers.Applicants.filter(appliance_status: String)
-GET         /applicants/:id                              controllers.Applicants.read(id: models.Applicant)
-POST        /applicants/:id/appliance_status             controllers.Applicants.changeApplianceStatus(id: models.Applicant)
+GET           /applicants                                    controllers.Applicants.list
+GET           /applicants/all                                controllers.Applicants.all
+GET           /applicants/by_status/:appliance_status        controllers.Applicants.filter(appliance_status: String)
+GET           /applicants/:id                                controllers.Applicants.read(id: models.Applicant)
+POST          /applicants/:id/appliance_status               controllers.Applicants.changeApplianceStatus(id: models.Applicant)
 
 # Comments
 # ~~~~~~~~~~~~~~
-GET         /openings/:id/comments/new          controllers.Comments.create(id: Long, clazz: String, callback: String)
-POST        /openings/:id/comments              controllers.Comments.save(id: Long, clazz: String, callback: String)
+GET           /openings/:id/comments/new                     controllers.Comments.create(id: Long, clazz: String, callback: String)
+POST          /openings/:id/comments                         controllers.Comments.save(id: Long, clazz: String, callback: String)
 
 # Tags
 # ~~~~~~~~~~~~~~
-POST        /applicants/:id/tags                controllers.Tags.save(id: Long, clazz: String)
-DELETE      /applicants/:id/tags                controllers.Tags.delete(id: Long, clazz: String)
+POST          /applicants/:id/tags                           controllers.Tags.save(id: Long, clazz: String)
+DELETE        /applicants/:id/tags                           controllers.Tags.delete(id: Long, clazz: String)
 
 # Documents
 # ~~~~~~~~~~~~~~
-GET         /openings/:id/documents/new         controllers.Documents.create(id: Long, clazz: String, callback: String)
-POST        /openings/:id/documents             controllers.Documents.save(id: Long, clazz: String, callback: String)
+GET           /openings/:id/documents/new                    controllers.Documents.create(id: Long, clazz: String, callback: String)
+POST          /openings/:id/documents                        controllers.Documents.save(id: Long, clazz: String, callback: String)
 
 # Feedbacks
 #~~~~~~~~~~~~~~~
-POST        /feedbacks                          controllers.Feedbacks.save
-GET         /feedbacks                          controllers.Feedbacks.list
+POST          /feedbacks                                     controllers.Feedbacks.save
+GET           /feedbacks                                     controllers.Feedbacks.list
 
 # Accounts
 #~~~~~~~~~~~~~~~
-GET         /accounts                           controllers.Accounts.list
-GET         /accounts/all                       controllers.Accounts.all
+GET           /accounts                                      controllers.Accounts.list
+GET           /accounts/all                                  controllers.Accounts.all
 
 # Mail
 # ~~~~~~~~~~~~~~
-POST        /incoming_mail                      controllers.IncomingMail.incomingMail
+POST          /incoming_mail                                 controllers.IncomingMail.incomingMail
 
 # Reporting
 # ~~~~~~~~~~~~~~
-GET         /reporting                          controllers.Reporting.index
+GET           /reporting                                     controllers.Reporting.index
 
 # Global Search
 # ~~~~~~~~~~~~~~
-GET         /search                             controllers.Search.search
+GET           /search                                        controllers.Search.search
 
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file                       controllers.Assets.at(path="/public", file)
+GET           /assets/*file                                  controllers.Assets.at(path="/public", file)

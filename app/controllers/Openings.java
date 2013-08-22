@@ -1,9 +1,8 @@
 package controllers;
 
-import models.Account;
-import models.Comment;
-import models.Document;
-import models.Opening;
+import misc.table.ColumnValueResolver;
+import misc.table.Html;
+import models.*;
 import play.data.Form;
 import play.mvc.Result;
 import views.html.openings.create;
@@ -14,12 +13,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static controllers.routes.Openings;
+import static misc.table.Html.url;
+import static misc.table.TableFilter.createNode;
 import static play.data.Form.form;
 
 public class Openings extends AjaxController {
 
     public static Result list() {
         return ok(index.render(user(), openingForm()));
+    }
+
+    public static Result all() {
+        return ok(createNode(request(), Opening.find.query(), new ColumnValueResolver<Opening>() {
+            @Override
+            public String label(Opening opening) {
+                return url(routes.Openings.read(opening), value(opening).toString());
+            }
+
+            @Override
+            public Comparable value(Opening opening) {
+                return opening.getName();
+            }
+        }));
     }
 
     public static Result create() {

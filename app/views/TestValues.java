@@ -4,9 +4,8 @@ import com.avaje.ebean.Ebean;
 import models.*;
 import play.Logger;
 
-import java.lang.Math;
-
 import static java.util.Arrays.asList;
+import static models.AccountType.EstablishedCompany;
 import static models.Profile.Administrator;
 import static models.Profile.Customer;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
@@ -16,7 +15,7 @@ public class TestValues {
     public static void createValues() {
         if (Ebean.find(Account.class).findRowCount() == 0) {
             createAdministrator();
-            for (Integer accountNumber : asList(1, 10, 100, 1000, 5000, 10000, 100000, 1000000)) {
+            for (Integer accountNumber : asList(1,2,3,4,5,6,7,8)) {
                 createAccount(accountNumber);
             }
         }
@@ -45,8 +44,9 @@ public class TestValues {
     }
 
     private static AccountType randomAccountType() {
-        return AccountType.values()[(accountTypeIndex++)%AccountType.values().length];
+        return AccountType.values()[(accountTypeIndex++) % AccountType.values().length];
     }
+
     private static int accountTypeIndex = 0;
 
     private static void createApplicants(int accountNumber, Account account, Member user, Opening opening) {
@@ -83,19 +83,19 @@ public class TestValues {
     }
 
     private static int memberCount(Account account) {
-        return Math.min(49, misc.Math.randomInt(account.getAccountType().getMaxUsers() - 1));
+        return Math.min(EstablishedCompany.getMaxUsers() * 100, misc.Math.randomInt(account.getAccountType().getMaxUsers() - 1));
     }
 
     private static int applicantCount(Account account) {
-        return Math.min(10000, misc.Math.randomInt(account.getAccountType().getMaxApplicants()));
+        return Math.min(EstablishedCompany.getMaxApplicants(), misc.Math.randomInt(account.getAccountType().getMaxApplicants()));
     }
 
     private static int openingCount(Account account) {
         int count = misc.Math.randomInt(account.getAccountType().getMaxOpenings());
-        if(count == 0) {
+        if (count == 0) {
             count = 1;
         }
-        return Math.min(50, count);
+        return Math.min(EstablishedCompany.getMaxOpenings() * 100, count);
     }
 
 }
