@@ -1,10 +1,29 @@
 @(user: Member)
 @import formatters._
+
+@planShares = {
+    <div id="plan_shares" style="min-width: 400px; height: 300px;"></div>
+    @defining(AdministratorDashboard.getAccounts.groupBy(_.getAccountType)) { accountTypes =>
+        @defining(accountTypes.map(accountType => Tuple2(accountType._1.name,accountType._2.size))) { data =>
+            @components.charts.pie("#plan_shares", "Plan shares", data)
+        }
+    }
+}
+
+@revenueShares = {
+    <div id="revenue_shares" style="min-width: 400px; height: 300px;"></div>
+    @defining(AdministratorDashboard.getAccounts.groupBy(_.getAccountType)) { accountTypes =>
+        @defining(accountTypes.map(accountType => Tuple2(accountType._1.name, accountType._2.map(account => account.getAccountType.getPrice).sum))) { data =>
+            @components.charts.pie("#revenue_shares", "Revenue shares", data)
+        }
+    }
+}
+
 @main(user){
 
     <h1>Dashboard</h1>
 
-    <table class="table table-bordered table-condensed table-striped" style="width: 60%;">
+    <table class="table table-bordered table-condensed table-striped">
         <thead>
             <th style="text-align: center;">Plan</th>
             <th style="text-align: center;">Customers</th>
@@ -47,5 +66,8 @@
             </tr>
         </tbody>
     </table>
+
+    @planShares
+    @revenueShares
 
 }
