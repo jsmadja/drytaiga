@@ -70,6 +70,7 @@ public class Applicant extends BaseModel<Applicant> implements Documentable, Com
 
     public void addDocument(Document document) {
         documents.add(document);
+        document.attachTo(this);
     }
 
     @Override

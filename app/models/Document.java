@@ -42,6 +42,11 @@ public class Document extends BaseModel<Document> {
         this.account = opening.getAccount();
     }
 
+    public void attachTo(Applicant applicant) {
+        this.applicant = applicant;
+        this.account = applicant.getAccount();
+    }
+
     public Long getSize() {
         return size;
     }
@@ -62,5 +67,6 @@ public class Document extends BaseModel<Document> {
     protected Finder getFinder() {
         return find;
     }
+
 }
 

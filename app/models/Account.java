@@ -143,4 +143,8 @@ public class Account extends BaseModel<Account> {
     protected Finder getFinder() {
         return find;
     }
+
+    public boolean accept(Document document) {
+        return (document.getSize() + getUsedSpace()) <= getTotalSpace();
+    }
 }

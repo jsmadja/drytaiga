@@ -1,11 +1,12 @@
 package controllers;
 
-import formatters.BytesFormatter;
 import misc.table.ColumnValueResolver;
+import misc.table.Html;
 import models.Account;
 import play.mvc.Result;
 import views.html.accounts.index;
 
+import static formatters.BytesFormatter.format;
 import static misc.table.Html.labelOrProgressbar;
 import static misc.table.TableFilter.createNode;
 
@@ -34,7 +35,10 @@ public class Accounts extends AjaxController {
         return new ColumnValueResolver<Account>() {
             @Override
             public String label(Account account) {
-                return BytesFormatter.format(account.getUsedSpace()) + " / " + BytesFormatter.format(account.getAccountType().getTotalSpace());
+                long usedSpace = account.getUsedSpace();
+                long totalSpace = account.getTotalSpace();
+                String tooltip = format(usedSpace) + " / " + format(totalSpace);
+                return Html.progressbar(usedSpace, totalSpace, tooltip);
             }
 
             @Override
@@ -48,7 +52,7 @@ public class Accounts extends AjaxController {
         return new ColumnValueResolver<Account>() {
             @Override
             public String label(Account account) {
-                return labelOrProgressbar(account.getApplicantCount(), account.getAccountType().getMaxApplicants());
+                return labelOrProgressbar(account.getApplicantCount().longValue(), account.getAccountType().getMaxApplicants().longValue());
             }
 
             @Override
@@ -62,7 +66,7 @@ public class Accounts extends AjaxController {
         return new ColumnValueResolver<Account>() {
             @Override
             public String label(Account account) {
-                return labelOrProgressbar(account.getOpeningCount(), account.getAccountType().getMaxOpenings());
+                return labelOrProgressbar(account.getOpeningCount().longValue(), account.getAccountType().getMaxOpenings().longValue());
             }
 
             @Override
@@ -76,7 +80,7 @@ public class Accounts extends AjaxController {
         return new ColumnValueResolver<Account>() {
             @Override
             public String label(Account account) {
-                return labelOrProgressbar(account.getMemberCount(), account.getAccountType().getMaxUsers());
+                return labelOrProgressbar(account.getMemberCount().longValue(), account.getAccountType().getMaxUsers().longValue());
             }
 
             @Override

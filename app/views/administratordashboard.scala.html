@@ -1,45 +1,49 @@
 @(user: Member)
+@import formatters._
 @main(user){
 
     <h1>Dashboard</h1>
 
-    <table class="table table-bordered table-condensed table-striped" style="width: 40%;">
+    <table class="table table-bordered table-condensed table-striped" style="width: 60%;">
         <thead>
             <th style="text-align: center;">Plan</th>
             <th style="text-align: center;">Customers</th>
             <th style="text-align: center;">Price</th>
             <th style="text-align: center;">Total</th>
+            <th style="text-align: center;">Used Space</th>
         </thead>
         <tbody style="text-align: right;">
             @defining(AdministratorDashboard.getAccounts.groupBy(_.getAccountType)) { accountTypes =>
                 @for(accountType <- AccountType.values) {
-                    @defining(accountTypes.get(accountType)) { entry =>
+                    @defining(accountTypes.get(accountType)) { accounts =>
                         <tr>
                             <td style="text-align: left;" >@accountType</td>
                             <td>
-                                @if(entry.isDefined) {
-                                    @formatters.NumberFormatter.format(entry.get.size)
+                                @if(accounts.isDefined) {
+                                    @NumberFormatter.format(accounts.get.size)
                                 } else {
                                     0
                                 }
                             </td>
                             <td>@accountType.getPrice €</td>
                             <td>
-                                @if(entry.isDefined) {
-                                    @(Math.round(entry.get.size * accountType.getPrice)) €
+                                @if(accounts.isDefined) {
+                                    @(Math.round(accounts.get.size * accountType.getPrice)) €
                                 } else {
                                     0 €
                                 }
                             </td>
+                            <td>@BytesFormatter.format(accounts.get.map(account => account.getUsedSpace).sum)</td>
                         </tr>
                     }
                 }
             }
             <tr>
+                <td style="font-weight: bold; text-align: center;">Total</td>
+                <td style="font-weight: bold;">@NumberFormatter.format(AdministratorDashboard.getAccounts.size)</td>
                 <td></td>
-                <td style="font-weight: bold;">@formatters.NumberFormatter.format(AdministratorDashboard.getAccounts.size)</td>
-                <td></td>
-                <td style="font-weight: bold;">@formatters.NumberFormatter.format((Math.round(AdministratorDashboard.getAccounts.map(a => a.getAccountType.getPrice).sum))) €</td>
+                <td style="font-weight: bold;">@NumberFormatter.format((Math.round(AdministratorDashboard.getAccounts.map(account => account.getAccountType.getPrice).sum))) €</td>
+                <td style="font-weight: bold;">@BytesFormatter.format(AdministratorDashboard.getAccounts.map(account => account.getUsedSpace).sum)</td>
             </tr>
         </tbody>
     </table>

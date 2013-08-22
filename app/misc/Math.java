@@ -4,6 +4,10 @@ import java.util.Random;
 
 public class Math {
 
+    public static int percent(Long up, Long down) {
+        return (int) (((double) up / down) * 100);
+    }
+
     public static int percent(Integer up, Integer down) {
         return (int) (((double) up / down) * 100);
     }

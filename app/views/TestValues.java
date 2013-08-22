@@ -1,9 +1,12 @@
 package views;
 
 import com.avaje.ebean.Ebean;
+import com.google.common.net.MediaType;
+import misc.Unity;
 import models.*;
 import play.Logger;
 
+import static com.google.common.net.MediaType.ZIP;
 import static java.util.Arrays.asList;
 import static models.AccountType.EstablishedCompany;
 import static models.Profile.Administrator;
@@ -15,7 +18,7 @@ public class TestValues {
     public static void createValues() {
         if (Ebean.find(Account.class).findRowCount() == 0) {
             createAdministrator();
-            for (Integer accountNumber : asList(1,2,3,4,5,6,7,8)) {
+            for (Integer accountNumber : asList(1, 2, 3, 4, 5, 6, 7, 8)) {
                 createAccount(accountNumber);
             }
         }
@@ -55,12 +58,20 @@ public class TestValues {
             int applicantId = i;
             Applicant applicant = new Applicant("Bob", "Lennon #" + applicantId, "blennon" + applicantId + "@gmail.com", account);
             applicant.addComment(new Comment("First comment on applicant", user));
+            addDocument(account, i, applicant);
             int index = Integer.parseInt(randomNumeric(1)) % ApplianceStatus.values().length;
             ApplianceStatus randomApplianceStatus = ApplianceStatus.values()[index];
             applicant.updateStatus(randomApplianceStatus);
             opening.addApplicant(applicant);
         }
         Logger.debug("Create " + applicantCount + " applicants for account #" + accountNumber);
+    }
+
+    private static void addDocument(Account account, int i, Applicant applicant) {
+        Document document = new Document("doc#" + i, "http://", Unity.MEGA.toBytes(3), ZIP.toString());
+        if(account.accept(document)) {
+            applicant.addDocument(document);
+        }
     }
 
     private static void createMembers(Account account) {
