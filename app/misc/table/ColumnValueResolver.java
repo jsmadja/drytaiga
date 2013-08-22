@@ -2,6 +2,7 @@ package misc.table;
 
 public interface ColumnValueResolver<T> {
 
-    String resolve(T value);
+    String label(T value);
 
+    Comparable value(T value);
 }

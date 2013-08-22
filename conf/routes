@@ -59,6 +59,7 @@ GET         /feedbacks                          controllers.Feedbacks.list
 # Accounts
 #~~~~~~~~~~~~~~~
 GET         /accounts                           controllers.Accounts.list
+GET         /accounts/all                       controllers.Accounts.all
 
 # Mail
 # ~~~~~~~~~~~~~~

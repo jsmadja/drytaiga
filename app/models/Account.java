@@ -129,11 +129,11 @@ public class Account extends Model {
         this.company = company;
     }
 
-    public int getApplicantCount() {
+    public Integer getApplicantCount() {
         return Applicant.find.where(thisAccount()).findRowCount();
     }
 
-    public int getOpeningCount() {
+    public Integer getOpeningCount() {
         return Opening.find.where(thisAccount()).findRowCount();
     }
 
@@ -141,7 +141,7 @@ public class Account extends Model {
         return Document.find.where(thisAccount()).findRowCount();
     }
 
-    public int getMemberCount() {
+    public Integer getMemberCount() {
         return Member.find.where(thisAccount()).findRowCount();
     }
 

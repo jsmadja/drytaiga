@@ -4,6 +4,7 @@ import com.avaje.ebean.Expression;
 import com.avaje.ebean.Query;
 import com.google.common.base.Joiner;
 import misc.table.ColumnValueResolver;
+import misc.table.Html;
 import misc.table.TableFilter;
 import models.ApplianceStatus;
 import models.Applicant;
@@ -17,6 +18,7 @@ import views.html.applicants.read;
 import static com.avaje.ebean.Expr.and;
 import static com.avaje.ebean.Expr.eq;
 import static controllers.routes.Applicants;
+import static misc.table.Html.url;
 import static misc.table.TableFilter.createNode;
 import static play.data.Form.form;
 
@@ -24,13 +26,23 @@ public class Applicants extends AjaxController {
 
     private static ColumnValueResolver<Applicant> fullnameResolver = new ColumnValueResolver<Applicant>() {
         @Override
-        public String resolve(Applicant applicant) {
-            return TableFilter.url(Applicants.read(applicant), applicant.getFullname());
+        public String label(Applicant applicant) {
+            return value(applicant).toString();
+        }
+
+        @Override
+        public Comparable value(Applicant applicant) {
+            return url(Applicants.read(applicant), applicant.getFullname());
         }
     };
     private static ColumnValueResolver<Applicant> applianceStatusResolver = new ColumnValueResolver<Applicant>() {
         @Override
-        public String resolve(Applicant applicant) {
+        public String label(Applicant applicant) {
+            return value(applicant).toString();
+        }
+
+        @Override
+        public Comparable value(Applicant applicant) {
             return applicant.getApplianceStatus().name();
         }
     };;

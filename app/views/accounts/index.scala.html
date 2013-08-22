@@ -1,39 +1,9 @@
 @(user: Member)
 @import play.i18n._
 
-@bar(up: Long, down: Long) = {
-    @defining(Accounts.percent(up, down)) { percent =>
-        @if(percent == 100) {
-            <h6><span class="label label-danger">MAX</span></h6>
-        }
-        @if(down == Integer.MAX_VALUE) {
-            <h6><span class="label label-success">UNLIMITED</span></h6>
-        }
-        @if(percent != 100 && down != Integer.MAX_VALUE) {
-            <div class="progress" style="height: 10px; margin-bottom: 0px; width: 100px;" title="@up/@down">
-                <div class="progress-bar" role="progressbar" aria-valuenow="@percent" aria-valuemin="0" aria-valuemax="100" style="width: @percent%;"></div>
-            </div>
-        }
-    }
-}
-
 @main(user) {
     <h1>
         @Messages.get("accounts.index.title")
     </h1>
-    @components.table("accounts", headers = Seq("Company", "Plan", "Users", "Openings", "Applicants", "Disk Usage")) {
-        @for(account <- Account.find.all) {
-            <tr>
-                <td>@account.getCompany.getName</td>
-                <td>@account.getAccountType.name</td>
-                <td>@bar(account.getMemberCount, account.getAccountType.getMaxUsers)</td>
-                <td>@bar(account.getOpeningCount, account.getAccountType.getMaxOpenings)</td>
-                <td>@bar(account.getApplicantCount, account.getAccountType.getMaxApplicants)</td>
-                <td>
-                    <span style="font-size: 10px; font-weight: bold;">@account.getUsedSpace / @formatters.BytesFormatter.format(account.getAccountType.getTotalSpace)</span>
-                    @bar(account.getUsedSpaceSize, account.getAccountType.getTotalSpace)
-                </td>
-            </tr>
-        }
-    }
+    @components.ajaxtable("table_accounts", headers = Seq("Company", "Plan", "Users", "Openings", "Applicants", "Disk Usage"), source = routes.Accounts.all().url)
 }

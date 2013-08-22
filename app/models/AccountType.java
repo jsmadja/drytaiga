@@ -36,7 +36,7 @@ public enum AccountType {
         this.maxApplicants = maxApplicants;
     }
 
-    public long getTotalSpace() {
+    public Long getTotalSpace() {
         return totalSpace;
     }
 
@@ -44,15 +44,15 @@ public enum AccountType {
         return price;
     }
 
-    public int getMaxUsers() {
+    public Integer getMaxUsers() {
         return maxUsers;
     }
 
-    public int getMaxOpenings() {
+    public Integer getMaxOpenings() {
         return maxOpenings;
     }
 
-    public int getMaxApplicants() {
+    public Integer getMaxApplicants() {
         return maxApplicants;
     }
 }

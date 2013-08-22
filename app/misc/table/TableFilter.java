@@ -21,19 +21,19 @@ public class TableFilter {
     public static <T> ObjectNode createNode(Http.Request request, Query<T> query, final ColumnValueResolver... columnValuesResolvers) {
         TableFilterConfiguration configuration = TableFilterConfiguration.readFrom(request);
         Collection<T> records = getRecords(query, configuration, columnValuesResolvers);
-        ObjectNode result = Json.newObject();
-        result.put("sEcho", configuration.sEcho);
-        result.put("iTotalRecords", query.findRowCount());
-        result.put("iTotalDisplayRecords", records.size());
-        ArrayNode array = result.putArray("aaData");
-        for (T rowValue : records) {
+        ObjectNode json = Json.newObject();
+        json.put("sEcho", configuration.sEcho);
+        json.put("iTotalRecords", query.findRowCount());
+        json.put("iTotalDisplayRecords", records.size());
+        ArrayNode rows = json.putArray("aaData");
+        for (T record : records) {
             ObjectNode row = Json.newObject();
             for (int i = 0; i < columnValuesResolvers.length; i++) {
-                row.put(Integer.toString(i), columnValuesResolvers[i].resolve(rowValue));
+                row.put(Integer.toString(i), columnValuesResolvers[i].label(record));
             }
-            array.add(row);
+            rows.add(row);
         }
-        return result;
+        return json;
     }
 
     private static <T> Collection<T> getRecords(Query<T> query, TableFilterConfiguration configuration, ColumnValueResolver... columnValuesResolvers) {
@@ -65,9 +65,9 @@ public class TableFilter {
             @Override
             public int compare(T t1, T t2) {
                 if ("asc".equalsIgnoreCase(order)) {
-                    return sortBy.resolve(t1).compareToIgnoreCase(sortBy.resolve(t2));
+                    return sortBy.value(t1).compareTo(sortBy.value(t2));
                 }
-                return sortBy.resolve(t2).compareToIgnoreCase(sortBy.resolve(t1));
+                return sortBy.value(t2).compareTo(sortBy.value(t1));
             }
         });
     }
@@ -77,17 +77,13 @@ public class TableFilter {
             @Override
             public boolean apply(@Nullable T filtrable) {
                 for (ColumnValueResolver columnValuesResolver : columnValuesResolvers) {
-                    if (columnValuesResolver.resolve(filtrable).contains(filter)) {
+                    if (columnValuesResolver.label(filtrable).contains(filter)) {
                         return true;
                     }
                 }
                 return false;
             }
         };
-    }
-
-    public static String url(Call call, String value) {
-        return "<a href='" + call.url() + "'>" + value + "</a>";
     }
 
 }
