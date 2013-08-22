@@ -5,10 +5,12 @@
 
 create table account (
   id                        bigint not null,
+  account_id                bigint,
   account_type              varchar(19),
   owner_id                  bigint,
   status                    varchar(9),
   company_id                bigint,
+  created_at                timestamp not null,
   constraint ck_account_account_type check (account_type in ('established_company','startup','large_company','free')),
   constraint ck_account_status check (status in ('active','suspended')),
   constraint pk_account primary key (id))
@@ -143,42 +145,44 @@ create sequence opening_seq;
 
 create sequence tag_seq;
 
-alter table account add constraint fk_account_owner_1 foreign key (owner_id) references member (id) on delete restrict on update restrict;
-create index ix_account_owner_1 on account (owner_id);
-alter table account add constraint fk_account_company_2 foreign key (company_id) references company (id) on delete restrict on update restrict;
-create index ix_account_company_2 on account (company_id);
-alter table applicant add constraint fk_applicant_account_3 foreign key (account_id) references account (id) on delete restrict on update restrict;
-create index ix_applicant_account_3 on applicant (account_id);
-alter table base_model add constraint fk_base_model_account_4 foreign key (account_id) references account (id) on delete restrict on update restrict;
-create index ix_base_model_account_4 on base_model (account_id);
-alter table comment add constraint fk_comment_account_5 foreign key (account_id) references account (id) on delete restrict on update restrict;
-create index ix_comment_account_5 on comment (account_id);
-alter table comment add constraint fk_comment_opening_6 foreign key (opening_id) references opening (id) on delete restrict on update restrict;
-create index ix_comment_opening_6 on comment (opening_id);
-alter table comment add constraint fk_comment_applicant_7 foreign key (applicant_id) references applicant (id) on delete restrict on update restrict;
-create index ix_comment_applicant_7 on comment (applicant_id);
-alter table comment add constraint fk_comment_author_8 foreign key (author_id) references member (id) on delete restrict on update restrict;
-create index ix_comment_author_8 on comment (author_id);
-alter table company add constraint fk_company_account_9 foreign key (account_id) references account (id) on delete restrict on update restrict;
-create index ix_company_account_9 on company (account_id);
-alter table document add constraint fk_document_account_10 foreign key (account_id) references account (id) on delete restrict on update restrict;
-create index ix_document_account_10 on document (account_id);
-alter table document add constraint fk_document_opening_11 foreign key (opening_id) references opening (id) on delete restrict on update restrict;
-create index ix_document_opening_11 on document (opening_id);
-alter table document add constraint fk_document_applicant_12 foreign key (applicant_id) references applicant (id) on delete restrict on update restrict;
-create index ix_document_applicant_12 on document (applicant_id);
-alter table feedback add constraint fk_feedback_account_13 foreign key (account_id) references account (id) on delete restrict on update restrict;
-create index ix_feedback_account_13 on feedback (account_id);
-alter table feedback add constraint fk_feedback_author_14 foreign key (author_id) references member (id) on delete restrict on update restrict;
-create index ix_feedback_author_14 on feedback (author_id);
-alter table member add constraint fk_member_account_15 foreign key (account_id) references account (id) on delete restrict on update restrict;
-create index ix_member_account_15 on member (account_id);
-alter table opening add constraint fk_opening_account_16 foreign key (account_id) references account (id) on delete restrict on update restrict;
-create index ix_opening_account_16 on opening (account_id);
-alter table tag add constraint fk_tag_account_17 foreign key (account_id) references account (id) on delete restrict on update restrict;
-create index ix_tag_account_17 on tag (account_id);
-alter table tag add constraint fk_tag_applicant_18 foreign key (applicant_id) references applicant (id) on delete restrict on update restrict;
-create index ix_tag_applicant_18 on tag (applicant_id);
+alter table account add constraint fk_account_account_1 foreign key (account_id) references account (id) on delete restrict on update restrict;
+create index ix_account_account_1 on account (account_id);
+alter table account add constraint fk_account_owner_2 foreign key (owner_id) references member (id) on delete restrict on update restrict;
+create index ix_account_owner_2 on account (owner_id);
+alter table account add constraint fk_account_company_3 foreign key (company_id) references company (id) on delete restrict on update restrict;
+create index ix_account_company_3 on account (company_id);
+alter table applicant add constraint fk_applicant_account_4 foreign key (account_id) references account (id) on delete restrict on update restrict;
+create index ix_applicant_account_4 on applicant (account_id);
+alter table base_model add constraint fk_base_model_account_5 foreign key (account_id) references account (id) on delete restrict on update restrict;
+create index ix_base_model_account_5 on base_model (account_id);
+alter table comment add constraint fk_comment_account_6 foreign key (account_id) references account (id) on delete restrict on update restrict;
+create index ix_comment_account_6 on comment (account_id);
+alter table comment add constraint fk_comment_opening_7 foreign key (opening_id) references opening (id) on delete restrict on update restrict;
+create index ix_comment_opening_7 on comment (opening_id);
+alter table comment add constraint fk_comment_applicant_8 foreign key (applicant_id) references applicant (id) on delete restrict on update restrict;
+create index ix_comment_applicant_8 on comment (applicant_id);
+alter table comment add constraint fk_comment_author_9 foreign key (author_id) references member (id) on delete restrict on update restrict;
+create index ix_comment_author_9 on comment (author_id);
+alter table company add constraint fk_company_account_10 foreign key (account_id) references account (id) on delete restrict on update restrict;
+create index ix_company_account_10 on company (account_id);
+alter table document add constraint fk_document_account_11 foreign key (account_id) references account (id) on delete restrict on update restrict;
+create index ix_document_account_11 on document (account_id);
+alter table document add constraint fk_document_opening_12 foreign key (opening_id) references opening (id) on delete restrict on update restrict;
+create index ix_document_opening_12 on document (opening_id);
+alter table document add constraint fk_document_applicant_13 foreign key (applicant_id) references applicant (id) on delete restrict on update restrict;
+create index ix_document_applicant_13 on document (applicant_id);
+alter table feedback add constraint fk_feedback_account_14 foreign key (account_id) references account (id) on delete restrict on update restrict;
+create index ix_feedback_account_14 on feedback (account_id);
+alter table feedback add constraint fk_feedback_author_15 foreign key (author_id) references member (id) on delete restrict on update restrict;
+create index ix_feedback_author_15 on feedback (author_id);
+alter table member add constraint fk_member_account_16 foreign key (account_id) references account (id) on delete restrict on update restrict;
+create index ix_member_account_16 on member (account_id);
+alter table opening add constraint fk_opening_account_17 foreign key (account_id) references account (id) on delete restrict on update restrict;
+create index ix_opening_account_17 on opening (account_id);
+alter table tag add constraint fk_tag_account_18 foreign key (account_id) references account (id) on delete restrict on update restrict;
+create index ix_tag_account_18 on tag (account_id);
+alter table tag add constraint fk_tag_applicant_19 foreign key (applicant_id) references applicant (id) on delete restrict on update restrict;
+create index ix_tag_applicant_19 on tag (applicant_id);
 
 
 

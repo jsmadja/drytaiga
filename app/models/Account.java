@@ -1,22 +1,17 @@
 package models;
 
-import com.avaje.ebean.*;
-import misc.FileSize;
+import com.avaje.ebean.Expression;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.avaje.ebean.Expr.and;
 import static com.avaje.ebean.Expr.eq;
 
 @Entity
 @Table(name = "account")
-public class Account extends Model {
-
-    @Id
-    public Long id;
+public class Account extends BaseModel<Account> {
 
     private AccountType accountType;
 
@@ -78,16 +73,7 @@ public class Account extends Model {
         openings.add(opening);
     }
 
-    public String getUsedSpace() {
-        long usedSpace = 0;
-        List<Document> list = Document.find.where(thisAccount()).findList();
-        for (Document document : list) {
-            usedSpace += document.getSize();
-        }
-        return new FileSize(usedSpace).toString();
-    }
-
-    public long getUsedSpaceSize() {
+    public long getUsedSpace() {
         long usedSpace = 0;
         List<Document> list = Document.find.where(thisAccount()).findList();
         for (Document document : list) {
@@ -96,8 +82,8 @@ public class Account extends Model {
         return usedSpace;
     }
 
-    public String getTotalSpace() {
-        return new FileSize(accountType.getTotalSpace()).toString();
+    public Long getTotalSpace() {
+        return accountType.getTotalSpace();
     }
 
     public boolean containsOpeningWithName(String positionName) {
@@ -151,5 +137,10 @@ public class Account extends Model {
 
     public List<Member> getMembers() {
         return members;
+    }
+
+    @Override
+    protected Finder getFinder() {
+        return find;
     }
 }

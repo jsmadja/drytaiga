@@ -16,9 +16,21 @@
                     @defining(accountTypes.get(accountType)) { entry =>
                         <tr>
                             <td style="text-align: left;" >@accountType</td>
-                            <td>@formatters.NumberFormatter.format(entry.get.size)</td>
+                            <td>
+                                @if(entry.isDefined) {
+                                    @formatters.NumberFormatter.format(entry.get.size)
+                                } else {
+                                    0
+                                }
+                            </td>
                             <td>@accountType.getPrice €</td>
-                            <td>@(Math.round(entry.get.size * accountType.getPrice)) €</td>
+                            <td>
+                                @if(entry.isDefined) {
+                                    @(Math.round(entry.get.size * accountType.getPrice)) €
+                                } else {
+                                    0 €
+                                }
+                            </td>
                         </tr>
                     }
                 }

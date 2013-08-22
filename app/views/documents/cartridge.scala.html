@@ -15,7 +15,7 @@
             <tr>
                 <td><a href="@document.getUrl">@document.getName</a></td>
                 <td>@document.getContentType</td>
-                <td>@document.sizeToString</td>
+                <td>@formatters.BytesFormatter.format(document.getSize)</td>
             </tr>
         }
     }

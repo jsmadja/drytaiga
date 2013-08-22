@@ -21,20 +21,23 @@
 
         <table class="table table-bordered table-condensed table-striped">
             <thead>
-                <th>Account</th>
+                <th>Plan</th>
                 <th>Login</th>
                 <th>Password</th>
+                <th>Account</th>
             </thead>
             <tr>
-                <td>Administrator</td>
+                <td></td>
                 <td>julien.smadja@@gmail.com</td>
                 <td>password</td>
+                <td>Administrator</td>
             </tr>
             @for(account <- Account.find.all()) {
              <tr>
-                 <td>@account.getApplicantCount applicants</td>
+                 <td>@account.getAccountType.name</td>
                  <td>@account.getMembers.get(0).getEmail</td>
                  <td>@account.getMembers.get(0).getPassword</td>
+                 <td>@account.getApplicantCount applicants, @account.getOpeningCount openings, @account.getMemberCount members</td>
              </tr>
             }
         </table>

@@ -26,7 +26,15 @@ public class Html {
 
     public static String progressbar(Integer up, Integer down) {
         int percent = percent(up, down);
-        return format("<div class=''progress'' style=''height: 10px; margin-bottom: 0px; width: 100px;'' title=''{0}/{1}''><div class=''progress-bar'' role=''progressbar'' aria-valuenow=''{2}'' aria-valuemin=''0'' aria-valuemax=''100'' style=''width: {3}%;''></div></div>", up, down, percent, percent);
+        String color = "success";
+        if(percent > 50) {
+            color = "warning";
+        }
+        if(percent >= 80) {
+            color = "danger";
+        }
+
+        return format("<div class=''progress'' style=''height: 10px; margin-bottom: 0px; width: 100px;'' title=''{0}/{1}''><div class=''progress-bar progress-bar-{2}'' role=''progressbar'' aria-valuenow=''{3}'' aria-valuemin=''0'' aria-valuemax=''100'' style=''width: {3}%;''></div></div>", up, down, color, percent, percent);
     }
 
     public static String span(String className, String value) {

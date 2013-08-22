@@ -3,8 +3,8 @@ package models;
 import com.avaje.ebean.annotation.EnumValue;
 
 import static java.lang.Integer.MAX_VALUE;
-import static misc.FileSize.Unity.GIGA;
-import static misc.FileSize.Unity.MEGA;
+import static misc.Unity.GIGA;
+import static misc.Unity.MEGA;
 
 public enum AccountType {
 

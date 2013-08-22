@@ -34,12 +34,12 @@ public class Accounts extends AjaxController {
         return new ColumnValueResolver<Account>() {
             @Override
             public String label(Account account) {
-                return account.getUsedSpace() + " / " + BytesFormatter.format(account.getAccountType().getTotalSpace());
+                return BytesFormatter.format(account.getUsedSpace()) + " / " + BytesFormatter.format(account.getAccountType().getTotalSpace());
             }
 
             @Override
             public Comparable value(Account account) {
-                return account.getUsedSpaceSize();
+                return account.getUsedSpace();
             }
         };
     }

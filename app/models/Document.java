@@ -1,6 +1,6 @@
 package models;
 
-import misc.FileSize;
+import formatters.BytesFormatter;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
@@ -40,10 +40,6 @@ public class Document extends BaseModel<Document> {
     public void attachTo(Opening opening) {
         this.opening = opening;
         this.account = opening.getAccount();
-    }
-
-    public String sizeToString() {
-        return new FileSize(size).toString();
     }
 
     public Long getSize() {

@@ -11,7 +11,7 @@
         <tr><td><b><a href="@routes.Openings.list">Openings</a></b></td><td>@formatters.NumberFormatter.format(user.getAccount.getOpeningCount)</td></tr>
         <tr><td><b><a href="@routes.Applicants.list">Applicants</a></b></td><td>@formatters.NumberFormatter.format(user.getAccount.getApplicantCount)</td></tr>
         <tr><td><b>Files</b></td><td>@user.getAccount.getDocumentCount</td></tr>
-        <tr><td><b>Space (Max: @user.getAccount.getTotalSpace)</b></td><td>@user.getAccount.getUsedSpace</td></tr>
+        <tr><td><b>Space (Max: @formatters.BytesFormatter.format(user.getAccount.getTotalSpace)</b></td><td>@formatters.BytesFormatter.format(user.getAccount.getUsedSpace)</td></tr>
     </table>
 
     <h3>Applicants to contact</h3>
